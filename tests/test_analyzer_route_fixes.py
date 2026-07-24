@@ -18,7 +18,7 @@ os.environ.setdefault("SECRET_KEY", "test-secret-key-do-not-use-in-prod")
 os.environ.setdefault("FLASK_DEBUG", "0")
 
 import app as A
-
+import core as C
 
 @pytest.fixture
 def client():
@@ -78,7 +78,7 @@ class TestAdvancedFieldsPopulatedBeforeUse:
             "blades": "3", "battery": "4S", "style": "freestyle", "motor_kv": "2400",
             "battery_mAh": "1500",
         }):
-            analysis = A._handle_analysis_post()
+            analysis = C._handle_analysis_post()
         for key in ("hover_throttle_pct", "rpm_estimated", "c_burst",
                     "c_continuous", "c_recommended", "max_power_total_w"):
             assert analysis.get(key) is not None, f"{key} should not be None"
@@ -92,7 +92,7 @@ class TestAdvancedFieldsPopulatedBeforeUse:
             "blades": "3", "battery": "4S", "battery_mAh": "450",
             "style": "racing", "motor_kv": "2700",
         }):
-            analysis = A._handle_analysis_post()
+            analysis = C._handle_analysis_post()
         assert isinstance(analysis.get("rules"), list)
 
 
@@ -101,19 +101,19 @@ class TestValidateInputTightening:
     used to have zero validation."""
 
     def test_negative_motor_kv_warns(self):
-        warnings = A.validate_input(5, 650, 5, 4.5, 3, "4S", motor_kv=-500)
+        warnings = C.validate_input(5, 650, 5, 4.5, 3, "4S", motor_kv=-500)
         assert any("KV" in w for w in warnings)
 
     def test_absurd_motor_count_warns(self):
-        warnings = A.validate_input(5, 650, 5, 4.5, 3, "4S", motor_count=5)
+        warnings = C.validate_input(5, 650, 5, 4.5, 3, "4S", motor_count=5)
         assert any("มอเตอร์" in w for w in warnings)
 
     def test_absurd_battery_mAh_warns(self):
-        warnings = A.validate_input(5, 650, 5, 4.5, 3, "4S", battery_mAh=-100)
+        warnings = C.validate_input(5, 650, 5, 4.5, 3, "4S", battery_mAh=-100)
         assert any("mAh" in w for w in warnings)
 
     def test_valid_values_produce_no_new_warnings(self):
-        warnings = A.validate_input(5, 650, 5, 4.5, 3, "4S",
+        warnings = C.validate_input(5, 650, 5, 4.5, 3, "4S",
                                      motor_kv=2400, motor_count=4,
                                      battery_mAh=1500, payload_g=0,
                                      esc_current_limit_a=40)
