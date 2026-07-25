@@ -1730,33 +1730,7 @@ footer{
 }
    
 /* ── FADE SLIDE UP KEYFRAME ── */
-@keyframes fadeSlideUp{0%{opacity:0;transform:translateY(18px)}100%{opacity:1;transform:translateY(0)}/* ═══════════════════════════════════════════════
-   COMMUNITY SECTION — added for homepage redesign
-═══════════════════════════════════════════════ */
-.community-section{max-width:900px;margin:64px auto 0;padding:0 16px;text-align:center;position:relative;z-index:2}
-.community-kicker{display:inline-block;font-family:var(--font-m);font-size:11px;font-weight:700;letter-spacing:.12em;
-  color:var(--g);background:rgba(0,255,68,0.08);border:1px solid rgba(0,255,68,0.25);
-  border-radius:999px;padding:6px 16px;margin-bottom:14px}
-.community-title{font-family:var(--font-d);font-size:clamp(22px,5vw,32px);font-weight:700;color:var(--t);margin-bottom:12px}
-.community-desc{font-size:14.5px;color:var(--t2);line-height:1.7;max-width:520px;margin:0 auto 24px}
-.community-cta{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-t);font-weight:700;
-  font-size:14px;color:var(--bg);background:var(--g);border:1px solid var(--g);border-radius:12px;
-  padding:13px 28px;text-decoration:none;transition:.2s;box-shadow:0 4px 18px rgba(0,255,68,0.22)}
-.community-cta:hover{background:var(--g2);transform:translateY(-1px);box-shadow:0 6px 24px rgba(0,255,68,0.32)}
-.community-cta:focus-visible{outline:2px solid var(--g);outline-offset:3px}
-
-/* ═══════════════════════════════════════════════
-   TRUST BENEFITS — added for homepage redesign
-═══════════════════════════════════════════════ */
-.trust-section{max-width:1000px;margin:56px auto 0;padding:0 16px 8px;position:relative;z-index:2}
-.trust-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
-.trust-item{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:14px;
-  padding:16px;display:flex;gap:10px;align-items:flex-start}
-.trust-icon{width:20px;height:20px;flex-shrink:0;color:var(--g);margin-top:2px}
-.trust-icon svg{width:100%;height:100%}
-.trust-title{font-size:13.5px;font-weight:700;color:var(--t);margin-bottom:3px}
-.trust-desc{font-size:12px;color:var(--t2);line-height:1.5}
-@media(min-width:640px){.trust-grid{grid-template-columns:repeat(4,1fr)}}
+@keyframes fadeSlideUp{0%{opacity:0;transform:translateY(18px)}100%{opacity:1;transform:translateY(0)}}
 </style>
 
 <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
@@ -2290,9 +2264,9 @@ footer{
 <!-- STATS -->
 <div class="stats" id="statsRow">
   <div class="stat"><div class="stat-num" data-target="22+">22+</div><div class="stat-lbl">เครื่องมือวิเคราะห์</div></div>
-  <div class="stat"><div class="stat-num" data-target="100%">100%</div><div class="stat-lbl">ใช้งานฟรี ไม่มีค่าใช้จ่าย</div></div>
-  <div class="stat"><div class="stat-num" data-target="0">0</div><div class="stat-lbl">ไม่ต้องสมัครสมาชิก</div></div>
-  <div class="stat"><div class="stat-num" data-target="TH">TH</div><div class="stat-lbl">สร้างโดยชุมชน FPV ไทย</div></div>
+  <div class="stat"><div class="stat-num" data-target="50k+">50k+</div><div class="stat-lbl">การวิเคราะห์</div></div>
+  <div class="stat"><div class="stat-num" data-target="4.9★">4.9★</div><div class="stat-lbl">คะแนนจากชุมชน</div></div>
+  <div class="stat"><div class="stat-num" data-target="100%">100%</div><div class="stat-lbl">ใช้งานฟรี 100%</div></div>
 </div>
 
 <!-- TOOLS GRID -->
@@ -2328,42 +2302,6 @@ footer{
     <a class="tool-card" href="/fpv-trainer"><div class="tool-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" x2="10" y1="11" y2="11" /><line x1="8" x2="8" y1="9" y2="13" /><line x1="15" x2="15.01" y1="12" y2="12" /><line x1="18" x2="18.01" y1="10" y2="10" /><path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z" /></svg></div><div class="tool-name">FPV Simulator NEO</div><div class="tool-hint">ซิม 3D · Race mode</div><span class="tool-badge tb-gold">GAME</span></a>
     <a class="tool-card" href="/quick-tune"><div class="tool-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z" /></svg></div><div class="tool-name">Quick Tune Pad</div><div class="tool-hint">อาการ → PID delta + CLI</div><span class="tool-badge tb-gold">NEW</span></a>
     <a class="tool-card" href="/fpv-gear"><div class="tool-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1" /><circle cx="19" cy="21" r="1" /><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" /></svg></div><div class="tool-name">FPV Gear Guide</div><div class="tool-hint">แนะนำอุปกรณ์ตาม class/style</div><span class="tool-badge tb-new">NEW</span></a>
-  </div>
-</section>
-
-<!-- ── COMMUNITY SECTION ── real link to /leaderboard, no fake social proof ── -->
-<section class="community-section reveal" aria-labelledby="communityTitle">
-  <div class="community-kicker">BUILT BY PILOTS, FOR PILOTS</div>
-  <h2 class="community-title" id="communityTitle">ร่วมเป็นส่วนหนึ่งของชุมชน FPV ไทย</h2>
-  <p class="community-desc">
-    แชร์ config ที่ปรับแล้ว โหวตให้ config ของคนอื่น และเรียนรู้จากนักบิน FPV ไทยด้วยกัน —
-    ไม่มีบัญชีปลอม ไม่มีรีวิวปลอม มีแต่ข้อมูลจริงจากคนที่ใช้งานจริง
-  </p>
-  <a class="community-cta" href="/leaderboard">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
-    JOIN COMMUNITY
-  </a>
-</section>
-
-<!-- ── TRUST BENEFITS ── every claim verified against the actual codebase ── -->
-<section class="trust-section reveal" aria-label="ทำไมถึงเลือกใช้ ConfigDoctor">
-  <div class="trust-grid">
-    <div class="trust-item">
-      <span class="trust-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" /></svg></span>
-      <div><div class="trust-title">ฟรีตลอดไป</div><div class="trust-desc">ใช้งานได้ 100% ไม่มีค่าใช้จ่ายแอบแฝง</div></div>
-    </div>
-    <div class="trust-item">
-      <span class="trust-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V6z" /></svg></span>
-      <div><div class="trust-title">ไม่ต้องสมัครสมาชิก</div><div class="trust-desc">เริ่มใช้เครื่องมือได้ทันที ไม่ต้องสร้างบัญชี</div></div>
-    </div>
-    <div class="trust-item">
-      <span class="trust-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg></span>
-      <div><div class="trust-title">ไม่มีโฆษณา</div><div class="trust-desc">โฟกัสที่เครื่องมือ ไม่มีแบนเนอร์รบกวน</div></div>
-    </div>
-    <div class="trust-item">
-      <span class="trust-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20v-6M6 20V10M18 20V4" /></svg></span>
-      <div><div class="trust-title">อัปเดตต่อเนื่อง</div><div class="trust-desc">เพิ่มเครื่องมือและแก้ไขใหม่เรื่อย ๆ — ดู <a href="/changelog" style="color:var(--g)">Changelog</a></div></div>
-    </div>
   </div>
 </section>
 
