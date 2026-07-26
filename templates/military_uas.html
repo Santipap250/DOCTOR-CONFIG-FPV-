@@ -424,21 +424,21 @@ body::after{
         </select>
       </div>
       <div class="form-group">
-        <label class="form-label">EMPTY WEIGHT <span class="form-unit">kg</span></label>
+        <label for="emptyWeight" class="form-label">EMPTY WEIGHT <span class="form-unit">kg</span></label>
         <input class="form-input" type="number" id="emptyWeight" value="120" min="1" max="10000" step="1">
         <span class="form-hint">น้ำหนักโครงสร้าง + อุปกรณ์ ไม่รวม fuel/battery และ payload</span>
       </div>
       <div class="form-group">
-        <label class="form-label">WINGSPAN / ROTOR SPAN <span class="form-unit">m</span></label>
+        <label for="wingspan" class="form-label">WINGSPAN / ROTOR SPAN <span class="form-unit">m</span></label>
         <input class="form-input" type="number" id="wingspan" value="8.0" min="0.5" max="50" step="0.1">
       </div>
       <div class="form-group">
-        <label class="form-label">WING AREA <span class="form-unit">m²</span></label>
+        <label for="wingArea" class="form-label">WING AREA <span class="form-unit">m²</span></label>
         <input class="form-input" type="number" id="wingArea" value="3.2" min="0.1" max="200" step="0.1">
         <span class="form-hint">Fixed wing: ความกว้าง × chord. Multirotor: ป้อน 0</span>
       </div>
       <div class="form-group">
-        <label class="form-label">ROTOR DIAMETER <span class="form-unit">m</span></label>
+        <label for="rotorDiam" class="form-label">ROTOR DIAMETER <span class="form-unit">m</span></label>
         <input class="form-input" type="number" id="rotorDiam" value="0" min="0" max="5" step="0.05">
         <span class="form-hint">Multirotor/VTOL เท่านั้น · Fixed wing ป้อน 0</span>
       </div>
@@ -471,28 +471,28 @@ body::after{
     </div>
     <div class="form-grid">
       <div class="form-group">
-        <label class="form-label">LIFT/DRAG RATIO (L/D)</label>
+        <label for="ldRatio" class="form-label">LIFT/DRAG RATIO (L/D)</label>
         <input class="form-input" type="number" id="ldRatio" value="14" min="2" max="40" step="0.5">
         <span class="form-hint">MALE ~12–18 · HALE ~20–35 · UCAV ~8–14 · Multirotor: ใช้ 0</span>
       </div>
       <div class="form-group">
-        <label class="form-label">DRAG COEFFICIENT (Cd)</label>
+        <label for="cdValue" class="form-label">DRAG COEFFICIENT (Cd)</label>
         <input class="form-input" type="number" id="cdValue" value="0.035" min="0.01" max="0.5" step="0.001">
       </div>
       <div class="form-group">
-        <label class="form-label">CRUISE SPEED <span class="form-unit">km/h</span></label>
+        <label for="cruiseSpeed" class="form-label">CRUISE SPEED <span class="form-unit">km/h</span></label>
         <input class="form-input" type="number" id="cruiseSpeed" value="180" min="20" max="1200" step="5">
       </div>
       <div class="form-group">
-        <label class="form-label">MAX SPEED (VNE) <span class="form-unit">km/h</span></label>
+        <label for="maxSpeed" class="form-label">MAX SPEED (VNE) <span class="form-unit">km/h</span></label>
         <input class="form-input" type="number" id="maxSpeed" value="280" min="30" max="1500" step="5">
       </div>
       <div class="form-group">
-        <label class="form-label">SERVICE CEILING <span class="form-unit">ft AMSL</span></label>
+        <label for="serviceCeiling" class="form-label">SERVICE CEILING <span class="form-unit">ft AMSL</span></label>
         <input class="form-input" type="number" id="serviceCeiling" value="25000" min="1000" max="65000" step="500">
       </div>
       <div class="form-group">
-        <label class="form-label">OPERATIONAL ALTITUDE <span class="form-unit">ft AGL</span></label>
+        <label for="opAltitude" class="form-label">OPERATIONAL ALTITUDE <span class="form-unit">ft AGL</span></label>
         <input class="form-input" type="number" id="opAltitude" value="10000" min="100" max="60000" step="100">
       </div>
     </div>
@@ -518,12 +518,12 @@ body::after{
         </select>
       </div>
       <div class="form-group" id="fg-battery">
-        <label class="form-label">BATTERY CAPACITY <span class="form-unit">Wh</span></label>
+        <label for="batteryWh" class="form-label">BATTERY CAPACITY <span class="form-unit">Wh</span></label>
         <input class="form-input" type="number" id="batteryWh" value="0" min="0" max="500000" step="100">
         <span class="form-hint">ใส่ 0 สำหรับ ICE/Turbine</span>
       </div>
       <div class="form-group" id="fg-fuel">
-        <label class="form-label">FUEL CAPACITY <span class="form-unit">liters</span></label>
+        <label for="fuelLiters" class="form-label">FUEL CAPACITY <span class="form-unit">liters</span></label>
         <input class="form-input" type="number" id="fuelLiters" value="80" min="0" max="50000" step="1">
       </div>
       <div class="form-group" id="fg-fueltype">
@@ -536,21 +536,21 @@ body::after{
         </select>
       </div>
       <div class="form-group">
-        <label class="form-label">FUEL CONSUMPTION @ CRUISE <span class="form-unit">L/hr</span></label>
+        <label for="fuelFlow" class="form-label">FUEL CONSUMPTION @ CRUISE <span class="form-unit">L/hr</span></label>
         <input class="form-input" type="number" id="fuelFlow" value="12" min="0.1" max="10000" step="0.1">
         <span class="form-hint">Specific fuel consumption at cruise power</span>
       </div>
       <div class="form-group">
-        <label class="form-label">PROPULSIVE EFFICIENCY η</label>
+        <label for="propEff" class="form-label">PROPULSIVE EFFICIENCY η</label>
         <input class="form-input" type="number" id="propEff" value="0.82" min="0.3" max="0.98" step="0.01">
         <span class="form-hint">ICE prop: 0.75–0.85 · Turbofan: 0.5–0.7 · Electric: 0.85–0.95</span>
       </div>
       <div class="form-group">
-        <label class="form-label">MAX THRUST <span class="form-unit">kgf</span></label>
+        <label for="maxThrust" class="form-label">MAX THRUST <span class="form-unit">kgf</span></label>
         <input class="form-input" type="number" id="maxThrust" value="45" min="1" max="100000" step="1">
       </div>
       <div class="form-group">
-        <label class="form-label">POWER OUTPUT <span class="form-unit">kW</span></label>
+        <label for="powerKW" class="form-label">POWER OUTPUT <span class="form-unit">kW</span></label>
         <input class="form-input" type="number" id="powerKW" value="22" min="0.1" max="50000" step="0.5">
       </div>
     </div>
@@ -569,7 +569,7 @@ body::after{
 
     <div class="form-grid" style="margin-bottom:20px;">
       <div class="form-group">
-        <label class="form-label">MAX PAYLOAD CAPACITY <span class="form-unit">kg</span></label>
+        <label for="maxPayload" class="form-label">MAX PAYLOAD CAPACITY <span class="form-unit">kg</span></label>
         <input class="form-input" type="number" id="maxPayload" value="200" min="0" max="50000" step="1">
       </div>
       <div class="form-group">
@@ -669,11 +669,11 @@ body::after{
 
     <div class="form-grid">
       <div class="form-group">
-        <label class="form-label">TOTAL PAYLOAD LOADED <span class="form-unit">kg</span></label>
+        <label for="actualPayload" class="form-label">TOTAL PAYLOAD LOADED <span class="form-unit">kg</span></label>
         <input class="form-input" type="number" id="actualPayload" value="150" min="0" max="50000" step="1">
       </div>
       <div class="form-group">
-        <label class="form-label">DRAG PENALTY FROM PAYLOAD <span class="form-unit">%</span></label>
+        <label for="dragPenalty" class="form-label">DRAG PENALTY FROM PAYLOAD <span class="form-unit">%</span></label>
         <input class="form-input" type="number" id="dragPenalty" value="12" min="0" max="80" step="1">
         <span class="form-hint">ดูจาก table ด้านบน</span>
       </div>
@@ -786,25 +786,25 @@ body::after{
         </select>
       </div>
       <div class="form-group">
-        <label class="form-label">DISTANCE TO TARGET <span class="form-unit">km</span></label>
+        <label for="targetDist" class="form-label">DISTANCE TO TARGET <span class="form-unit">km</span></label>
         <input class="form-input" type="number" id="targetDist" value="300" min="1" max="10000" step="10">
       </div>
       <div class="form-group">
-        <label class="form-label">TIME ON TARGET (TOT) <span class="form-unit">min</span></label>
+        <label for="totMinutes" class="form-label">TIME ON TARGET (TOT) <span class="form-unit">min</span></label>
         <input class="form-input" type="number" id="totMinutes" value="30" min="1" max="480" step="5">
         <span class="form-hint">เวลา loiter / engagement window</span>
       </div>
       <div class="form-group">
-        <label class="form-label">DIVERT / ABORT RESERVE <span class="form-unit">%</span></label>
+        <label for="reservePct" class="form-label">DIVERT / ABORT RESERVE <span class="form-unit">%</span></label>
         <input class="form-input" type="number" id="reservePct" value="20" min="5" max="40" step="5">
         <span class="form-hint">เปอร์เซ็นต์ fuel/energy สำรองสำหรับ abort/divert</span>
       </div>
       <div class="form-group">
-        <label class="form-label">WIND (HEADWIND) <span class="form-unit">km/h</span></label>
+        <label for="headwind" class="form-label">WIND (HEADWIND) <span class="form-unit">km/h</span></label>
         <input class="form-input" type="number" id="headwind" value="30" min="0" max="200" step="5">
       </div>
       <div class="form-group">
-        <label class="form-label">MISSION ALTITUDE <span class="form-unit">ft AGL</span></label>
+        <label for="missAlt" class="form-label">MISSION ALTITUDE <span class="form-unit">ft AGL</span></label>
         <input class="form-input" type="number" id="missAlt" value="10000" min="100" max="60000" step="500">
       </div>
     </div>

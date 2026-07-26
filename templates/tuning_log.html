@@ -207,7 +207,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-t);min-height
 </div>
 
 <div class="filter-bar">
-  <input class="fbar-input" id="searchInput" placeholder="ค้นหา build name, note..." oninput="renderLog()">
+  <input class="fbar-input" id="searchInput" aria-label="Search tuning log entries" placeholder="ค้นหา build name, note..." oninput="renderLog()">
   <select class="fbar-sel" id="filterResult" onchange="renderLog()">
     <option value="">ทุกผล</option>
     <option value="BETTER">🟢 Better</option>
@@ -230,11 +230,11 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-t);min-height
     </div>
     <div class="form-grid">
       <div class="mfield"><label>Build Name</label>
-        <input type="text" id="m_name" placeholder='5" Freestyle Build A' maxlength="50"></div>
+        <input type="text" id="m_name" aria-label="Build name" placeholder='5" Freestyle Build A' maxlength="50"></div>
       <div class="mfield"><label>วันที่บิน</label>
-        <input type="date" id="m_date"></div>
+        <input type="date" id="m_date" aria-label="Date"></div>
       <div class="mfield"><label>สนาม / สถานที่</label>
-        <input type="text" id="m_loc" placeholder="สนาม X · สวน Y · หน้าบ้าน" maxlength="50"></div>
+        <input type="text" id="m_loc" aria-label="Location" placeholder="สนาม X · สวน Y · หน้าบ้าน" maxlength="50"></div>
       <div class="mfield"><label>อากาศ</label>
         <select id="m_weather">
           <option>☀️ แดดจัด ลมน้อย</option><option>⛅ มีเมฆบ้าง</option>
@@ -249,27 +249,27 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-t);min-height
             <div class="pid-col-lbl r">ROLL</div>
             <div class="pid-row-labels"><span>P</span><span>I</span><span>D</span></div>
             <div class="pid-row-m">
-              <input type="number" id="m_rp" placeholder="48" min="0" max="200">
-              <input type="number" id="m_ri" placeholder="90" min="0" max="200">
-              <input type="number" id="m_rd" placeholder="38" min="0" max="200">
+              <input type="number" id="m_rp" aria-label="Roll P gain" placeholder="48" min="0" max="200">
+              <input type="number" id="m_ri" aria-label="Roll I gain" placeholder="90" min="0" max="200">
+              <input type="number" id="m_rd" aria-label="Roll D gain" placeholder="38" min="0" max="200">
             </div>
           </div>
           <div>
             <div class="pid-col-lbl p">PITCH</div>
             <div class="pid-row-labels"><span>P</span><span>I</span><span>D</span></div>
             <div class="pid-row-m">
-              <input type="number" id="m_pp" placeholder="52" min="0" max="200">
-              <input type="number" id="m_pi" placeholder="90" min="0" max="200">
-              <input type="number" id="m_pd" placeholder="40" min="0" max="200">
+              <input type="number" id="m_pp" aria-label="Pitch P gain" placeholder="52" min="0" max="200">
+              <input type="number" id="m_pi" aria-label="Pitch I gain" placeholder="90" min="0" max="200">
+              <input type="number" id="m_pd" aria-label="Pitch D gain" placeholder="40" min="0" max="200">
             </div>
           </div>
           <div>
             <div class="pid-col-lbl y">YAW</div>
             <div class="pid-row-labels"><span>P</span><span>I</span><span>D</span></div>
             <div class="pid-row-m">
-              <input type="number" id="m_yp" placeholder="40" min="0" max="200">
-              <input type="number" id="m_yi" placeholder="90" min="0" max="200">
-              <input type="number" id="m_yd" placeholder="0" min="0" max="40">
+              <input type="number" id="m_yp" aria-label="Yaw P gain" placeholder="40" min="0" max="200">
+              <input type="number" id="m_yi" aria-label="Yaw I gain" placeholder="90" min="0" max="200">
+              <input type="number" id="m_yd" aria-label="Yaw D gain" placeholder="0" min="0" max="40">
             </div>
           </div>
         </div>

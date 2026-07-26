@@ -251,13 +251,13 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-t);min-height
   </div>
   <div class="mgrid">
     <div class="mf"><label>Build Name</label>
-      <input id="s_name" placeholder='5" Freestyle V2' maxlength="50" type="text"></div>
+      <input id="s_name" aria-label="Build name" placeholder='5" Freestyle V2' maxlength="50" type="text"></div>
     <div class="mf"><label>Pilot / Callsign</label>
-      <input id="s_pilot" placeholder="@thaiflyer" maxlength="30" type="text"></div>
+      <input id="s_pilot" aria-label="Pilot or callsign" placeholder="@thaiflyer" maxlength="30" type="text"></div>
     <div class="mf"><label>Frame Size</label>
-      <input id="s_size" placeholder='5"' maxlength="10" type="text"></div>
+      <input id="s_size" aria-label="Frame size" placeholder='5"' maxlength="10" type="text"></div>
     <div class="mf"><label>Battery</label>
-      <input id="s_batt" placeholder="4S 1500mAh" maxlength="20" type="text"></div>
+      <input id="s_batt" aria-label="Battery" placeholder="4S 1500mAh" maxlength="20" type="text"></div>
 
     <div class="style-sel">
       <span class="ss-btn on" data-v="FREESTYLE">Freestyle</span>
@@ -272,27 +272,27 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-t);min-height
         <div class="pid-mg-lbl r">ROLL</div>
         <div class="pid-3labels"><span>P</span><span>I</span><span>D</span></div>
         <div class="pid-3cols">
-          <input type="number" id="s_rp" placeholder="48" min="0" max="200">
-          <input type="number" id="s_ri" placeholder="90" min="0" max="200">
-          <input type="number" id="s_rd" placeholder="38" min="0" max="200">
+          <input type="number" id="s_rp" aria-label="Roll P gain" placeholder="48" min="0" max="200">
+          <input type="number" id="s_ri" aria-label="Roll I gain" placeholder="90" min="0" max="200">
+          <input type="number" id="s_rd" aria-label="Roll D gain" placeholder="38" min="0" max="200">
         </div>
       </div>
       <div class="pid-mg-col">
         <div class="pid-mg-lbl p">PITCH</div>
         <div class="pid-3labels"><span>P</span><span>I</span><span>D</span></div>
         <div class="pid-3cols">
-          <input type="number" id="s_pp" placeholder="52" min="0" max="200">
-          <input type="number" id="s_pi" placeholder="90" min="0" max="200">
-          <input type="number" id="s_pd" placeholder="40" min="0" max="200">
+          <input type="number" id="s_pp" aria-label="Pitch P gain" placeholder="52" min="0" max="200">
+          <input type="number" id="s_pi" aria-label="Pitch I gain" placeholder="90" min="0" max="200">
+          <input type="number" id="s_pd" aria-label="Pitch D gain" placeholder="40" min="0" max="200">
         </div>
       </div>
       <div class="pid-mg-col">
         <div class="pid-mg-lbl y">YAW</div>
         <div class="pid-3labels"><span>P</span><span>I</span><span>D</span></div>
         <div class="pid-3cols">
-          <input type="number" id="s_yp" placeholder="40" min="0" max="200">
-          <input type="number" id="s_yi" placeholder="90" min="0" max="200">
-          <input type="number" id="s_yd" placeholder="0" min="0" max="40">
+          <input type="number" id="s_yp" aria-label="Yaw P gain" placeholder="40" min="0" max="200">
+          <input type="number" id="s_yi" aria-label="Yaw I gain" placeholder="90" min="0" max="200">
+          <input type="number" id="s_yd" aria-label="Yaw D gain" placeholder="0" min="0" max="40">
         </div>
       </div>
     </div>

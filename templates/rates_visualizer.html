@@ -328,21 +328,21 @@ canvas#rv{width:100%;display:block;cursor:crosshair;}
               <span class="cname">RC Rate <span class="hint">ความไวตรงกลาง</span></span>
               <span class="cval roll" id="vr">1.20</span>
             </div>
-            <input type="range" id="rr" class="rr" min="0.01" max="2.55" step="0.01" value="1.20" oninput="update()">
+            <input type="range" id="rr" class="rr" aria-label="RC Rate" min="0.01" max="2.55" step="0.01" value="1.20" oninput="update()">
           </div>
           <div class="cg">
             <div class="clabel">
               <span class="cname">Super Rate <span class="hint">ความไวขอบ</span></span>
               <span class="cval roll" id="vs">0.70</span>
             </div>
-            <input type="range" id="sr" class="rr" min="0.00" max="0.95" step="0.01" value="0.70" oninput="update()">
+            <input type="range" id="sr" class="rr" aria-label="Super Rate" min="0.00" max="0.95" step="0.01" value="0.70" oninput="update()">
           </div>
           <div class="cg">
             <div class="clabel">
               <span class="cname">Expo <span class="hint">ความนุ่มตรงกลาง</span></span>
               <span class="cval roll" id="ve">0.15</span>
             </div>
-            <input type="range" id="er" class="rr" min="0.00" max="1.00" step="0.01" value="0.15" oninput="update()">
+            <input type="range" id="er" class="rr" aria-label="Expo" min="0.00" max="1.00" step="0.01" value="0.15" oninput="update()">
           </div>
         </div>
 
@@ -354,21 +354,21 @@ canvas#rv{width:100%;display:block;cursor:crosshair;}
               <span class="cname">RC Rate <span class="hint">ความไวพื้นฐาน</span></span>
               <span class="cval roll" id="vbr">1.00</span>
             </div>
-            <input type="range" id="bfr" class="rr" min="0.01" max="2.55" step="0.01" value="1.00" oninput="update()">
+            <input type="range" id="bfr" class="rr" aria-label="RC Rate (BF Legacy)" min="0.01" max="2.55" step="0.01" value="1.00" oninput="update()">
           </div>
           <div class="cg">
             <div class="clabel">
               <span class="cname">Super Rate <span class="hint">ขยาย rate ขอบ</span></span>
               <span class="cval roll" id="vbs">0.70</span>
             </div>
-            <input type="range" id="bfs" class="rr" min="0.00" max="0.95" step="0.01" value="0.70" oninput="update()">
+            <input type="range" id="bfs" class="rr" aria-label="Super Rate (BF Legacy)" min="0.00" max="0.95" step="0.01" value="0.70" oninput="update()">
           </div>
           <div class="cg">
             <div class="clabel">
               <span class="cname">RC Expo <span class="hint">dead zone กลาง</span></span>
               <span class="cval roll" id="vbe">0.00</span>
             </div>
-            <input type="range" id="bfe" class="rr" min="0.00" max="1.00" step="0.01" value="0.00" oninput="update()">
+            <input type="range" id="bfe" class="rr" aria-label="RC Expo (BF Legacy)" min="0.00" max="1.00" step="0.01" value="0.00" oninput="update()">
           </div>
         </div>
 
@@ -380,14 +380,14 @@ canvas#rv{width:100%;display:block;cursor:crosshair;}
               <span class="cname">Rate <span class="hint">deg/s พื้นฐาน</span></span>
               <span class="cval roll" id="vkr">60</span>
             </div>
-            <input type="range" id="kr" class="rr" min="10" max="200" step="1" value="60" oninput="update()">
+            <input type="range" id="kr" class="rr" aria-label="Rate (KISS)" min="10" max="200" step="1" value="60" oninput="update()">
           </div>
           <div class="cg">
             <div class="clabel">
               <span class="cname">Acro+ <span class="hint">curve ขอบ</span></span>
               <span class="cval roll" id="vka">0.02</span>
             </div>
-            <input type="range" id="ka" class="rr" min="0.00" max="0.50" step="0.01" value="0.02" oninput="update()">
+            <input type="range" id="ka" class="rr" aria-label="Acro+ (KISS)" min="0.00" max="0.50" step="0.01" value="0.02" oninput="update()">
           </div>
         </div>
 

@@ -409,7 +409,7 @@ pre::-webkit-scrollbar-thumb{background:rgba(0,255,68,.2);border-radius:2px}
       <div class="pwrow">
         <span class="pw-l">ทั้งลำพร้อมแบต</span>
         <span class="pw-sp"></span>
-        <input class="ninput w64" type="number" id="fWtV" placeholder="720"
+        <input class="ninput w64" type="number" id="fWtV" aria-label="Weight including battery (grams)" placeholder="720"
           value="{{ request.form.get('weight','720') }}" oninput="fWt.value=this.value;dCalc()">
         <span class="pw-u">g</span>
       </div>
@@ -420,12 +420,12 @@ pre::-webkit-scrollbar-thumb{background:rgba(0,255,68,.2);border-radius:2px}
       <div class="fld-label"><span class="fld-num">3</span><span class="fld-name">ใบพัด (Propeller)</span></div>
       <div class="pwrow">
         <span class="pw-l">ขนาด</span>
-        <input class="ninput w64" type="number" step="0.1" id="fPrV" placeholder="5.0"
+        <input class="ninput w64" type="number" step="0.1" id="fPrV" aria-label="Propeller size (inches)" placeholder="5.0"
           value="{{ request.form.get('prop_size','5.0') }}" oninput="fPr.value=this.value;syncSzFromProp();dCalc()">
         <span class="pw-u">"</span>
         <span class="pw-sp"></span>
         <span class="pw-l">Pitch</span>
-        <input class="ninput w64" type="number" step="0.1" id="fPtV" placeholder="4.0"
+        <input class="ninput w64" type="number" step="0.1" id="fPtV" aria-label="Propeller pitch" placeholder="4.0"
           value="{{ request.form.get('pitch','4.0') }}" oninput="fPt.value=this.value;dCalc()">
       </div>
     </div>
@@ -449,7 +449,7 @@ pre::-webkit-scrollbar-thumb{background:rgba(0,255,68,.2);border-radius:2px}
       </select>
       <div class="mahr">
         <span class="mahl">mAh</span>
-        <input class="mahi" type="number" name="battery_mAh" id="fMah" placeholder="1500"
+        <input class="mahi" type="number" name="battery_mAh" id="fMah" aria-label="Battery capacity (mAh)" placeholder="1500"
           value="{{ request.form.get('battery_mAh','') }}" oninput="dCalc();updateMahHint()">
         <span class="mahh" id="mahHint"></span>
       </div>
@@ -482,7 +482,7 @@ pre::-webkit-scrollbar-thumb{background:rgba(0,255,68,.2);border-radius:2px}
       <summary>⚙️ ปรับเพิ่มความแม่นยำ<span class="adv-hint">Motor KV · BF Version</span></summary>
       <div class="adv-b">
         <div>
-          <label class="adv-l">Motor KV (สำคัญที่สุดสำหรับความแม่นยำ)</label>
+          <label class="adv-l" for="fKv">Motor KV (สำคัญที่สุดสำหรับความแม่นยำ)</label>
           <input class="ainput" type="number" name="motor_kv" id="fKv" placeholder="เช่น 2306"
             value="{{ request.form.get('motor_kv','') }}" oninput="dCalc()">
           <span class="anote">ใส่ค่านี้เพื่อคำนวณ RPM, Tip Speed, rpm_filter_min_hz ให้แม่นยำขึ้นมาก — ไม่ใส่ระบบจะประมาณจากขนาดลำแทน</span>

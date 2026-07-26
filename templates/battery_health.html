@@ -176,11 +176,11 @@ select option{background:#111820}
           </select>
         </div>
         <div class="field">
-          <label>Capacity <span class="unit">mAh</span></label>
+          <label for="capacity">Capacity <span class="unit">mAh</span></label>
           <input type="number" id="capacity" value="1300" min="100" max="10000" step="50">
         </div>
         <div class="field">
-          <label>Rated C-Rating
+          <label for="crating">Rated C-Rating
             <span class="tip">C-rating ที่ระบุบนแบต เช่น 75C, 100C</span>
           </label>
           <input type="number" id="crating" value="75" min="10" max="300" step="5">
@@ -190,17 +190,17 @@ select option{background:#111820}
         <div class="card-title" style="margin-bottom:16px">Current State</div>
 
         <div class="field">
-          <label>Internal Resistance / cell <span class="unit">mΩ</span>
+          <label for="ir">Internal Resistance / cell <span class="unit">mΩ</span>
             <span class="tip">วัดจาก charger ที่มี IR meter เช่น ISDT Q6 Plus, HOTA D6</span>
           </label>
           <input type="number" id="ir" value="4.5" min="0.5" max="60" step="0.5">
         </div>
         <div class="field">
-          <label>Resting Voltage / cell <span class="unit">V (หลังพัก 30+ นาที)</span></label>
+          <label for="restV">Resting Voltage / cell <span class="unit">V (หลังพัก 30+ นาที)</span></label>
           <input type="number" id="restV" value="3.85" min="3.0" max="4.35" step="0.01">
         </div>
         <div class="field">
-          <label>Cycle Count
+          <label for="cycles">Cycle Count
             <span class="tip">จำนวนครั้งที่ชาร์จ (ประมาณ)</span>
           </label>
           <input type="number" id="cycles" value="50" min="0" max="1000" step="5">

@@ -479,12 +479,12 @@ pre#cliOut .cs{color:var(--green);font-weight:700;text-shadow:0 0 10px rgba(0,25
     <div class="card-head">📐 SIZE & WEIGHT</div>
     <div class="frow">
       <div class="flabel">ขนาด propeller (นิ้ว)<span class="fval" id="v_size">5.0\"</span></div>
-      <input type="range" class="ws" id="s_size" min="20" max="100" step="5" value="50">
+      <input type="range" class="ws" id="s_size" aria-label="ขนาด propeller (นิ้ว)" min="20" max="100" step="5" value="50">
       <div class="fhint">2\" Tiny → 2.5\" Micro → 3–4\" Mini → 5\" Standard → 7\"+ LR</div>
     </div>
     <div class="frow">
       <div class="flabel">น้ำหนักรวม (g) — รวม battery<span class="fval" id="v_weight">750 g</span></div>
-      <input type="range" class="ws" id="s_weight" min="40" max="2500" step="10" value="750">
+      <input type="range" class="ws" id="s_weight" aria-label="น้ำหนักรวม (g) — รวม battery" min="40" max="2500" step="10" value="750">
       <div class="fhint">ชั่งน้ำหนักจริงหลัง build พร้อม battery ได้ค่าแม่นยำที่สุด</div>
     </div>
   </div>
@@ -570,7 +570,7 @@ pre#cliOut .cs{color:var(--green);font-weight:700;text-shadow:0 0 10px rgba(0,25
     </div>
     <div class="frow">
       <div class="flabel">Motor KV<span class="fval a" id="v_kv">2400 KV</span></div>
-      <input type="range" class="ws a" id="s_kv" min="500" max="6000" step="100" value="2400">
+      <input type="range" class="ws a" id="s_kv" aria-label="Motor KV" min="500" max="6000" step="100" value="2400">
       <div class="fhint">1700–2600 KV: 5\" 4S · 1400–1800 KV: 7\"+ 6S · >3000 KV: Micro 3S</div>
     </div>
     <div class="frow">
@@ -585,7 +585,7 @@ pre#cliOut .cs{color:var(--green);font-weight:700;text-shadow:0 0 10px rgba(0,25
     </div>
     <div class="frow">
       <div class="flabel">Idle Speed (%)<span class="fval a" id="v_idle">5.5</span></div>
-      <input type="range" class="ws a" id="s_idle" min="2" max="12" step="0.5" value="5.5">
+      <input type="range" class="ws a" id="s_idle" aria-label="Idle Speed (%)" min="2" max="12" step="0.5" value="5.5">
       <div class="fhint">3.5–5% Racing · 5–6.5% Freestyle · 6–8% LR/Cine · ต่ำเกิน → desync</div>
     </div>
   </div>
@@ -624,7 +624,7 @@ pre#cliOut .cs{color:var(--green);font-weight:700;text-shadow:0 0 10px rgba(0,25
     <div class="card-head">🎚️ MASTER MULTIPLIER</div>
     <div class="frow">
       <div class="flabel">Scale PID ทั้งหมด<span class="fval" id="v_master">1.00×</span></div>
-      <input type="range" class="ws" id="s_master" min="50" max="200" step="5" value="100">
+      <input type="range" class="ws" id="s_master" aria-label="Scale PID ทั้งหมด" min="50" max="200" step="5" value="100">
       <div class="fhint">Conservative 0.75× → Stock 1.0× → Slightly Hot 1.2× → Aggressive 1.4×</div>
     </div>
     <div class="pill-row" id="pg_pidpre">
@@ -639,24 +639,24 @@ pre#cliOut .cs{color:var(--green);font-weight:700;text-shadow:0 0 10px rgba(0,25
     <div class="pid-grid">
       <div class="pid-axis">
         <div class="pid-axis-lbl r">🟢 ROLL</div>
-        <div class="pid-row"><div class="pid-rh"><span>P (Proportional)</span><span class="pval" id="pv_rp">48</span></div><input type="range" class="ws" id="s_rp" min="10" max="120" value="48"></div>
-        <div class="pid-row"><div class="pid-rh"><span>I (Integral)</span><span class="pval" id="pv_ri">90</span></div><input type="range" class="ws" id="s_ri" min="20" max="200" value="90"></div>
-        <div class="pid-row"><div class="pid-rh"><span>D (Derivative)</span><span class="pval" id="pv_rd">38</span></div><input type="range" class="ws" id="s_rd" min="0" max="80" value="38"></div>
-        <div class="pid-row"><div class="pid-rh"><span>FF (Feedforward)</span><span class="pval" id="pv_rf">100</span></div><input type="range" class="ws" id="s_rf" min="0" max="250" value="100"></div>
+        <div class="pid-row"><div class="pid-rh"><span>P (Proportional)</span><span class="pval" id="pv_rp">48</span></div><input type="range" class="ws" id="s_rp" aria-label="Roll P gain" min="10" max="120" value="48"></div>
+        <div class="pid-row"><div class="pid-rh"><span>I (Integral)</span><span class="pval" id="pv_ri">90</span></div><input type="range" class="ws" id="s_ri" aria-label="Roll I gain" min="20" max="200" value="90"></div>
+        <div class="pid-row"><div class="pid-rh"><span>D (Derivative)</span><span class="pval" id="pv_rd">38</span></div><input type="range" class="ws" id="s_rd" aria-label="Roll D gain" min="0" max="80" value="38"></div>
+        <div class="pid-row"><div class="pid-rh"><span>FF (Feedforward)</span><span class="pval" id="pv_rf">100</span></div><input type="range" class="ws" id="s_rf" aria-label="Roll FF gain" min="0" max="250" value="100"></div>
       </div>
       <div class="pid-axis">
         <div class="pid-axis-lbl p">🔵 PITCH</div>
-        <div class="pid-row"><div class="pid-rh"><span>P</span><span class="pval b" id="pv_pp">52</span></div><input type="range" class="ws b" id="s_pp" min="10" max="120" value="52"></div>
-        <div class="pid-row"><div class="pid-rh"><span>I</span><span class="pval b" id="pv_pi">90</span></div><input type="range" class="ws b" id="s_pi" min="20" max="200" value="90"></div>
-        <div class="pid-row"><div class="pid-rh"><span>D</span><span class="pval b" id="pv_pd">40</span></div><input type="range" class="ws b" id="s_pd" min="0" max="80" value="40"></div>
-        <div class="pid-row"><div class="pid-rh"><span>FF</span><span class="pval b" id="pv_pf">100</span></div><input type="range" class="ws b" id="s_pf" min="0" max="250" value="100"></div>
+        <div class="pid-row"><div class="pid-rh"><span>P</span><span class="pval b" id="pv_pp">52</span></div><input type="range" class="ws b" id="s_pp" aria-label="Pitch P gain" min="10" max="120" value="52"></div>
+        <div class="pid-row"><div class="pid-rh"><span>I</span><span class="pval b" id="pv_pi">90</span></div><input type="range" class="ws b" id="s_pi" aria-label="Pitch I gain" min="20" max="200" value="90"></div>
+        <div class="pid-row"><div class="pid-rh"><span>D</span><span class="pval b" id="pv_pd">40</span></div><input type="range" class="ws b" id="s_pd" aria-label="Pitch D gain" min="0" max="80" value="40"></div>
+        <div class="pid-row"><div class="pid-rh"><span>FF</span><span class="pval b" id="pv_pf">100</span></div><input type="range" class="ws b" id="s_pf" aria-label="Pitch FF gain" min="0" max="250" value="100"></div>
       </div>
       <div class="pid-axis">
         <div class="pid-axis-lbl y">🟡 YAW</div>
-        <div class="pid-row"><div class="pid-rh"><span>P</span><span class="pval a" id="pv_yp">40</span></div><input type="range" class="ws a" id="s_yp" min="10" max="100" value="40"></div>
-        <div class="pid-row"><div class="pid-rh"><span>I</span><span class="pval a" id="pv_yi">90</span></div><input type="range" class="ws a" id="s_yi" min="20" max="200" value="90"></div>
-        <div class="pid-row"><div class="pid-rh"><span>D</span><span class="pval a" id="pv_yd">0</span></div><input type="range" class="ws a" id="s_yd" min="0" max="40" value="0"></div>
-        <div class="pid-row"><div class="pid-rh"><span>FF</span><span class="pval a" id="pv_yf">80</span></div><input type="range" class="ws a" id="s_yf" min="0" max="200" value="80"></div>
+        <div class="pid-row"><div class="pid-rh"><span>P</span><span class="pval a" id="pv_yp">40</span></div><input type="range" class="ws a" id="s_yp" aria-label="Yaw P gain" min="10" max="100" value="40"></div>
+        <div class="pid-row"><div class="pid-rh"><span>I</span><span class="pval a" id="pv_yi">90</span></div><input type="range" class="ws a" id="s_yi" aria-label="Yaw I gain" min="20" max="200" value="90"></div>
+        <div class="pid-row"><div class="pid-rh"><span>D</span><span class="pval a" id="pv_yd">0</span></div><input type="range" class="ws a" id="s_yd" aria-label="Yaw D gain" min="0" max="40" value="0"></div>
+        <div class="pid-row"><div class="pid-rh"><span>FF</span><span class="pval a" id="pv_yf">80</span></div><input type="range" class="ws a" id="s_yf" aria-label="Yaw FF gain" min="0" max="200" value="80"></div>
       </div>
     </div>
     <!-- PID health -->
@@ -666,12 +666,12 @@ pre#cliOut .cs{color:var(--green);font-weight:700;text-shadow:0 0 10px rgba(0,25
     <div class="card-head">⚡ TPA — THROTTLE PID ATTENUATION</div>
     <div class="frow">
       <div class="flabel">TPA Rate (%)<span class="fval" id="v_tpa">10</span></div>
-      <input type="range" class="ws" id="s_tpa" min="0" max="50" step="5" value="10">
+      <input type="range" class="ws" id="s_tpa" aria-label="TPA Rate (%)" min="0" max="50" step="5" value="10">
       <div class="fhint">ลด P/D เมื่อ throttle สูง ป้องกัน oscillation ตอน high-speed · 10–15% freestyle · 20–25% racing</div>
     </div>
     <div class="frow">
       <div class="flabel">TPA Breakpoint<span class="fval" id="v_tpabp">1450</span></div>
-      <input type="range" class="ws" id="s_tpabp" min="1100" max="1800" step="50" value="1450">
+      <input type="range" class="ws" id="s_tpabp" aria-label="TPA Breakpoint" min="1100" max="1800" step="50" value="1450">
       <div class="fhint">Throttle level ที่ TPA เริ่มทำงาน (~hover throttle)</div>
     </div>
   </div>
@@ -719,21 +719,21 @@ pre#cliOut .cs{color:var(--green);font-weight:700;text-shadow:0 0 10px rgba(0,25
     <div class="rates-grid">
       <div class="rates-ax">
         <div class="rates-ax-lbl r">🟢 ROLL</div>
-        <div class="frow"><div class="flabel" style="font-size:8px">RC Rate<span class="fval" id="rv_rrc">1.20</span></div><input type="range" class="ws" id="r_rrc" min="10" max="255" value="120"></div>
-        <div class="frow"><div class="flabel" style="font-size:8px">Super Rate<span class="fval" id="rv_rsr">0.70</span></div><input type="range" class="ws" id="r_rsr" min="0" max="100" value="70"></div>
-        <div class="frow"><div class="flabel" style="font-size:8px">Expo<span class="fval" id="rv_rex">0.15</span></div><input type="range" class="ws" id="r_rex" min="0" max="100" value="15"></div>
+        <div class="frow"><div class="flabel" style="font-size:8px">RC Rate<span class="fval" id="rv_rrc">1.20</span></div><input type="range" class="ws" id="r_rrc" aria-label="Roll RC Rate" min="10" max="255" value="120"></div>
+        <div class="frow"><div class="flabel" style="font-size:8px">Super Rate<span class="fval" id="rv_rsr">0.70</span></div><input type="range" class="ws" id="r_rsr" aria-label="Roll Super Rate" min="0" max="100" value="70"></div>
+        <div class="frow"><div class="flabel" style="font-size:8px">Expo<span class="fval" id="rv_rex">0.15</span></div><input type="range" class="ws" id="r_rex" aria-label="Roll Expo" min="0" max="100" value="15"></div>
       </div>
       <div class="rates-ax">
         <div class="rates-ax-lbl p">🔵 PITCH</div>
-        <div class="frow"><div class="flabel" style="font-size:8px">RC Rate<span class="fval b" id="rv_prc">1.20</span></div><input type="range" class="ws b" id="r_prc" min="10" max="255" value="120"></div>
-        <div class="frow"><div class="flabel" style="font-size:8px">Super Rate<span class="fval b" id="rv_psr">0.70</span></div><input type="range" class="ws b" id="r_psr" min="0" max="100" value="70"></div>
-        <div class="frow"><div class="flabel" style="font-size:8px">Expo<span class="fval b" id="rv_pex">0.15</span></div><input type="range" class="ws b" id="r_pex" min="0" max="100" value="15"></div>
+        <div class="frow"><div class="flabel" style="font-size:8px">RC Rate<span class="fval b" id="rv_prc">1.20</span></div><input type="range" class="ws b" id="r_prc" aria-label="Pitch RC Rate" min="10" max="255" value="120"></div>
+        <div class="frow"><div class="flabel" style="font-size:8px">Super Rate<span class="fval b" id="rv_psr">0.70</span></div><input type="range" class="ws b" id="r_psr" aria-label="Pitch Super Rate" min="0" max="100" value="70"></div>
+        <div class="frow"><div class="flabel" style="font-size:8px">Expo<span class="fval b" id="rv_pex">0.15</span></div><input type="range" class="ws b" id="r_pex" aria-label="Pitch Expo" min="0" max="100" value="15"></div>
       </div>
       <div class="rates-ax">
         <div class="rates-ax-lbl y">🟡 YAW</div>
-        <div class="frow"><div class="flabel" style="font-size:8px">RC Rate<span class="fval a" id="rv_yrc">0.80</span></div><input type="range" class="ws a" id="r_yrc" min="10" max="255" value="80"></div>
-        <div class="frow"><div class="flabel" style="font-size:8px">Super Rate<span class="fval a" id="rv_ysr">0.45</span></div><input type="range" class="ws a" id="r_ysr" min="0" max="100" value="45"></div>
-        <div class="frow"><div class="flabel" style="font-size:8px">Expo<span class="fval a" id="rv_yex">0.10</span></div><input type="range" class="ws a" id="r_yex" min="0" max="100" value="10"></div>
+        <div class="frow"><div class="flabel" style="font-size:8px">RC Rate<span class="fval a" id="rv_yrc">0.80</span></div><input type="range" class="ws a" id="r_yrc" aria-label="Yaw RC Rate" min="10" max="255" value="80"></div>
+        <div class="frow"><div class="flabel" style="font-size:8px">Super Rate<span class="fval a" id="rv_ysr">0.45</span></div><input type="range" class="ws a" id="r_ysr" aria-label="Yaw Super Rate" min="0" max="100" value="45"></div>
+        <div class="frow"><div class="flabel" style="font-size:8px">Expo<span class="fval a" id="rv_yex">0.10</span></div><input type="range" class="ws a" id="r_yex" aria-label="Yaw Expo" min="0" max="100" value="10"></div>
       </div>
     </div>
   </div>
@@ -758,12 +758,12 @@ pre#cliOut .cs{color:var(--green);font-weight:700;text-shadow:0 0 10px rgba(0,25
     </div>
     <div class="frow">
       <div class="flabel">Gyro LPF1 (Hz)<span class="fval" id="v_glpf1">200 Hz</span></div>
-      <input type="range" class="ws" id="s_glpf1" min="60" max="500" step="10" value="200">
+      <input type="range" class="ws" id="s_glpf1" aria-label="Gyro LPF1 (Hz)" min="60" max="500" step="10" value="200">
       <div class="fhint">ต่ำ = filter หนัก latency มาก · สูง = fast response แต่ noise มากขึ้น</div>
     </div>
     <div class="frow">
       <div class="flabel">Gyro LPF2 (Hz) — 0 = ปิด<span class="fval" id="v_glpf2">0</span></div>
-      <input type="range" class="ws" id="s_glpf2" min="0" max="500" step="10" value="0">
+      <input type="range" class="ws" id="s_glpf2" aria-label="Gyro LPF2 (Hz) — 0 = ปิด" min="0" max="500" step="10" value="0">
     </div>
   </div>
   <div class="scard blue">
@@ -777,12 +777,12 @@ pre#cliOut .cs{color:var(--green);font-weight:700;text-shadow:0 0 10px rgba(0,25
     </div>
     <div class="frow">
       <div class="flabel">D-term LPF1 (Hz)<span class="fval b" id="v_dlpf1">110 Hz</span></div>
-      <input type="range" class="ws b" id="s_dlpf1" min="40" max="300" step="10" value="110">
+      <input type="range" class="ws b" id="s_dlpf1" aria-label="D-term LPF1 (Hz)" min="40" max="300" step="10" value="110">
       <div class="fhint">ต่ำเกิน → D sluggish ไม่ทำงาน · สูงเกิน → motor ร้อน (D amplify noise)</div>
     </div>
     <div class="frow">
       <div class="flabel">D-term LPF2 (Hz) — 0 = ปิด<span class="fval b" id="v_dlpf2">0</span></div>
-      <input type="range" class="ws b" id="s_dlpf2" min="0" max="300" step="10" value="0">
+      <input type="range" class="ws b" id="s_dlpf2" aria-label="D-term LPF2 (Hz) — 0 = ปิด" min="0" max="300" step="10" value="0">
     </div>
   </div>
   <div class="scard amber">
@@ -800,12 +800,12 @@ pre#cliOut .cs{color:var(--green);font-weight:700;text-shadow:0 0 10px rgba(0,25
     <div id="rpmExt">
       <div class="frow" style="margin-top:10px">
         <div class="flabel">RPM Filter Harmonics<span class="fval a" id="v_rpmh">3</span></div>
-        <input type="range" class="ws a" id="s_rpmh" min="1" max="5" step="1" value="3">
+        <input type="range" class="ws a" id="s_rpmh" aria-label="RPM Filter Harmonics" min="1" max="5" step="1" value="3">
         <div class="fhint">3 harmonics = sweet spot · มากขึ้น = CPU load สูงขึ้น</div>
       </div>
       <div class="frow">
         <div class="flabel">RPM Filter Min Hz<span class="fval a" id="v_rpmmin">100</span></div>
-        <input type="range" class="ws a" id="s_rpmmin" min="40" max="300" step="10" value="100">
+        <input type="range" class="ws a" id="s_rpmmin" aria-label="RPM Filter Min Hz" min="40" max="300" step="10" value="100">
         <div class="fhint">ควรต่ำกว่า idle RPM harmonic เล็กน้อย · ~100 Hz สำหรับ 5" motor</div>
       </div>
     </div>
@@ -825,13 +825,13 @@ pre#cliOut .cs{color:var(--green);font-weight:700;text-shadow:0 0 10px rgba(0,25
     <div id="dynExt">
       <div class="frow" style="margin-top:10px">
         <div class="flabel">Notch Count<span class="fval" id="v_dync">2</span></div>
-        <input type="range" class="ws" id="s_dync" min="1" max="4" step="1" value="2">
+        <input type="range" class="ws" id="s_dync" aria-label="Notch Count" min="1" max="4" step="1" value="2">
         <div class="fhint">2–3 เหมาะส่วนใหญ่ · 1 ถ้ามี RPM filter · 4 ถ้ายัง buzz</div>
       </div>
       <div class="frow">
         <div class="flabel">Min Hz<span class="fval" id="v_dynmin">80</span> — Max Hz<span class="fval" id="v_dynmax" style="margin-left:4px">400</span></div>
-        <input type="range" class="ws" id="s_dynmin" min="40" max="200" step="10" value="80" style="margin-bottom:8px">
-        <input type="range" class="ws" id="s_dynmax" min="200" max="800" step="20" value="400">
+        <input type="range" class="ws" id="s_dynmin" aria-label="Dynamic notch min Hz" min="40" max="200" step="10" value="80" style="margin-bottom:8px">
+        <input type="range" class="ws" id="s_dynmax" aria-label="Dynamic notch max Hz" min="200" max="800" step="20" value="400">
       </div>
     </div>
   </div>
@@ -856,7 +856,7 @@ pre#cliOut .cs{color:var(--green);font-weight:700;text-shadow:0 0 10px rgba(0,25
     </div>
     <div class="frow">
       <div class="flabel">Throttle Boost<span class="fval" id="v_tboost">5</span></div>
-      <input type="range" class="ws" id="s_tboost" min="0" max="25" step="1" value="5">
+      <input type="range" class="ws" id="s_tboost" aria-label="Throttle Boost" min="0" max="25" step="1" value="5">
       <div class="fhint">ช่วยให้ throttle ตอบสนองเร็วขึ้นในช่วง low → high · 3–7 เหมาะส่วนใหญ่</div>
     </div>
   </div>
@@ -864,7 +864,7 @@ pre#cliOut .cs{color:var(--green);font-weight:700;text-shadow:0 0 10px rgba(0,25
     <div class="card-head a">⚡ ANTI-GRAVITY & ITERM RELAX</div>
     <div class="frow">
       <div class="flabel">Anti-Gravity Gain<span class="fval a" id="v_ag">5</span></div>
-      <input type="range" class="ws a" id="s_ag" min="1" max="20" step="1" value="5">
+      <input type="range" class="ws a" id="s_ag" aria-label="Anti-Gravity Gain" min="1" max="20" step="1" value="5">
       <div class="fhint">ป้องกัน nose dip ตอน punch throttle · 3–7 freestyle · 8–12 ถ้ายัง nose drop</div>
     </div>
     <div class="frow">
@@ -878,7 +878,7 @@ pre#cliOut .cs{color:var(--green);font-weight:700;text-shadow:0 0 10px rgba(0,25
     </div>
     <div class="frow">
       <div class="flabel">iterm_relax Cutoff<span class="fval a" id="v_irc">15</span> Hz</div>
-      <input type="range" class="ws a" id="s_irc" min="5" max="50" step="1" value="15">
+      <input type="range" class="ws a" id="s_irc" aria-label="iterm_relax Cutoff Hz" min="5" max="50" step="1" value="15">
     </div>
   </div>
   <div class="scard blue">
@@ -946,12 +946,12 @@ pre#cliOut .cs{color:var(--green);font-weight:700;text-shadow:0 0 10px rgba(0,25
     </div>
     <div class="frow">
       <div class="flabel">Failsafe Delay (×0.1s)<span class="fval r" id="v_fsd">4</span></div>
-      <input type="range" class="ws r" id="s_fsd" min="1" max="20" step="1" value="4">
+      <input type="range" class="ws r" id="s_fsd" aria-label="Failsafe Delay (×0.1s)" min="1" max="20" step="1" value="4">
       <div class="fhint">ค่า 4 = 0.4 วินาที · ต่ำเกิน → false trigger จาก interference · สูงเกิน → โดรนบินไปไกล</div>
     </div>
     <div class="frow">
       <div class="flabel">Failsafe Off Delay (×0.1s)<span class="fval r" id="v_fsod">1</span></div>
-      <input type="range" class="ws r" id="s_fsod" min="1" max="10" step="1" value="1">
+      <input type="range" class="ws r" id="s_fsod" aria-label="Failsafe Off Delay (×0.1s)" min="1" max="10" step="1" value="1">
       <div class="fhint">เวลา motor ยัง spin หลัง failsafe trigger · 1 = ปลอดภัยสุด</div>
     </div>
   </div>
@@ -969,7 +969,7 @@ pre#cliOut .cs{color:var(--green);font-weight:700;text-shadow:0 0 10px rgba(0,25
     </div>
     <div class="frow" style="margin-top:10px">
       <div class="flabel">Motor Output Limit (%)<span class="fval a" id="v_mol">100</span></div>
-      <input type="range" class="ws a" id="s_mol" min="50" max="100" step="5" value="100">
+      <input type="range" class="ws a" id="s_mol" aria-label="Motor Output Limit (%)" min="50" max="100" step="5" value="100">
       <div class="fhint">100% = full power · 80–90% สำหรับ beginner หรือ บิน indoor</div>
     </div>
   </div>
@@ -977,12 +977,12 @@ pre#cliOut .cs{color:var(--green);font-weight:700;text-shadow:0 0 10px rgba(0,25
     <div class="card-head">🔒 ARMING CONFIGURATION</div>
     <div class="frow">
       <div class="flabel">Arming Angle (°)<span class="fval" id="v_armang">25</span></div>
-      <input type="range" class="ws" id="s_armang" min="10" max="90" step="5" value="25">
+      <input type="range" class="ws" id="s_armang" aria-label="Arming Angle (°)" min="10" max="90" step="5" value="25">
       <div class="fhint">โดรนต้อง level ภายในมุมนี้ก่อน arm ได้ · 180° = arm ได้ทุกมุม (ระวัง!)</div>
     </div>
     <div class="frow">
       <div class="flabel">Min Throttle<span class="fval" id="v_minth">1000</span></div>
-      <input type="range" class="ws" id="s_minth" min="1000" max="1100" step="5" value="1000">
+      <input type="range" class="ws" id="s_minth" aria-label="Min Throttle" min="1000" max="1100" step="5" value="1000">
       <div class="fhint">1000–1030 เหมาะสำหรับส่วนใหญ่</div>
     </div>
     <div class="toggle-row" id="tw_3d" onclick="twClick(this,'mode3d','t_3d')">
