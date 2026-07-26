@@ -1,12 +1,13 @@
 {% extends "base.html" %}
 {% block title %}ConfigDoctor — FPV Drone Diagnostic Platform{% endblock %}
 {% block page_og_title %}ConfigDoctor — FPV Drone Diagnostic Platform{% endblock %}
-{% block page_og_description %}All-in-one FPV diagnostics platform for blackbox analysis, PID tuning, filter optimization, rate calculations, component checks, and flight readiness.{% endblock %}
+{% block page_og_description %}วิเคราะห์และปรับจูนโดรน FPV แบบเป็นระบบ ด้วยเครื่องมือสำหรับ Configuration, Blackbox, PID, Filter, Battery และ Performance Preview{% endblock %}
 {% block page_og_path %}/landing{% endblock %}
-{% block page_nav_page %}landing{% endblock %}
+{% block page_nav_page %}home{% endblock %}
 {% block page_css %}{% endblock %}
 {% block show_shared_chrome %}false{% endblock %}
 {% block page_viewport %}width=device-width, initial-scale=1.0, viewport-fit=cover{% endblock %}
+{% block body_attrs %} class="ld-page"{% endblock %}
 
 {% block extra_head %}
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,90 +15,97 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Sarabun:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#040807;
-    --bg2:#07100f;
-    --surface:rgba(8,16,14,.72);
-    --surface-strong:rgba(7,13,12,.88);
-    --surface-soft:rgba(11,20,18,.52);
-    --line:rgba(84,255,160,.16);
-    --line-strong:rgba(84,255,160,.26);
-    --text:#ecf7ef;
-    --muted:#a5baad;
-    --muted-2:#7f9588;
-    --green:#17f36b;
-    --green-2:#0fd55c;
-    --green-3:rgba(23,243,107,.14);
-    --cyan:#36d6ff;
-    --shadow:0 24px 90px rgba(0,0,0,.46);
-    --shadow-soft:0 12px 34px rgba(0,0,0,.28);
-    --radius-xl:30px;
-    --radius-lg:24px;
-    --radius-md:18px;
-    --radius-sm:14px;
-    --font-title:'Orbitron',system-ui,sans-serif;
-    --font-body:'Sarabun',system-ui,sans-serif;
+    --ld-bg:#040806;
+    --ld-bg-2:#07100d;
+    --ld-surface:rgba(10,17,15,.72);
+    --ld-surface-strong:rgba(8,13,12,.90);
+    --ld-surface-soft:rgba(10,18,16,.46);
+    --ld-line:rgba(84,255,160,.16);
+    --ld-line-strong:rgba(84,255,160,.24);
+    --ld-text:#eef8f0;
+    --ld-muted:#a6b8ae;
+    --ld-muted-2:#7f9488;
+    --ld-green:#17f36b;
+    --ld-green-2:#0fd55c;
+    --ld-green-dim:rgba(23,243,107,.12);
+    --ld-blue:#36d6ff;
+    --ld-amber:#f1b65a;
+    --ld-red:#ff6b6b;
+    --ld-shadow:0 28px 90px rgba(0,0,0,.46);
+    --ld-shadow-soft:0 14px 34px rgba(0,0,0,.28);
+    --ld-radius-xl:30px;
+    --ld-radius-lg:24px;
+    --ld-radius-md:18px;
+    --ld-radius-sm:14px;
+    --ld-radius-pill:999px;
+    --ld-font-title:'Orbitron',system-ui,sans-serif;
+    --ld-font-body:'Sarabun',system-ui,sans-serif;
   }
 
   html{scroll-behavior:smooth}
-  body{
+  body.ld-page{
     margin:0;
-    background:
-      radial-gradient(circle at 20% 0%, rgba(23,243,107,.08), transparent 24%),
-      radial-gradient(circle at 90% 16%, rgba(54,214,255,.07), transparent 18%),
-      linear-gradient(180deg, #030605 0%, #040807 48%, #030506 100%);
-    color:var(--text);
+    color:var(--ld-text);
+    font-family:var(--ld-font-body);
     overflow-x:hidden;
-    font-family:var(--font-body);
+    background:
+      radial-gradient(circle at 14% 2%, rgba(23,243,107,.12), transparent 22%),
+      radial-gradient(circle at 88% 16%, rgba(54,214,255,.08), transparent 18%),
+      linear-gradient(180deg, #030605 0%, #040806 42%, #020404 100%);
     -webkit-font-smoothing:antialiased;
     text-rendering:optimizeLegibility;
   }
-
-  body::before{
+  body.ld-page::before{
     content:'';
     position:fixed;
     inset:0;
     pointer-events:none;
     z-index:0;
     background:
-      linear-gradient(180deg, rgba(255,255,255,.02), transparent 8%),
+      linear-gradient(180deg, rgba(255,255,255,.018), transparent 10%),
       repeating-linear-gradient(180deg, rgba(255,255,255,.024) 0 1px, transparent 1px 4px);
-    opacity:.12;
+    opacity:.14;
     mix-blend-mode:screen;
   }
+  body.ld-page::after{
+    content:'';
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:0;
+    background:linear-gradient(180deg, rgba(0,0,0,.06), rgba(0,0,0,.18));
+  }
 
-  .landing-shell{
+  .ld-shell{
     position:relative;
     z-index:1;
-    width:min(100%, 1280px);
+    width:min(100%, 1240px);
     margin:0 auto;
     padding:
       calc(env(safe-area-inset-top, 0px) + 18px)
-      clamp(14px, 2.6vw, 28px)
-      22px;
+      clamp(16px, 3vw, 30px)
+      26px;
   }
 
-  .topbar{
+  .ld-topbar{
     position:fixed;
-    top:0;
-    left:0;
-    right:0;
+    top:0; left:0; right:0;
     z-index:30;
     padding:
       calc(env(safe-area-inset-top, 0px) + 12px)
-      clamp(14px, 2.6vw, 28px)
+      clamp(16px, 3vw, 30px)
       12px;
-    transition:background .25s ease, border-color .25s ease, box-shadow .25s ease, backdrop-filter .25s ease;
+    transition:background .22s ease, box-shadow .22s ease, border-color .22s ease, backdrop-filter .22s ease;
     pointer-events:none;
   }
-  .topbar.is-scrolled{
-    background:rgba(3,7,6,.82);
+  .ld-topbar.is-scrolled{
+    background:rgba(2,6,5,.84);
     backdrop-filter:blur(18px) saturate(1.2);
     border-bottom:1px solid rgba(255,255,255,.04);
-    box-shadow:0 10px 34px rgba(0,0,0,.28);
+    box-shadow:0 12px 34px rgba(0,0,0,.28);
   }
-
-  .topbar-inner{
-    width:min(100%, 1280px);
+  .ld-topbar__inner{
+    width:min(100%, 1240px);
     margin:0 auto;
     display:flex;
     align-items:center;
@@ -106,7 +114,7 @@
     pointer-events:auto;
   }
 
-  .brand{
+  .ld-brand{
     display:flex;
     align-items:center;
     gap:12px;
@@ -114,48 +122,41 @@
     text-decoration:none;
     color:inherit;
   }
-  .brand-mark{
-    width:48px;
-    height:48px;
+  .ld-brand__mark{
+    width:46px;
+    height:46px;
     flex:none;
-    display:block;
     object-fit:contain;
-    filter:drop-shadow(0 0 14px rgba(23,243,107,.12));
-  }
-  .brand-copy{
-    min-width:0;
-    line-height:1;
-  }
-  .brand-title{
     display:block;
-    font:900 clamp(18px, 2.1vw, 30px)/1 var(--font-title);
+    filter:drop-shadow(0 0 14px rgba(23,243,107,.14));
+  }
+  .ld-brand__copy{min-width:0; line-height:1}
+  .ld-brand__title{
+    display:block;
+    font:900 clamp(18px, 2.2vw, 30px)/1 var(--ld-font-title);
     letter-spacing:.02em;
     color:#fff;
     white-space:nowrap;
   }
-  .brand-title span{color:var(--green)}
-  .brand-sub{
+  .ld-brand__title span{color:var(--ld-green)}
+  .ld-brand__sub{
     display:block;
     margin-top:4px;
-    font:700 10px/1.1 var(--font-title);
+    font:700 10px/1.1 var(--ld-font-title);
     letter-spacing:.24em;
     text-transform:uppercase;
-    color:rgba(146,255,193,.78);
+    color:rgba(146,255,193,.82);
     white-space:nowrap;
   }
 
-  .nav-actions{
-    display:flex;
-    align-items:center;
-    gap:10px;
-  }
+  .ld-actions{display:flex; align-items:center; gap:10px}
 
-  .desktop-nav{
+  .ld-nav{
     display:none;
     gap:8px;
     align-items:center;
   }
-  .desktop-nav a{
+  .ld-nav a{
     color:rgba(255,255,255,.72);
     text-decoration:none;
     font-size:12px;
@@ -165,40 +166,37 @@
     transition:background .2s ease, border-color .2s ease, color .2s ease, transform .2s ease;
     white-space:nowrap;
   }
-  .desktop-nav a:hover{
+  .ld-nav a:hover{
     color:#fff;
     background:rgba(255,255,255,.04);
     border-color:rgba(255,255,255,.07);
     transform:translateY(-1px);
   }
 
-  .menu-toggle{
+  .ld-menu-btn{
     width:46px;
     height:46px;
     border-radius:15px;
     border:1px solid rgba(23,243,107,.22);
-    background:
-      linear-gradient(180deg, rgba(12,18,16,.96), rgba(6,10,10,.92));
-    box-shadow:
-      0 14px 34px rgba(0,0,0,.26),
-      inset 0 1px 0 rgba(255,255,255,.04);
+    background:linear-gradient(180deg, rgba(12,18,16,.96), rgba(6,10,10,.92));
+    box-shadow:0 14px 34px rgba(0,0,0,.26), inset 0 1px 0 rgba(255,255,255,.04);
     color:#fff;
     display:grid;
     place-items:center;
     cursor:pointer;
-    transition:transform .2s ease, border-color .2s ease, box-shadow .2s ease, background .2s ease;
+    transition:transform .2s ease, border-color .2s ease, box-shadow .2s ease;
     -webkit-tap-highlight-color:transparent;
   }
-  .menu-toggle:hover{
+  .ld-menu-btn:hover{
     transform:translateY(-1px);
     border-color:rgba(23,243,107,.36);
-    box-shadow:
-      0 18px 38px rgba(0,0,0,.32),
-      0 0 0 1px rgba(23,243,107,.06) inset;
+    box-shadow:0 18px 38px rgba(0,0,0,.32), 0 0 0 1px rgba(23,243,107,.06) inset;
   }
-  .menu-toggle svg{width:18px;height:18px;stroke:currentColor}
+  .ld-menu-btn svg{width:18px; height:18px; stroke:currentColor}
 
-  .mobile-drawer{
+  .btn-lg{padding:14px 22px; font-size:15px; border-radius:16px;}
+
+  .ld-drawer{
     position:fixed;
     inset:0;
     z-index:40;
@@ -215,37 +213,36 @@
     pointer-events:none;
     transition:opacity .22s ease, visibility .22s ease;
   }
-  .mobile-drawer.open{
+  .ld-drawer.open{
     opacity:1;
     visibility:visible;
     pointer-events:auto;
   }
-  .drawer-panel{
-    width:min(100%, 540px);
+  .ld-drawer__panel{
+    width:min(100%, 560px);
     border-radius:28px;
     border:1px solid rgba(23,243,107,.18);
-    background:
-      linear-gradient(180deg, rgba(9,14,13,.96), rgba(4,7,7,.92));
-    box-shadow:var(--shadow);
+    background:linear-gradient(180deg, rgba(9,14,13,.96), rgba(4,7,7,.92));
+    box-shadow:var(--ld-shadow);
     padding:18px;
     transform:translateY(10px) scale(.985);
     transition:transform .22s ease;
   }
-  .mobile-drawer.open .drawer-panel{transform:translateY(0) scale(1)}
-  .drawer-head{
+  .ld-drawer.open .ld-drawer__panel{transform:translateY(0) scale(1)}
+  .ld-drawer__head{
     display:flex;
     align-items:center;
     justify-content:space-between;
     gap:12px;
     margin-bottom:14px;
   }
-  .drawer-head strong{
-    font:800 13px/1 var(--font-title);
+  .ld-drawer__head strong{
+    font:800 13px/1 var(--ld-font-title);
     letter-spacing:.16em;
     color:rgba(233,255,240,.92);
     text-transform:uppercase;
   }
-  .drawer-close{
+  .ld-close{
     width:40px;
     height:40px;
     border:none;
@@ -256,1081 +253,953 @@
     display:grid;
     place-items:center;
   }
-  .drawer-links{
+  .ld-drawer__links{
     display:grid;
     gap:10px;
   }
-  .drawer-links a{
+  .ld-drawer__links a{
     display:flex;
     align-items:center;
     justify-content:space-between;
-    gap:16px;
+    gap:14px;
     text-decoration:none;
-    color:#fff;
-    padding:14px 14px;
+    color:inherit;
+    padding:14px 16px;
     border-radius:18px;
+    border:1px solid rgba(255,255,255,.06);
     background:rgba(255,255,255,.03);
-    border:1px solid rgba(255,255,255,.05);
     transition:transform .2s ease, border-color .2s ease, background .2s ease;
   }
-  .drawer-links a:hover{
+  .ld-drawer__links a:hover{
     transform:translateY(-1px);
     border-color:rgba(23,243,107,.22);
     background:rgba(23,243,107,.05);
   }
-  .drawer-links a span{
+  .ld-drawer__links span{display:block}
+  .ld-drawer__links small{
     display:block;
-  }
-  .drawer-links .label{
-    font-weight:800;
-  }
-  .drawer-links .meta{
-    color:var(--muted);
+    margin-top:3px;
+    color:var(--ld-muted);
     font-size:12px;
   }
 
-  .hero{
+  .ld-section{
     position:relative;
-    min-height:calc(100svh - 28px);
-    border-radius:36px;
-    overflow:hidden;
-    border:1px solid rgba(255,255,255,.05);
-    background:
-      linear-gradient(180deg, rgba(4,8,7,.58), rgba(4,8,7,.76));
-    box-shadow:var(--shadow);
-    isolation:isolate;
+    padding:clamp(26px, 5vw, 54px) 0;
   }
-
-  .hero-bg{
-    position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    object-position:center;
-    z-index:-3;
-    filter:saturate(1.05) contrast(1.06) brightness(.72);
-    transform:scale(1.01);
-  }
-  .hero-overlay{
-    position:absolute;
-    inset:0;
-    z-index:-2;
-    background:
-      radial-gradient(circle at 19% 14%, rgba(23,243,107,.24), transparent 20%),
-      radial-gradient(circle at 82% 22%, rgba(54,214,255,.17), transparent 16%),
-      linear-gradient(90deg, rgba(2,5,5,.92) 0%, rgba(2,5,5,.74) 32%, rgba(2,5,5,.28) 68%, rgba(2,5,5,.56) 100%),
-      linear-gradient(180deg, rgba(0,0,0,.16) 0%, rgba(0,0,0,.34) 46%, rgba(0,0,0,.58) 100%);
-  }
-  .hero::before{
-    content:'';
-    position:absolute;
-    inset:-20% -10% auto -10%;
-    height:35%;
-    background:radial-gradient(circle, rgba(23,243,107,.14), transparent 68%);
-    filter:blur(34px);
-    pointer-events:none;
-    z-index:-1;
-  }
-  .hero::after{
-    content:'';
-    position:absolute;
-    inset:0;
-    pointer-events:none;
-    z-index:-1;
-    background:
-      linear-gradient(180deg, rgba(255,255,255,.02), transparent 8%),
-      repeating-linear-gradient(180deg, rgba(255,255,255,.03) 0 1px, transparent 1px 5px);
-    opacity:.10;
-    mix-blend-mode:screen;
-  }
-
-  .hero-inner{
-    display:grid;
-    grid-template-columns:1fr;
-    gap:28px;
-    padding:92px 22px 18px;
-  }
-
-  .hero-copy{
-    max-width:720px;
-  }
-  .eyebrow{
+  .ld-section + .ld-section{margin-top:6px}
+  .ld-section__eyebrow{
     display:inline-flex;
     align-items:center;
     gap:8px;
     padding:7px 12px;
-    border-radius:999px;
-    border:1px solid rgba(23,243,107,.28);
-    background:rgba(8,17,14,.52);
-    color:rgba(181,255,207,.92);
-    font:800 11px/1 var(--font-title);
-    letter-spacing:.14em;
+    border-radius:var(--ld-radius-pill);
+    border:1px solid rgba(23,243,107,.18);
+    background:rgba(23,243,107,.06);
+    color:rgba(200,255,220,.92);
+    font:800 10px/1 var(--ld-font-title);
+    letter-spacing:.2em;
     text-transform:uppercase;
-    box-shadow:0 0 0 1px rgba(255,255,255,.02) inset;
   }
-  .eyebrow i{
-    width:7px;
-    height:7px;
-    border-radius:50%;
-    background:var(--green);
-    box-shadow:0 0 16px rgba(23,243,107,.75);
-    display:inline-block;
-  }
-
-  .hero-title{
-    margin:18px 0 0;
-    font:900 clamp(46px, 8vw, 84px)/.93 var(--font-title);
-    letter-spacing:-.04em;
-    text-transform:uppercase;
+  .ld-section__title{
+    margin:14px 0 0;
+    font:900 clamp(28px, 5vw, 52px)/.98 var(--ld-font-title);
+    letter-spacing:-.02em;
     color:#fff;
-    text-wrap:balance;
-    max-width:12ch;
   }
-  .hero-title .accent{
-    display:block;
-    color:var(--green);
-    text-shadow:0 0 20px rgba(23,243,107,.22);
-  }
-  .hero-desc{
-    margin:18px 0 0;
-    max-width:34ch;
-    color:rgba(231,242,235,.84);
-    font-size:clamp(16px, 2.25vw, 20px);
-    line-height:1.55;
-    text-wrap:pretty;
+  .ld-section__title span{color:var(--ld-green)}
+  .ld-section__lead{
+    margin:14px 0 0;
+    max-width:68ch;
+    color:var(--ld-muted);
+    font-size:clamp(15px, 1.4vw, 18px);
+    line-height:1.75;
   }
 
-  .hero-actions{
+  .ld-hero{
+    padding-top:calc(74px + env(safe-area-inset-top, 0px));
+  }
+  .ld-hero__grid{
+    display:grid;
+    gap:22px;
+    align-items:center;
+  }
+  .ld-hero__copy{
+    order:2;
+  }
+  .ld-hero__visual{
+    order:1;
+    position:relative;
+  }
+  .ld-hero__eyebrow{margin-bottom:14px}
+  .ld-hero__title{
+    margin:0;
+    font:900 clamp(40px, 9vw, 72px)/.94 var(--ld-font-title);
+    letter-spacing:-.04em;
+    color:#fff;
+  }
+  .ld-hero__title .green{color:var(--ld-green)}
+  .ld-hero__title .cyan{color:var(--ld-blue)}
+  .ld-hero__desc{
+    margin:18px 0 0;
+    max-width:62ch;
+    color:var(--ld-muted);
+    font-size:clamp(15px, 1.35vw, 18px);
+    line-height:1.78;
+  }
+  .ld-hero__actions{
     display:flex;
-    gap:12px;
     flex-wrap:wrap;
+    gap:12px;
     margin-top:22px;
   }
-  .btn{
+  .ld-hero__chips{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:18px;
+  }
+  .ld-chip{
     display:inline-flex;
     align-items:center;
-    justify-content:center;
-    gap:10px;
-    min-height:48px;
-    padding:0 18px;
-    border-radius:14px;
-    text-decoration:none;
-    font-weight:800;
-    letter-spacing:.05em;
-    text-transform:uppercase;
-    transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease, color .18s ease;
-    will-change:transform;
-  }
-  .btn svg{width:18px;height:18px;stroke:currentColor}
-  .btn-primary{
-    color:#04130a;
-    background:linear-gradient(180deg, #2cff78 0%, #16e766 100%);
-    border:1px solid rgba(255,255,255,.06);
-    box-shadow:
-      0 20px 40px rgba(23,243,107,.18),
-      0 0 0 1px rgba(23,243,107,.14) inset;
-  }
-  .btn-primary:hover{
-    transform:translateY(-1px);
-    box-shadow:
-      0 24px 46px rgba(23,243,107,.22),
-      0 0 24px rgba(23,243,107,.14);
-  }
-  .btn-secondary{
-    color:#fff;
-    background:rgba(255,255,255,.03);
-    border:1px solid rgba(255,255,255,.14);
-  }
-  .btn-secondary:hover{
-    transform:translateY(-1px);
-    border-color:rgba(23,243,107,.28);
-    background:rgba(23,243,107,.04);
-  }
-
-  .hero-proof{
-    display:grid;
-    grid-template-columns:repeat(4, minmax(0,1fr));
-    gap:0;
-    border-radius:22px;
-    overflow:hidden;
+    gap:6px;
+    padding:8px 12px;
+    border-radius:var(--ld-radius-pill);
     border:1px solid rgba(255,255,255,.08);
-    background:rgba(3,8,7,.36);
-    backdrop-filter:blur(14px);
-    box-shadow:var(--shadow-soft);
-    margin-top:22px;
-  }
-  .stat{
-    padding:16px 10px 15px;
-    text-align:center;
-    border-right:1px solid rgba(255,255,255,.08);
-  }
-  .stat:last-child{border-right:none}
-  .stat-icon{
-    width:22px;
-    height:22px;
-    margin:0 auto 8px;
-    color:var(--green);
-    display:block;
-  }
-  .stat-value{
-    font:900 clamp(18px, 3vw, 34px)/1 var(--font-title);
-    color:var(--green);
-    letter-spacing:-.03em;
-  }
-  .stat-label{
-    margin-top:6px;
-    color:rgba(232,242,236,.82);
-    font-size:13px;
-    line-height:1.2;
-  }
-
-  .hero-visual{
-    position:relative;
-    min-height:360px;
-  }
-  .orb{
-    position:absolute;
-    inset:auto auto 6% 10%;
-    width:54%;
-    height:54%;
-    border-radius:50%;
-    background:radial-gradient(circle, rgba(23,243,107,.18), transparent 62%);
-    filter:blur(4px);
-    opacity:.9;
-    pointer-events:none;
-  }
-  .hud-card{
-    position:absolute;
-    border-radius:18px;
-    border:1px solid rgba(97,255,168,.20);
-    background:
-      linear-gradient(180deg, rgba(6,12,11,.62), rgba(6,12,11,.30));
-    backdrop-filter:blur(14px) saturate(1.05);
-    box-shadow:0 18px 42px rgba(0,0,0,.24);
-    padding:13px 14px;
-    color:#dfffe7;
-    overflow:hidden;
-  }
-  .hud-card::after{
-    content:'';
-    position:absolute;
-    inset:0;
-    background:linear-gradient(110deg, transparent 26%, rgba(255,255,255,.10) 50%, transparent 74%);
-    opacity:.18;
-  }
-  .hud-card strong{
-    position:relative;
-    z-index:1;
-    display:block;
-    font:800 15px/1 var(--font-title);
-    letter-spacing:.04em;
-    color:var(--green);
-  }
-  .hud-card span{
-    position:relative;
-    z-index:1;
-    display:block;
-    margin-top:5px;
+    background:rgba(255,255,255,.03);
+    color:rgba(236,247,239,.88);
     font-size:12px;
-    color:rgba(222,240,230,.76);
+    font-weight:700;
+    letter-spacing:.01em;
   }
 
-  .hud-live{
-    top:18%;
-    right:10%;
-    min-width:138px;
-    transform:rotate(-1.4deg);
+  .ld-visual-card{
+    position:relative;
+    border-radius:32px;
+    overflow:hidden;
+    border:1px solid rgba(23,243,107,.16);
+    background:linear-gradient(180deg, rgba(8,12,12,.92), rgba(3,6,6,.82));
+    box-shadow:var(--ld-shadow);
+    min-height:420px;
   }
-  .hud-signal{
-    right:6%;
-    bottom:18%;
-    min-width:120px;
-    text-align:center;
-    transform:rotate(1deg);
-  }
-  .hud-signal strong{
-    font-size:24px;
-    line-height:1;
-  }
-  .hud-signal span{font-size:11px;letter-spacing:.14em;text-transform:uppercase}
-  .hud-board{
-    left:8%;
-    bottom:14%;
-    min-width:170px;
-  }
-  .hud-board .line{
+  .ld-visual-card picture,
+  .ld-visual-card img{
     display:block;
     width:100%;
-    height:2px;
-    margin:10px 0 8px;
-    background:linear-gradient(90deg, transparent, rgba(23,243,107,.92), transparent);
+    height:100%;
+    object-fit:cover;
   }
-
-  .content-section{
-    padding:22px 0 0;
+  .ld-visual-card__overlay{
+    position:absolute;
+    inset:auto 14px 14px 14px;
+    border-radius:24px;
+    border:1px solid rgba(255,255,255,.08);
+    background:rgba(6,10,10,.72);
+    backdrop-filter:blur(16px) saturate(1.1);
+    box-shadow:var(--ld-shadow-soft);
+    padding:16px;
   }
-  .section-label{
-    margin:0 auto 10px;
-    width:max-content;
-    padding:6px 12px;
-    border-radius:999px;
-    border:1px solid rgba(23,243,107,.20);
-    background:rgba(8,16,14,.44);
-    color:rgba(174,255,201,.88);
-    font:800 11px/1 var(--font-title);
-    letter-spacing:.12em;
+  .ld-visual-card__head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    color:#fff;
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:.08em;
     text-transform:uppercase;
   }
-  .section-title{
-    margin:0;
-    text-align:center;
-    font:900 clamp(26px, 4.4vw, 50px)/1.06 var(--font-title);
-    letter-spacing:-.03em;
+  .ld-score{
+    display:flex;
+    align-items:baseline;
+    gap:6px;
+    margin-top:14px;
+  }
+  .ld-score strong{
+    font:900 clamp(42px, 7vw, 62px)/1 var(--ld-font-title);
     color:#fff;
   }
-  .section-title .accent{
-    color:var(--green);
-    text-shadow:0 0 18px rgba(23,243,107,.14);
+  .ld-score span{color:var(--ld-muted); font-size:14px; font-weight:700}
+  .ld-stat-list{
+    display:grid;
+    gap:10px;
+    margin-top:14px;
   }
-  .section-subtitle{
-    margin:14px auto 0;
-    text-align:center;
-    max-width:62ch;
-    color:rgba(233,242,236,.82);
-    font-size:16px;
-    line-height:1.65;
+  .ld-stat-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:11px 12px;
+    border-radius:16px;
+    border:1px solid rgba(255,255,255,.06);
+    background:rgba(255,255,255,.03);
+    color:rgba(236,247,239,.92);
+    font-size:13px;
+    font-weight:700;
   }
 
-  .tools-grid{
+  .ld-trust{
+    padding-top:14px;
+  }
+  .ld-trust__grid{
     display:grid;
     grid-template-columns:repeat(3, minmax(0,1fr));
-    gap:12px;
-    margin-top:22px;
+    gap:10px;
   }
-  .tool-card{
-    position:relative;
-    min-height:156px;
-    border-radius:20px;
-    border:1px solid rgba(255,255,255,.08);
-    background:
-      linear-gradient(180deg, rgba(8,17,15,.72), rgba(4,8,7,.86));
-    box-shadow:0 14px 32px rgba(0,0,0,.22);
-    padding:16px 14px 14px;
-    overflow:hidden;
-    text-decoration:none;
-    color:inherit;
-    transition:transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease;
-  }
-  .tool-card::before{
-    content:'';
-    position:absolute;
-    inset:-28% -8% auto -8%;
-    height:42%;
-    background:radial-gradient(circle, rgba(23,243,107,.16), transparent 70%);
-    pointer-events:none;
-    opacity:.95;
-  }
-  .tool-card:hover{
-    transform:translateY(-2px);
-    border-color:rgba(23,243,107,.22);
-    box-shadow:0 20px 38px rgba(0,0,0,.28);
-  }
-  .tool-card .tool-icon{
-    position:relative;
-    z-index:1;
-    width:22px;
-    height:22px;
-    color:var(--green);
-    margin-bottom:14px;
-  }
-  .tool-card h3{
-    position:relative;
-    z-index:1;
-    margin:0;
-    font:800 17px/1.15 var(--font-body);
-    color:#fff;
-  }
-  .tool-card p{
-    position:relative;
-    z-index:1;
-    margin:8px 0 0;
-    color:rgba(230,240,234,.76);
-    font-size:13px;
-    line-height:1.45;
-  }
-  .tool-arrow{
-    position:absolute;
-    right:12px;
-    bottom:12px;
-    z-index:1;
-    width:28px;
-    height:28px;
-    border-radius:50%;
-    border:1px solid rgba(23,243,107,.24);
-    display:grid;
-    place-items:center;
-    color:var(--green);
-    background:rgba(23,243,107,.05);
-  }
-  .tool-arrow svg{width:14px;height:14px;stroke:currentColor}
-
-  .tools-footer-link{
-    display:flex;
-    justify-content:center;
-    margin:16px 0 0;
-  }
-  .tools-footer-link a{
-    color:rgba(23,243,107,.96);
-    text-decoration:none;
-    font-weight:800;
-    letter-spacing:.03em;
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-  }
-  .tools-footer-link svg{width:16px;height:16px;stroke:currentColor}
-
-  .community-card{
-    margin-top:24px;
-    border-radius:24px;
-    border:1px solid rgba(23,243,107,.16);
-    background:
-      linear-gradient(180deg, rgba(10,17,15,.70), rgba(5,8,8,.86));
-    box-shadow:var(--shadow-soft);
-    padding:20px 18px;
+  .ld-trust__item{
+    padding:14px 10px;
+    border-radius:22px;
+    border:1px solid rgba(255,255,255,.06);
+    background:rgba(255,255,255,.03);
     text-align:center;
   }
-  .community-card .mini-label{
-    color:rgba(23,243,107,.94);
-    font:800 11px/1 var(--font-title);
+  .ld-trust__item strong{
+    display:block;
+    font:900 clamp(18px, 3.8vw, 28px)/1 var(--ld-font-title);
+    color:#fff;
+  }
+  .ld-trust__item span{
+    display:block;
+    margin-top:6px;
+    color:var(--ld-muted);
+    font-size:11px;
     letter-spacing:.16em;
     text-transform:uppercase;
   }
-  .community-card h3{
-    margin:10px 0 0;
-    font:900 clamp(24px, 3.4vw, 34px)/1.1 var(--font-title);
-    letter-spacing:-.03em;
-  }
-  .avatars{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:8px;
-    margin-top:14px;
-    flex-wrap:wrap;
-  }
-  .avatar{
-    width:38px;
-    height:38px;
-    border-radius:50%;
-    border:2px solid rgba(255,255,255,.14);
+
+  .ld-cards{
     display:grid;
-    place-items:center;
+    gap:14px;
+    margin-top:22px;
+  }
+  .ld-card{
+    position:relative;
     overflow:hidden;
+    border-radius:28px;
+    padding:20px;
+    border:1px solid rgba(255,255,255,.07);
     background:
-      radial-gradient(circle at 35% 30%, rgba(255,255,255,.18), transparent 35%),
-      linear-gradient(180deg, rgba(23,243,107,.16), rgba(4,8,7,.72));
-    color:#fff;
-    font:800 12px/1 var(--font-title);
+      linear-gradient(180deg, rgba(10,16,14,.88), rgba(6,10,10,.90));
+    box-shadow:var(--ld-shadow-soft);
+    text-decoration:none;
+    color:inherit;
+    transition:transform .2s ease, border-color .2s ease, background .2s ease, box-shadow .2s ease;
+    min-height:190px;
+  }
+  .ld-card:hover{
+    transform:translateY(-2px);
+    border-color:rgba(23,243,107,.20);
+    box-shadow:0 20px 40px rgba(0,0,0,.34);
+  }
+  .ld-card__badge{
+    display:inline-flex;
+    align-items:center;
+    padding:7px 11px;
+    border-radius:var(--ld-radius-pill);
+    border:1px solid rgba(23,243,107,.18);
+    background:rgba(23,243,107,.06);
+    color:rgba(200,255,220,.9);
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:.12em;
     text-transform:uppercase;
   }
-  .avatar img{width:100%;height:100%;object-fit:cover}
-  .avatar.more{
-    background:transparent;
-    border-color:rgba(23,243,107,.46);
-    color:var(--green);
-    box-shadow:0 0 0 1px rgba(23,243,107,.12) inset;
+  .ld-card__title{
+    margin:14px 0 0;
+    font:900 22px/1.06 var(--ld-font-title);
+    color:#fff;
   }
-  .community-desc{
-    margin:14px auto 0;
-    max-width:52ch;
-    color:rgba(231,240,235,.82);
-    line-height:1.6;
+  .ld-card__desc{
+    margin:10px 0 0;
+    color:var(--ld-muted);
+    line-height:1.7;
+    font-size:14px;
   }
-  .community-actions{
-    margin-top:16px;
+  .ld-card__tags{
     display:flex;
-    justify-content:center;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:14px;
   }
-
-  .trust-grid{
-    margin-top:18px;
-    border-radius:22px;
-    border:1px solid rgba(255,255,255,.08);
-    background:rgba(4,8,7,.40);
-    display:grid;
-    grid-template-columns:repeat(4, minmax(0,1fr));
-    overflow:hidden;
+  .ld-tag{
+    display:inline-flex;
+    align-items:center;
+    padding:7px 10px;
+    border-radius:var(--ld-radius-pill);
+    border:1px solid rgba(255,255,255,.07);
+    background:rgba(255,255,255,.03);
+    color:rgba(236,247,239,.88);
+    font-size:12px;
+    font-weight:700;
   }
-  .trust-item{
-    padding:16px 10px 15px;
-    text-align:left;
-    border-right:1px solid rgba(255,255,255,.08);
-  }
-  .trust-item:last-child{border-right:none}
-  .trust-top{
+  .ld-card__foot{
     display:flex;
     align-items:center;
+    justify-content:space-between;
     gap:10px;
+    margin-top:18px;
+    color:rgba(199,255,221,.9);
+    font-weight:800;
+  }
+
+  .ld-tool-sections{margin-top:22px}
+  .ld-tabs{
+    display:flex;
+    gap:8px;
+    overflow:auto;
+    padding-bottom:4px;
+    scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;
+  }
+  .ld-tabs::-webkit-scrollbar{display:none}
+  .ld-tab{
+    flex:none;
+    border:1px solid rgba(255,255,255,.08);
+    background:rgba(255,255,255,.03);
+    color:rgba(236,247,239,.86);
+    border-radius:999px;
+    padding:10px 14px;
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    cursor:pointer;
+    transition:background .2s ease, border-color .2s ease, color .2s ease, transform .2s ease;
+  }
+  .ld-tab[aria-selected="true"]{
+    background:rgba(23,243,107,.10);
+    border-color:rgba(23,243,107,.30);
+    color:#dfffe9;
+  }
+  .ld-tab:focus-visible,
+  .ld-menu-btn:focus-visible,
+  .ld-close:focus-visible,
+  .btn:focus-visible,
+  .card:focus-visible,
+  .ld-card:focus-visible{
+    outline:2px solid var(--ld-green);
+    outline-offset:3px;
+  }
+
+  .ld-panel{display:none}
+  .ld-panel.is-active{display:block}
+  .ld-grid{
+    display:grid;
+    gap:12px;
+    margin-top:16px;
+  }
+  .ld-tool-card{
+    padding:18px;
+    border-radius:22px;
+    border:1px solid rgba(255,255,255,.07);
+    background:rgba(255,255,255,.03);
+    text-decoration:none;
+    color:inherit;
+    transition:transform .2s ease, border-color .2s ease, background .2s ease;
+    min-height:128px;
+  }
+  .ld-tool-card:hover{
+    transform:translateY(-1px);
+    border-color:rgba(23,243,107,.18);
+    background:rgba(23,243,107,.05);
+  }
+  .ld-tool-card strong{
+    display:block;
+    font:900 18px/1.08 var(--ld-font-title);
     color:#fff;
+  }
+  .ld-tool-card p{
+    margin:10px 0 0;
+    color:var(--ld-muted);
+    line-height:1.65;
+    font-size:13px;
+  }
+  .ld-tool-card .ld-tag{margin-top:12px}
+
+  .ld-split{
+    display:grid;
+    gap:14px;
+    margin-top:22px;
+  }
+  .ld-result{
+    padding:20px;
+    border-radius:28px;
+    border:1px solid rgba(255,255,255,.07);
+    background:linear-gradient(180deg, rgba(10,16,14,.88), rgba(5,9,9,.92));
+    box-shadow:var(--ld-shadow-soft);
+  }
+  .ld-result__head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+  }
+  .ld-result__title{
+    font:900 18px/1 var(--ld-font-title);
+    color:#fff;
+  }
+  .ld-result__score{
+    display:flex;
+    align-items:baseline;
+    gap:6px;
+    margin-top:14px;
+  }
+  .ld-result__score strong{
+    font:900 clamp(44px, 8vw, 70px)/1 var(--ld-font-title);
+    color:#fff;
+  }
+  .ld-result__score span{color:var(--ld-muted); font-weight:700}
+  .ld-result__list{display:grid; gap:10px; margin-top:14px}
+  .ld-result__item{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:12px 13px;
+    border-radius:18px;
+    border:1px solid rgba(255,255,255,.07);
+    background:rgba(255,255,255,.03);
+    color:rgba(236,247,239,.92);
+    font-size:13px;
+    font-weight:700;
+  }
+
+  .ld-steps{
+    display:grid;
+    gap:12px;
+    margin-top:22px;
+  }
+  .ld-step{
+    padding:18px;
+    border-radius:24px;
+    border:1px solid rgba(255,255,255,.07);
+    background:rgba(255,255,255,.03);
+  }
+  .ld-step__num{
+    font:900 11px/1 var(--ld-font-title);
+    letter-spacing:.18em;
+    color:rgba(146,255,193,.88);
+    text-transform:uppercase;
+  }
+  .ld-step__title{
+    margin:10px 0 0;
+    font:900 20px/1.05 var(--ld-font-title);
+    color:#fff;
+  }
+  .ld-step__desc{
+    margin:10px 0 0;
+    color:var(--ld-muted);
+    line-height:1.7;
+  }
+
+  .ld-community-grid{
+    display:grid;
+    gap:14px;
+    margin-top:22px;
+  }
+  .ld-stat-card{
+    padding:20px;
+    border-radius:26px;
+    border:1px solid rgba(255,255,255,.07);
+    background:rgba(255,255,255,.03);
+  }
+  .ld-stat-card strong{
+    display:block;
+    font:900 clamp(34px, 7vw, 54px)/1 var(--ld-font-title);
+    color:#fff;
+  }
+  .ld-stat-card span{
+    display:block;
+    margin-top:8px;
+    color:var(--ld-muted);
+    line-height:1.7;
+  }
+
+  .ld-gear-grid{
+    display:grid;
+    gap:12px;
+    margin-top:18px;
+    grid-template-columns:repeat(2, minmax(0,1fr));
+  }
+  .ld-gear-pill{
+    padding:12px 10px;
+    border-radius:18px;
+    border:1px solid rgba(255,255,255,.07);
+    background:rgba(255,255,255,.03);
+    text-align:center;
+    color:rgba(236,247,239,.9);
     font-weight:800;
     font-size:13px;
   }
-  .trust-top svg{
-    width:18px;
-    height:18px;
-    color:var(--green);
-    flex:none;
-  }
-  .trust-item p{
-    margin:6px 0 0;
-    color:rgba(226,237,231,.72);
-    font-size:12px;
-    line-height:1.35;
-  }
 
-  .section-stack{
-    padding:22px 0 0;
+  .ld-support__grid{
+    display:grid;
+    gap:16px;
+    margin-top:22px;
   }
-
-  .footer-space{
-    height:18px;
-  }
-
-  .sr-only{
-    position:absolute;
-    width:1px;
-    height:1px;
-    padding:0;
-    margin:-1px;
+  .ld-qr{
+    border-radius:28px;
     overflow:hidden;
-    clip:rect(0,0,0,0);
-    white-space:nowrap;
-    border:0;
+    border:1px solid rgba(255,255,255,.07);
+    background:rgba(255,255,255,.03);
+    padding:16px;
+  }
+  .ld-qr img{
+    display:block;
+    width:100%;
+    max-width:240px;
+    margin:0 auto;
+    border-radius:20px;
+  }
+  .ld-support-card{
+    padding:20px;
+    border-radius:28px;
+    border:1px solid rgba(255,255,255,.07);
+    background:linear-gradient(180deg, rgba(10,16,14,.88), rgba(5,9,9,.92));
+  }
+  .ld-support-card p{color:var(--ld-muted); line-height:1.75}
+
+  .ld-footer{
+    padding:34px 0 10px;
+    color:var(--ld-muted-2);
+  }
+  .ld-footer__grid{
+    display:grid;
+    gap:18px;
+    border-top:1px solid rgba(255,255,255,.06);
+    padding-top:18px;
+  }
+  .ld-footer__brand{
+    font:900 18px/1 var(--ld-font-title);
+    color:#fff;
+  }
+  .ld-footer__brand span{color:var(--ld-green)}
+  .ld-footer__links{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px 12px;
+  }
+  .ld-footer__links a{
+    color:rgba(236,247,239,.76);
+    text-decoration:none;
+    font-weight:700;
+    font-size:13px;
+  }
+  .ld-footer__links a:hover{color:#fff}
+
+  .ld-hidden{display:none !important}
+
+  @media (min-width: 700px){
+    .ld-hero__grid{grid-template-columns:1.06fr .94fr; gap:26px}
+    .ld-hero__copy{order:1}
+    .ld-hero__visual{order:2}
+    .ld-cards{grid-template-columns:repeat(3, minmax(0,1fr))}
+    .ld-grid{grid-template-columns:repeat(2, minmax(0,1fr))}
+    .ld-split{grid-template-columns:1.06fr .94fr}
+    .ld-community-grid{grid-template-columns:repeat(3, minmax(0,1fr))}
+    .ld-support__grid{grid-template-columns:1fr 1.05fr; align-items:center}
+    .ld-footer__grid{grid-template-columns:1fr auto; align-items:center}
+    .ld-gear-grid{grid-template-columns:repeat(4, minmax(0,1fr))}
   }
 
-  .motion-line{
-    position:absolute;
-    inset:0 auto 0 0;
-    width:2px;
-    background:linear-gradient(180deg, transparent, rgba(23,243,107,.65), transparent);
-    filter:blur(1px);
-    opacity:.35;
-    pointer-events:none;
+  @media (min-width: 960px){
+    .ld-nav{display:flex}
+    .ld-menu-btn{display:none}
+    .ld-trust__grid{grid-template-columns:repeat(4, minmax(0,1fr))}
+    .ld-grid{grid-template-columns:repeat(3, minmax(0,1fr))}
+    .ld-steps{grid-template-columns:repeat(3, minmax(0,1fr))}
+    .ld-tool-card{min-height:140px}
   }
 
-  @media (min-width: 860px){
-    .desktop-nav{display:flex}
-    .hero-inner{
-      grid-template-columns:minmax(0, 1.02fr) minmax(320px, .98fr);
-      align-items:center;
-      gap:16px;
-      padding:118px 40px 34px;
-      min-height:inherit;
-    }
-    .hero-copy{max-width:680px}
-    .hero-title{max-width:13ch}
-    .hero-desc{max-width:38ch}
-    .hero-visual{min-height:520px}
-    .hud-live{top:14%; right:6%}
-    .hud-signal{right:6%; bottom:16%}
-    .hud-board{left:11%; bottom:12%}
-    .tools-grid{gap:14px}
-    .tool-card{min-height:178px; padding:18px 16px 16px}
-    .tool-card h3{font-size:18px}
-    .community-card{padding:24px 22px}
-    .section-stack{padding-top:28px}
+  @media (max-width: 959.98px){
+    .ld-nav{display:none}
   }
 
-  @media (max-width: 859.98px){
-    .hero{border-radius:30px}
-    .hero-inner{padding:94px 16px 16px}
-    .hero-proof, .trust-grid{
-      grid-template-columns:repeat(4, minmax(0,1fr));
-    }
-    .tools-grid{
-      grid-template-columns:repeat(3, minmax(0,1fr));
-      gap:10px;
-    }
-    .tool-card{
-      min-height:152px;
-      padding:14px 12px 12px;
-      border-radius:18px;
-    }
-    .tool-card h3{font-size:15px}
-    .tool-card p{font-size:12px}
-    .community-card{padding:18px 16px}
-    .community-card h3{font-size:26px}
-  }
-
-  @media (max-width: 540px){
-    .landing-shell{padding-left:14px;padding-right:14px}
-    .topbar{padding-left:14px;padding-right:14px}
-    .brand-mark{width:44px;height:44px}
-    .brand-title{font-size:18px}
-    .brand-sub{font-size:9px;letter-spacing:.18em}
-    .hero{border-radius:28px}
-    .hero-inner{padding:86px 14px 14px}
-    .hero-title{
-      font-size:clamp(42px, 13.4vw, 56px);
-      max-width:11ch;
-    }
-    .hero-desc{font-size:15px;max-width:28ch}
-    .hero-actions{gap:10px}
-    .btn{
-      min-height:46px;
-      padding:0 15px;
-      font-size:12px;
-      border-radius:13px;
-    }
-    .hero-proof{
-      border-radius:20px;
-      margin-top:18px;
-    }
-    .stat{
-      padding:13px 6px 12px;
-    }
-    .stat-value{font-size:18px}
-    .stat-label{font-size:10px}
-    .hero-visual{min-height:330px}
-    .hud-card{
-      padding:11px 12px;
-      border-radius:16px;
-    }
-    .hud-live{top:16%; right:6%; min-width:124px}
-    .hud-board{left:6%; bottom:15%; min-width:154px}
-    .hud-signal{right:5%; bottom:18%; min-width:106px}
-    .section-label{font-size:10px}
-    .section-title{font-size:clamp(24px, 7vw, 34px)}
-    .section-subtitle{font-size:14px; margin-top:10px}
-    .content-section{padding-top:18px}
-    .tools-grid{
-      grid-template-columns:repeat(3, minmax(0,1fr));
-      gap:8px;
-      margin-top:18px;
-    }
-    .tool-card{
-      min-height:130px;
-      padding:12px 10px 10px;
-      border-radius:16px;
-    }
-    .tool-card .tool-icon{width:20px;height:20px;margin-bottom:10px}
-    .tool-card h3{font-size:13px;line-height:1.1}
-    .tool-card p{font-size:10px;line-height:1.35;margin-top:6px}
-    .tool-arrow{
-      width:24px;height:24px;right:9px;bottom:9px;
-    }
-    .tools-footer-link{margin-top:12px}
-    .tools-footer-link a{font-size:13px}
-    .community-card{border-radius:22px}
-    .community-card .mini-label{font-size:10px}
-    .community-card h3{font-size:22px}
-    .avatars{gap:7px}
-    .avatar{width:34px;height:34px;font-size:11px}
-    .community-desc{font-size:13px}
-    .trust-grid{
-      margin-top:14px;
-      border-radius:20px;
-    }
-    .trust-item{
-      padding:13px 8px 12px;
-    }
-    .trust-top{font-size:11px;gap:7px}
-    .trust-item p{font-size:10px}
-  }
-
-  @media (max-width: 380px){
-    .hero-title{font-size:38px;max-width:10ch}
-    .hero-desc{max-width:26ch}
-    .tools-grid{gap:7px}
-    .tool-card{min-height:124px;padding:11px 9px 9px}
-    .tool-card h3{font-size:12px}
-    .tool-card p{font-size:9px}
-    .trust-item{padding:11px 7px 10px}
+  @media (max-width: 699.98px){
+    .ld-topbar__inner{gap:10px}
+    .ld-brand__mark{width:40px;height:40px}
+    .ld-brand__sub{font-size:9px;letter-spacing:.18em}
+    .ld-visual-card{min-height:360px; border-radius:28px}
+    .ld-visual-card__overlay{inset:auto 10px 10px 10px}
+    .ld-section__title{font-size:clamp(28px, 8vw, 42px)}
+    .ld-card{min-height:auto}
+    .ld-grid{grid-template-columns:1fr}
+    .ld-community-grid{grid-template-columns:1fr}
+    .ld-support__grid{grid-template-columns:1fr}
   }
 
   @media (prefers-reduced-motion: reduce){
-    html{scroll-behavior:auto}
-    *, *::before, *::after{
-      animation-duration:.01ms !important;
-      animation-iteration-count:1 !important;
-      transition-duration:.01ms !important;
-      scroll-behavior:auto !important;
-    }
+    *,*::before,*::after{animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; scroll-behavior:auto !important}
   }
 </style>
 {% endblock %}
 
-{% block body_attrs %} class="landing-page"{% endblock %}
-
 {% block content %}
-<div class="topbar" id="topbar">
-  <div class="topbar-inner">
-    <a class="brand" href="/landing" aria-label="ConfigDoctor home">
-      <img
-        class="brand-mark"
-        src="{{ url_for('static', filename='img/configdoctor-landing-logo.png') }}"
-        alt="ConfigDoctor"
-        width="749"
-        height="160"
-      >
-      <span class="brand-copy">
-        <span class="brand-title">Config<span>Doctor</span></span>
-        <span class="brand-sub">FPV Drone Diagnostic Platform</span>
-      </span>
-    </a>
+<main id="top" class="ld-shell">
+  <header class="ld-topbar" data-topbar>
+    <div class="ld-topbar__inner">
+      <a class="ld-brand" href="{{ url_for('tools_static.landing') }}" aria-label="ConfigDoctor Home">
+        <img class="ld-brand__mark" src="{{ url_for('static', filename='img/configdoctor-landing-logo.png') }}" alt="ConfigDoctor logo">
+        <span class="ld-brand__copy">
+          <span class="ld-brand__title">Config<span>Doctor</span></span>
+          <span class="ld-brand__sub">FPV Diagnostic Platform</span>
+        </span>
+      </a>
 
-    <div class="nav-actions">
-      <nav class="desktop-nav" aria-label="Primary">
+      <nav class="ld-nav" aria-label="Primary navigation">
+        <a href="#quick-start">Start</a>
+        <a href="#featured">Featured</a>
         <a href="#tools">Tools</a>
-        <a href="/fpv">FPV Hub</a>
-        <a href="/about">About</a>
-        <a href="/team">Community</a>
+        <a href="#support">Support</a>
+        <a href="{{ url_for('content_pages.about') }}">About</a>
       </nav>
-      <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mobileDrawer" aria-label="Open menu">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round">
-          <path d="M4 7h16M4 12h16M4 17h16"></path>
-        </svg>
-      </button>
+
+      <div class="ld-actions">
+        <a class="btn btn-primary" href="{{ url_for('tools_analysis.index') }}">Start Analysis</a>
+        <button class="ld-menu-btn" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-drawer" data-menu-btn>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round">
+            <path d="M4 7h16M4 12h16M4 17h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="ld-drawer" id="mobile-drawer" aria-hidden="true" data-drawer>
+    <div class="ld-drawer__panel" role="dialog" aria-modal="true" aria-label="Navigation">
+      <div class="ld-drawer__head">
+        <strong>Menu</strong>
+        <button class="ld-close" type="button" aria-label="Close navigation" data-close-btn>✕</button>
+      </div>
+      <div class="ld-drawer__links">
+        <a href="#quick-start"><span>Quick Start</span><small>เริ่มจากสิ่งที่คุณต้องการทำ</small></a>
+        <a href="#featured"><span>Featured Tool</span><small>จุดเริ่มต้นที่แนะนำ</small></a>
+        <a href="#tools"><span>Tools Explorer</span><small>เลือกหมวดเครื่องมือ</small></a>
+        <a href="#community"><span>Community</span><small>โปรเจกต์และสถิติ</small></a>
+        <a href="#support"><span>Support</span><small>ช่วยให้โปรเจกต์พัฒนาต่อ</small></a>
+        <a href="{{ url_for('tools_analysis.index') }}"><span>Start Analysis</span><small>ไปยังหน้าเครื่องมือหลัก</small></a>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
-  <div class="drawer-panel" role="dialog" aria-modal="true" aria-label="Site menu">
-    <div class="drawer-head">
-      <strong>Quick access</strong>
-      <button class="drawer-close" id="drawerClose" aria-label="Close menu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round">
-          <path d="M6 6l12 12M18 6L6 18"></path>
-        </svg>
-      </button>
-    </div>
-    <div class="drawer-links">
-      <a href="/app"><span><span class="label">Launch App</span><span class="meta">Open the analysis workspace</span></span><span>↗</span></a>
-      <a href="#tools"><span><span class="label">Explore Tools</span><span class="meta">Browse the full toolkit</span></span><span>↗</span></a>
-      <a href="/fpv"><span><span class="label">FPV Hub</span><span class="meta">Guides, builds, and workflows</span></span><span>↗</span></a>
-      <a href="/team"><span><span class="label">Community</span><span class="meta">Share setups and learn together</span></span><span>↗</span></a>
-    </div>
-  </div>
-</div>
+  <section class="ld-section ld-hero" aria-labelledby="hero-title">
+    <div class="ld-hero__grid">
+      <div class="ld-hero__copy">
+        <span class="ld-section__eyebrow ld-hero__eyebrow">FPV Drone Diagnostic Platform</span>
+        <h1 id="hero-title" class="ld-hero__title">วิเคราะห์ให้ชัด <span class="green">ปรับให้ตรง</span> <span class="cyan">บินได้มั่นใจขึ้น</span></h1>
+        <p class="ld-hero__desc">ConfigDoctor ช่วยวิเคราะห์ข้อมูลสำคัญของโดรน FPV ตั้งแต่ Configuration, Blackbox, PID และ Filter ไปจนถึง Motor, ESC และ Battery เพื่อเปลี่ยนข้อมูลที่ซับซ้อนให้กลายเป็นแนวทางที่เข้าใจง่ายและนำไปใช้ได้จริง</p>
 
-<main class="landing-shell">
-  <section class="hero" aria-labelledby="hero-title">
-    <img
-      class="hero-bg"
-      src="{{ url_for('static', filename='img/landing-bg-mobile.jpg') }}"
-      srcset="
-        {{ url_for('static', filename='img/landing-bg-mobile.jpg') }} 720w,
-        {{ url_for('static', filename='img/landing-bg-desktop.jpg') }} 1600w
-      "
-      sizes="(max-width: 859px) 100vw, 1280px"
-      alt=""
-      aria-hidden="true"
-      fetchpriority="high"
-    >
-    <div class="hero-overlay"></div>
-    <div class="motion-line" aria-hidden="true"></div>
-
-    <div class="hero-inner">
-      <div class="hero-copy">
-        <span class="eyebrow"><i></i> #1 FPV Tuning &amp; Analysis Suite</span>
-        <h1 class="hero-title" id="hero-title">
-          Tune Smarter.
-          <span class="accent">Fly Faster.</span>
-        </h1>
-        <p class="hero-desc">
-          The all-in-one platform for FPV pilots. Analyze Blackbox logs, tune PID &amp; filters, calculate rates, check components, and improve every flight.
-        </p>
-
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="/app">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M5 19l14-14"></path>
-              <path d="M9 5h10v10"></path>
-            </svg>
-            Launch App
-          </a>
-          <a class="btn btn-secondary" href="#tools">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M12 4v16"></path>
-              <path d="M4 12h16"></path>
-            </svg>
-            Explore Tools
-          </a>
+        <div class="ld-hero__actions">
+          <a class="btn btn-primary btn-lg" href="{{ url_for('tools_analysis.index') }}">เริ่มวิเคราะห์โดรน <span aria-hidden="true">→</span></a>
+          <a class="btn btn-secondary" href="#tools">ดูเครื่องมือทั้งหมด</a>
         </div>
 
-        <div class="hero-proof" aria-label="Platform stats">
-          <div class="stat">
-            <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M17 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
-              <circle cx="9" cy="7" r="4"></circle>
-              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-            </svg>
-            <div class="stat-value">10K+</div>
-            <div class="stat-label">Active Pilots</div>
-          </div>
-          <div class="stat">
-            <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M3 3v18h18"></path>
-              <path d="M7 14l3-3 4 4 7-8"></path>
-            </svg>
-            <div class="stat-value">50K+</div>
-            <div class="stat-label">Logs Analyzed</div>
-          </div>
-          <div class="stat">
-            <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M10 13a5 5 0 1 0 0-5"></path>
-              <path d="M21 12h-6"></path>
-              <path d="M3 12h2"></path>
-              <path d="M11 21v-2"></path>
-              <path d="M11 5V3"></path>
-            </svg>
-            <div class="stat-value">12+</div>
-            <div class="stat-label">Powerful Tools</div>
-          </div>
-          <div class="stat">
-            <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M20 6 9 17l-5-5"></path>
-              <path d="M12 12h8"></path>
-            </svg>
-            <div class="stat-value">100%</div>
-            <div class="stat-label">Free to Use</div>
-          </div>
+        <div class="ld-hero__chips" aria-label="Key highlights">
+          <span class="ld-chip">Analysis first</span>
+          <span class="ld-chip">Mobile friendly</span>
+          <span class="ld-chip">FPV focused</span>
+          <span class="ld-chip">Free to use</span>
         </div>
       </div>
 
-      <div class="hero-visual" aria-hidden="true">
-        <div class="orb"></div>
-        <div class="hud-card hud-live">
-          <strong>LIVE ANALYSIS</strong>
-          <span>Blackbox • PID • Filter</span>
-        </div>
-        <div class="hud-card hud-board">
-          <strong>142 ms</strong>
-          <span>Response drift / latency snapshot</span>
-          <span class="line"></span>
-          <span>Confidence scoring enabled</span>
-        </div>
-        <div class="hud-card hud-signal">
-          <strong>98%</strong>
-          <span>Signal</span>
+      <div class="ld-hero__visual">
+        <div class="ld-visual-card" aria-label="Drone health overview preview">
+          <picture>
+            <source media="(max-width: 767px)" srcset="{{ url_for('static', filename='img/landing-bg-mobile.jpg') }}">
+            <img src="{{ url_for('static', filename='img/landing-bg-desktop.jpg') }}" alt="ConfigDoctor landing visual preview">
+          </picture>
+          <div class="ld-visual-card__overlay">
+            <div class="ld-visual-card__head">
+              <span>Drone Health Overview</span>
+              <span class="badge badge-success">Analysis Ready</span>
+            </div>
+            <div class="ld-score"><strong>82</strong><span>/ 100</span></div>
+            <div class="ld-stat-list">
+              <div class="ld-stat-row"><span>PID Configuration</span><span class="badge badge-success">Good</span></div>
+              <div class="ld-stat-row"><span>Filter Setup</span><span class="badge badge-warning">Check</span></div>
+              <div class="ld-stat-row"><span>Motor Performance</span><span class="badge badge-success">Good</span></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="section-stack" id="tools">
-    <div class="content-section">
-      <div class="section-label">All-in-one toolkit</div>
-      <h2 class="section-title">Everything You Need<br><span class="accent">in One Place</span></h2>
-      <p class="section-subtitle">
-        A clean, focused workspace for FPV pilots who want fast diagnostics, reliable recommendations, and a smoother path from setup to flight.
-      </p>
-
-      <div class="tools-grid">
-        <a class="tool-card" href="/blackbox">
-          <svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M2 12h4l3-8 4 16 3-8h6"></path>
-          </svg>
-          <h3>Blackbox Analyzer</h3>
-          <p>Deep log analysis with advanced visualization.</p>
-          <span class="tool-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg></span>
-        </a>
-
-        <a class="tool-card" href="/pid-advisor">
-          <svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M4 6h16"></path>
-            <path d="M4 12h10"></path>
-            <path d="M4 18h13"></path>
-            <circle cx="17" cy="12" r="2"></circle>
-          </svg>
-          <h3>PID Tuning</h3>
-          <p>Smart tuning guidance based on your setup.</p>
-          <span class="tool-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg></span>
-        </a>
-
-        <a class="tool-card" href="/rates-visualizer">
-          <svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M4 19V5"></path>
-            <path d="M4 19h16"></path>
-            <path d="M8 15l3-4 3 2 4-7"></path>
-          </svg>
-          <h3>Rates Calculator</h3>
-          <p>Calculate and preview the feel of your rates.</p>
-          <span class="tool-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg></span>
-        </a>
-
-        <a class="tool-card" href="/bf-wizard">
-          <svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M4 7h16"></path>
-            <path d="M7 12h10"></path>
-            <path d="M10 17h4"></path>
-            <path d="M12 3v18"></path>
-          </svg>
-          <h3>Filter Optimizer</h3>
-          <p>Find optimal filter settings for your build.</p>
-          <span class="tool-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg></span>
-        </a>
-
-        <a class="tool-card" href="/vtx">
-          <svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M5 12a7 7 0 0 1 14 0"></path>
-            <path d="M8.5 12a3.5 3.5 0 0 1 7 0"></path>
-            <circle cx="12" cy="12" r="1"></circle>
-          </svg>
-          <h3>VTX Calculator</h3>
-          <p>Find the best VTX settings for your needs.</p>
-          <span class="tool-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg></span>
-        </a>
-
-        <a class="tool-card" href="/motor-prop">
-          <svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M12 3v18"></path>
-            <path d="M3 12h18"></path>
-            <path d="M7 7l10 10"></path>
-            <path d="M17 7 7 17"></path>
-          </svg>
-          <h3>Component Check</h3>
-          <p>Check compatibility and match the best parts.</p>
-          <span class="tool-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg></span>
-        </a>
-      </div>
-
-      <div class="tools-footer-link">
-        <a href="/app">
-          View All Tools
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path>
-          </svg>
-        </a>
-      </div>
+  <section class="ld-section ld-trust" aria-label="Platform highlights">
+    <div class="ld-trust__grid">
+      <div class="ld-trust__item"><strong>22+</strong><span>Tools</span></div>
+      <div class="ld-trust__item"><strong>FPV</strong><span>Focused</span></div>
+      <div class="ld-trust__item"><strong>FREE</strong><span>To use</span></div>
+      <div class="ld-trust__item"><strong>MOBILE</strong><span>First</span></div>
     </div>
-
-    <div class="community-card">
-      <div class="mini-label">Built by pilots, for pilots</div>
-      <h3>Join Our Growing Community</h3>
-      <div class="avatars" aria-hidden="true">
-        <div class="avatar"><img src="{{ url_for('static', filename='img/santipap-profile.webp') }}" alt=""></div>
-        <div class="avatar">fpv</div>
-        <div class="avatar">pid</div>
-        <div class="avatar">log</div>
-        <div class="avatar">vtx</div>
-        <div class="avatar more">+999</div>
-      </div>
-      <p class="community-desc">
-        Share setups, ask questions, and learn from other FPV pilots to build a better flight experience together.
-      </p>
-      <div class="community-actions">
-        <a class="btn btn-secondary" href="/team">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M17 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
-            <circle cx="9" cy="7" r="4"></circle>
-            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-          </svg>
-          Join Community
-        </a>
-      </div>
-    </div>
-
-    <div class="trust-grid" aria-label="Trust and privacy highlights">
-      <div class="trust-item">
-        <div class="trust-top">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M12 2 3 7v5c0 5 3.8 9.7 9 10 5.2-.3 9-5 9-10V7l-9-5z"></path>
-          </svg>
-          Always Free
-        </div>
-        <p>100% free forever</p>
-      </div>
-      <div class="trust-item">
-        <div class="trust-top">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-            <path d="M9.5 12.5 11 14l3.5-4"></path>
-          </svg>
-          Privacy First
-        </div>
-        <p>Your data stays on your device</p>
-      </div>
-      <div class="trust-item">
-        <div class="trust-top">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M7 7h10v10H7z"></path>
-            <path d="M4 12h3"></path>
-            <path d="M17 12h3"></path>
-            <path d="M12 4v3"></path>
-            <path d="M12 17v3"></path>
-          </svg>
-          Open Source
-        </div>
-        <p>Transparent and community driven</p>
-      </div>
-      <div class="trust-item">
-        <div class="trust-top">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M4 20h16"></path>
-            <path d="M7 17v-3"></path>
-            <path d="M12 17v-6"></path>
-            <path d="M17 17V8"></path>
-          </svg>
-          No Registration
-        </div>
-        <p>Start using immediately</p>
-      </div>
-    </div>
-
-    <div class="footer-space"></div>
   </section>
+
+  <section class="ld-section" id="quick-start" aria-labelledby="quick-start-title">
+    <span class="ld-section__eyebrow">Quick Start</span>
+    <h2 id="quick-start-title" class="ld-section__title">คุณกำลังทำอะไรกับ <span>โดรนของคุณ?</span></h2>
+    <p class="ld-section__lead">เลือกจุดเริ่มต้นที่ตรงกับสิ่งที่คุณต้องการทำ จากนั้นค่อยลงไปยังเครื่องมือที่เหมาะสมที่สุด</p>
+
+    <div class="ld-cards">
+      <a class="ld-card" href="{{ url_for('tools_analysis.index') }}" aria-label="Analyze drone configuration">
+        <span class="ld-card__badge">Analyze</span>
+        <h3 class="ld-card__title">ตรวจสอบโดรน</h3>
+        <p class="ld-card__desc">หาจุดผิดปกติและสิ่งที่ควรให้ความสนใจจาก Configuration, Blackbox และ PID</p>
+        <div class="ld-card__tags"><span class="ld-tag">Configuration</span><span class="ld-tag">Blackbox</span><span class="ld-tag">PID</span></div>
+        <div class="ld-card__foot"><span>Start here</span><span aria-hidden="true">→</span></div>
+      </a>
+
+      <a class="ld-card" href="{{ url_for('tools_advisor.quick_tune') }}" aria-label="Optimize flight tune">
+        <span class="ld-card__badge">Optimize</span>
+        <h3 class="ld-card__title">ปรับจูนให้เหมาะกับลำ</h3>
+        <p class="ld-card__desc">ต่อยอดจากค่าปัจจุบันด้วยคำแนะนำด้าน PID, Filter, Motor และ Battery</p>
+        <div class="ld-card__tags"><span class="ld-tag">PID</span><span class="ld-tag">Filter</span><span class="ld-tag">Motor</span></div>
+        <div class="ld-card__foot"><span>Improve</span><span aria-hidden="true">→</span></div>
+      </a>
+
+      <a class="ld-card" href="{{ url_for('tools_static.bf_wizard') }}" aria-label="Build and explore tools">
+        <span class="ld-card__badge">Build</span>
+        <h3 class="ld-card__title">สร้าง ตรวจสอบ และจัดการข้อมูล</h3>
+        <p class="ld-card__desc">ใช้ BF Wizard, Build Card และ Tuning Log เพื่อจัดระบบข้อมูลของโดรน</p>
+        <div class="ld-card__tags"><span class="ld-tag">BF Wizard</span><span class="ld-tag">Build Card</span><span class="ld-tag">Tuning Log</span></div>
+        <div class="ld-card__foot"><span>Explore</span><span aria-hidden="true">→</span></div>
+      </a>
+    </div>
+  </section>
+
+  <section class="ld-section" id="featured" aria-labelledby="featured-title">
+    <span class="ld-section__eyebrow">Recommended Start</span>
+    <h2 id="featured-title" class="ld-section__title">จุดเริ่มต้นที่ <span>แนะนำ</span></h2>
+    <p class="ld-section__lead">ใช้ Drone Analyzer เป็นจุดเริ่มต้นหลัก เพราะช่วยให้ผู้ใช้เข้าใจภาพรวมก่อนตัดสินใจปรับค่าใด ๆ</p>
+
+    <div class="ld-split">
+      <div class="ld-result">
+        <div class="ld-result__head">
+          <span class="ld-result__title">Drone Analyzer</span>
+          <span class="badge badge-success">Best first step</span>
+        </div>
+        <div class="ld-result__score"><strong>82</strong><span>/ 100</span></div>
+        <div class="ld-result__list">
+          <div class="ld-result__item"><span>PID Configuration</span><span class="badge badge-success">Good</span></div>
+          <div class="ld-result__item"><span>Filter Noise</span><span class="badge badge-warning">Check</span></div>
+          <div class="ld-result__item"><span>Motor Performance</span><span class="badge badge-success">Good</span></div>
+          <div class="ld-result__item"><span>Battery Condition</span><span class="badge badge-success">Healthy</span></div>
+        </div>
+        <div class="ld-hero__actions" style="margin-top:18px;">
+          <a class="btn btn-primary" href="{{ url_for('tools_analysis.index') }}">เริ่มวิเคราะห์ →</a>
+          <a class="btn btn-secondary" href="#how-it-works">ดูวิธีทำงาน</a>
+        </div>
+      </div>
+
+      <div class="ld-result">
+        <span class="ld-section__eyebrow">Why it matters</span>
+        <h3 class="ld-section__title" style="margin-top:12px; font-size:clamp(24px,4vw,34px);">เข้าใจโดรนของคุณ <span>ก่อนเปลี่ยนค่าใด ๆ</span></h3>
+        <p class="ld-section__lead">เปลี่ยนข้อมูลที่ซับซ้อนให้กลายเป็นภาพรวมที่อ่านง่าย ช่วยให้ผู้ใช้เห็นสิ่งที่ควรเช็กก่อนลงมือปรับ</p>
+        <div class="ld-hero__chips">
+          <span class="ld-chip">Safe guidance</span>
+          <span class="ld-chip">Clear action</span>
+          <span class="ld-chip">Fast overview</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ld-section" id="how-it-works" aria-labelledby="how-title">
+    <span class="ld-section__eyebrow">How it works</span>
+    <h2 id="how-title" class="ld-section__title">จากข้อมูล <span>สู่คำแนะนำ</span> ที่ใช้งานได้จริง</h2>
+    <p class="ld-section__lead">ออกแบบให้ผู้ใช้เข้าใจ flow ภายในไม่กี่วินาที และพาไปยังการวิเคราะห์ที่เหมาะกับข้อมูลของตน</p>
+
+    <div class="ld-steps">
+      <article class="ld-step">
+        <div class="ld-step__num">01 Input</div>
+        <h3 class="ld-step__title">ใส่ข้อมูลของโดรน</h3>
+        <p class="ld-step__desc">Configuration, Blackbox หรือข้อมูลสเปกของโดรน</p>
+      </article>
+      <article class="ld-step">
+        <div class="ld-step__num">02 Analyze</div>
+        <h3 class="ld-step__title">ตรวจสอบข้อมูลสำคัญ</h3>
+        <p class="ld-step__desc">ระบบช่วยค้นหาจุดที่ควรให้ความสนใจและเรียบเรียงผลให้อ่านง่าย</p>
+      </article>
+      <article class="ld-step">
+        <div class="ld-step__num">03 Improve</div>
+        <h3 class="ld-step__title">นำไปปรับใช้</h3>
+        <p class="ld-step__desc">รับแนวทางที่เข้าใจง่ายเพื่อนำไปปรับแต่งอย่างมีข้อมูลประกอบ</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="ld-section" id="tools" aria-labelledby="tools-title">
+    <span class="ld-section__eyebrow">Tools Explorer</span>
+    <h2 id="tools-title" class="ld-section__title">เครื่องมือสำหรับทุก <span>ขั้นตอนของการจูน</span></h2>
+    <p class="ld-section__lead">เลือกหมวดที่ต้องการก่อน แล้วค่อยเจาะไปยังเครื่องมือที่เหมาะกับงานของคุณ</p>
+
+    <div class="ld-tool-sections">
+      <div class="ld-tabs" role="tablist" aria-label="Tool categories">
+        <button class="ld-tab" role="tab" aria-selected="true" aria-controls="panel-analyze" id="tab-analyze" data-tab="analyze">Analyze</button>
+        <button class="ld-tab" role="tab" aria-selected="false" aria-controls="panel-optimize" id="tab-optimize" data-tab="optimize">Optimize</button>
+        <button class="ld-tab" role="tab" aria-selected="false" aria-controls="panel-build" id="tab-build" data-tab="build">Build & Explore</button>
+      </div>
+
+      <div class="ld-panel is-active" role="tabpanel" id="panel-analyze" aria-labelledby="tab-analyze" data-panel="analyze">
+        <div class="ld-grid">
+          <a class="ld-tool-card" href="{{ url_for('tools_analysis.index') }}"><strong>Drone Analyzer</strong><p>วิเคราะห์ภาพรวมของโดรนก่อนตัดสินใจปรับค่า</p><span class="ld-tag">Main entry</span></a>
+          <a class="ld-tool-card" href="{{ url_for('tools_static.blackbox_page') }}"><strong>Blackbox Analyzer</strong><p>อ่านข้อมูลบินเพื่อหา pattern และจุดผิดปกติ</p><span class="ld-tag">Logs</span></a>
+          <a class="ld-tool-card" href="{{ url_for('tools_advisor.pid_advisor') }}"><strong>PID Advisor</strong><p>ช่วยตีความการตั้งค่า PID ให้เหมาะกับสไตล์การบิน</p><span class="ld-tag">Tuning</span></a>
+          <a class="ld-tool-card" href="{{ url_for('tools_static.cli_surgeon_page') }}"><strong>CLI Surgeon</strong><p>ตรวจและจัดการคอนฟิกที่พร้อมนำไปใช้ทันที</p><span class="ld-tag">CLI</span></a>
+          <a class="ld-tool-card" href="{{ url_for('tools_static.cli_comparator') }}"><strong>CLI Comparator</strong><p>เปรียบเทียบความต่างของคอนฟิกหลายชุดแบบอ่านง่าย</p><span class="ld-tag">Diff</span></a>
+          <a class="ld-tool-card" href="{{ url_for('tools_static.rates_visualizer') }}"><strong>Rates Visualizer</strong><p>ดูและปรับการตอบสนองของ rates ก่อนขึ้นบินจริง</p><span class="ld-tag">Rates</span></a>
+        </div>
+      </div>
+
+      <div class="ld-panel" role="tabpanel" id="panel-optimize" aria-labelledby="tab-optimize" data-panel="optimize">
+        <div class="ld-grid">
+          <a class="ld-tool-card" href="{{ url_for('tools_advisor.quick_tune') }}"><strong>Quick Tune</strong><p>เริ่มจากคำแนะนำสั้น ๆ สำหรับการจูนที่ปลอดภัยและเข้าใจง่าย</p><span class="ld-tag">Fast tune</span></a>
+          <a class="ld-tool-card" href="{{ url_for('tools_rpm.rpm_filter') }}"><strong>RPM Filter</strong><p>ประเมินและเลือกค่าฟิลเตอร์ที่เหมาะกับมอเตอร์และ RPM</p><span class="ld-tag">Filters</span></a>
+          <a class="ld-tool-card" href="{{ url_for('tools_analysis.motor_prop') }}"><strong>Motor × Prop</strong><p>ดูแนวทางจับคู่มอเตอร์และใบพัดให้สมดุลขึ้น</p><span class="ld-tag">Match</span></a>
+          <a class="ld-tool-card" href="{{ url_for('tools_static.battery_health') }}"><strong>Battery Health</strong><p>ดูสภาพแบตเตอรี่และผลกระทบต่อระยะเวลาบิน</p><span class="ld-tag">Battery</span></a>
+          <a class="ld-tool-card" href="{{ url_for('tools_static.motor_thermal') }}"><strong>Motor Thermal</strong><p>ติดตามอุณหภูมิมอเตอร์และความเสี่ยงจากการทำงานหนัก</p><span class="ld-tag">Thermal</span></a>
+          <a class="ld-tool-card" href="{{ url_for('tools_static.loop_analyzer') }}"><strong>Loop Analyzer</strong><p>สำรวจพฤติกรรมลูปควบคุมเพื่อปรับความนิ่งให้ดียิ่งขึ้น</p><span class="ld-tag">Loop</span></a>
+        </div>
+      </div>
+
+      <div class="ld-panel" role="tabpanel" id="panel-build" aria-labelledby="tab-build" data-panel="build">
+        <div class="ld-grid">
+          <a class="ld-tool-card" href="{{ url_for('tools_static.bf_wizard') }}"><strong>BF Wizard</strong><p>ช่วยจัดการ Betaflight config แบบเป็นขั้นตอน</p><span class="ld-tag">Wizard</span></a>
+          <a class="ld-tool-card" href="{{ url_for('tools_static.build_card') }}"><strong>Build Card</strong><p>สร้างการ์ดสรุปสเปกโดรนแบบแชร์ได้</p><span class="ld-tag">Share</span></a>
+          <a class="ld-tool-card" href="{{ url_for('tools_static.tuning_log') }}"><strong>Tuning Log</strong><p>จดบันทึกการจูนแต่ละครั้งให้ย้อนดูได้</p><span class="ld-tag">History</span></a>
+          <a class="ld-tool-card" href="{{ url_for('tools_osd.osd_page') }}"><strong>OSD Designer</strong><p>วางเลย์เอาต์ OSD ให้เข้าใจง่ายและใช้งานจริงได้</p><span class="ld-tag">OSD</span></a>
+          <a class="ld-tool-card" href="{{ url_for('tools_vtx.vtx') }}"><strong>VTX Hub</strong><p>รวบรวมเครื่องมือเกี่ยวกับ VTX, Range และ SmartAudio</p><span class="ld-tag">Video</span></a>
+          <a class="ld-tool-card" href="{{ url_for('tools_gear.fpv_gear') }}"><strong>FPV Gear Guide</strong><p>ดูแนวทางเลือกอุปกรณ์ให้เข้ากับโดรนของคุณ</p><span class="ld-tag">Gear</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ld-section" id="community" aria-labelledby="community-title">
+    <span class="ld-section__eyebrow">Community</span>
+    <h2 id="community-title" class="ld-section__title">สร้างโดยคนที่บินจริง <span>เพื่อคนที่บินจริง</span></h2>
+    <p class="ld-section__lead">ConfigDoctor เกิดจากความต้องการทำให้ข้อมูลการจูนโดรน FPV เข้าใจง่ายขึ้น และช่วยให้นักบินมีเครื่องมือสำหรับตรวจสอบ เรียนรู้ และพัฒนาการบินของตัวเอง</p>
+
+    <div class="ld-community-grid">
+      <article class="ld-stat-card"><strong>22+</strong><span>เครื่องมือที่ออกแบบมาเพื่อ FPV โดยเฉพาะ</span></article>
+      <article class="ld-stat-card"><strong>Mobile</strong><span>วาง UX ให้ใช้งานง่ายทั้งบนมือถือและคอมพิวเตอร์</span></article>
+      <article class="ld-stat-card"><strong>Free</strong><span>เข้าถึงเครื่องมือหลักได้โดยไม่ต้องเริ่มจากความซับซ้อน</span></article>
+    </div>
+  </section>
+
+  <section class="ld-section" id="gear-guide" aria-labelledby="gear-title">
+    <span class="ld-section__eyebrow">Gear Guide</span>
+    <h2 id="gear-title" class="ld-section__title">เลือกอุปกรณ์ให้เข้ากับ <span>โดรนของคุณ</span></h2>
+    <p class="ld-section__lead">สำรวจคำแนะนำด้านอุปกรณ์ FPV โดยพิจารณาจากขนาด น้ำหนัก และสไตล์การบินของคุณ</p>
+    <div class="ld-gear-grid">
+      <div class="ld-gear-pill">Motor</div>
+      <div class="ld-gear-pill">Frame</div>
+      <div class="ld-gear-pill">Propeller</div>
+      <div class="ld-gear-pill">Battery</div>
+      <div class="ld-gear-pill">ESC</div>
+      <div class="ld-gear-pill">Goggles</div>
+      <div class="ld-gear-pill">Antenna</div>
+      <div class="ld-gear-pill">VTX</div>
+    </div>
+  </section>
+
+  <section class="ld-section" id="support" aria-labelledby="support-title">
+    <span class="ld-section__eyebrow">Support</span>
+    <h2 id="support-title" class="ld-section__title">ช่วยให้โปรเจกต์ <span>พัฒนาต่อ</span></h2>
+    <p class="ld-section__lead">ถ้า ConfigDoctor ช่วยคุณได้ คุณสามารถช่วยสนับสนุนค่าโฮสต์ การพัฒนา และเครื่องมือใหม่ ๆ ได้ตามความสมัครใจ</p>
+
+    <div class="ld-support__grid">
+      <div class="ld-qr">
+        <img src="{{ url_for('static', filename='img/support-qr.png') }}" alt="Support QR code for ConfigDoctor">
+      </div>
+      <div class="ld-support-card">
+        <h3 class="ld-section__title" style="font-size:clamp(24px,4vw,34px); margin-top:0;">ขอบคุณที่ช่วยให้โครงการเดินต่อ</h3>
+        <p>การสนับสนุนช่วยให้เราดูแลโฮสต์ พัฒนาฟีเจอร์ใหม่ และรักษาเครื่องมือ FPV ให้พร้อมใช้งานต่อเนื่อง</p>
+        <div class="ld-hero__actions" style="margin-top:18px;">
+          <a class="btn btn-primary" href="#top">กลับขึ้นด้านบน</a>
+          <a class="btn btn-secondary" href="{{ url_for('content_pages.team') }}">ดูทีมงาน</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="ld-footer">
+    <div class="ld-footer__grid">
+      <div>
+        <div class="ld-footer__brand">Config<span>Doctor</span></div>
+        <p style="margin:10px 0 0; max-width:52ch; line-height:1.7;">FPV Drone Diagnostic Platform สำหรับวิเคราะห์ ปรับจูน และทำความเข้าใจข้อมูลของโดรนอย่างเป็นระบบ</p>
+      </div>
+      <div class="ld-footer__links" aria-label="Footer links">
+        <a href="{{ url_for('tools_analysis.index') }}">Analyzer</a>
+        <a href="{{ url_for('content_pages.about') }}">About</a>
+        <a href="{{ url_for('content_pages.team') }}">Team</a>
+        <a href="{{ url_for('content_pages.changelog') }}">Changelog</a>
+        <a href="{{ url_for('tools_static.fpv_hub') }}">FPV Hub</a>
+      </div>
+    </div>
+  </footer>
 </main>
 {% endblock %}
 
 {% block extra_scripts %}
 <script>
 (() => {
-  const topbar = document.getElementById('topbar');
-  const drawer = document.getElementById('mobileDrawer');
-  const toggle = document.getElementById('menuToggle');
-  const closeBtn = document.getElementById('drawerClose');
+  const topbar = document.querySelector('[data-topbar]');
+  const menuBtn = document.querySelector('[data-menu-btn]');
+  const drawer = document.querySelector('[data-drawer]');
+  const closeBtn = document.querySelector('[data-close-btn]');
+  const tabs = Array.from(document.querySelectorAll('[data-tab]'));
+  const panels = Array.from(document.querySelectorAll('[data-panel]'));
 
-  const setOpen = (open) => {
+  const setDrawer = (open) => {
+    if (!drawer || !menuBtn) return;
     drawer.classList.toggle('open', open);
-    drawer.setAttribute('aria-hidden', String(!open));
-    toggle.setAttribute('aria-expanded', String(open));
+    drawer.setAttribute('aria-hidden', open ? 'false' : 'true');
+    menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
     document.body.style.overflow = open ? 'hidden' : '';
   };
 
-  const onScroll = () => {
-    topbar.classList.toggle('is-scrolled', window.scrollY > 12);
+  if (menuBtn && drawer) {
+    menuBtn.addEventListener('click', () => setDrawer(!drawer.classList.contains('open')));
+    closeBtn && closeBtn.addEventListener('click', () => setDrawer(false));
+    drawer.addEventListener('click', (e) => {
+      if (e.target === drawer) setDrawer(false);
+    });
+    drawer.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setDrawer(false)));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') setDrawer(false);
+    });
+  }
+
+  const syncTopbar = () => {
+    if (!topbar) return;
+    topbar.classList.toggle('is-scrolled', window.scrollY > 8);
+  };
+  syncTopbar();
+  window.addEventListener('scroll', syncTopbar, { passive: true });
+
+  const activateTab = (name) => {
+    tabs.forEach((tab) => {
+      const active = tab.dataset.tab === name;
+      tab.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+    panels.forEach((panel) => {
+      panel.classList.toggle('is-active', panel.dataset.panel === name);
+    });
   };
 
-  toggle?.addEventListener('click', () => {
-    setOpen(!drawer.classList.contains('open'));
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => activateTab(tab.dataset.tab));
+    tab.addEventListener('keydown', (e) => {
+      if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+      e.preventDefault();
+      const idx = tabs.indexOf(tab);
+      const next = e.key === 'ArrowRight' ? (idx + 1) % tabs.length : (idx - 1 + tabs.length) % tabs.length;
+      tabs[next].focus();
+      activateTab(tabs[next].dataset.tab);
+    });
   });
-
-  closeBtn?.addEventListener('click', () => setOpen(false));
-
-  drawer?.addEventListener('click', (ev) => {
-    if (ev.target === drawer) setOpen(false);
-  });
-
-  drawer?.querySelectorAll('a').forEach((link) => {
-    link.addEventListener('click', () => setOpen(false));
-  });
-
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', () => {
-    if (window.innerWidth >= 860) setOpen(false);
-  });
-
-  document.addEventListener('keydown', (ev) => {
-    if (ev.key === 'Escape') setOpen(false);
-  });
-
-  onScroll();
 })();
 </script>
 {% endblock %}
