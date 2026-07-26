@@ -1226,15 +1226,15 @@ body::after{
       <div class="pid-grid" style="margin-bottom:10px">
         <div class="pid-input-wrap">
           <div class="pid-term-label">P</div>
-          <input type="number" class="pid-num p" id="pid_p_roll" value="48" min="0" max="200" oninput="onPidChange()">
+          <input type="number" class="pid-num p" id="pid_p_roll" aria-label="Roll P gain" value="48" min="0" max="200" oninput="onPidChange()">
         </div>
         <div class="pid-input-wrap">
           <div class="pid-term-label">I</div>
-          <input type="number" class="pid-num i" id="pid_i_roll" value="90" min="0" max="200" oninput="onPidChange()">
+          <input type="number" class="pid-num i" id="pid_i_roll" aria-label="Roll I gain" value="90" min="0" max="200" oninput="onPidChange()">
         </div>
         <div class="pid-input-wrap">
           <div class="pid-term-label">D</div>
-          <input type="number" class="pid-num d" id="pid_d_roll" value="38" min="0" max="200" oninput="onPidChange()">
+          <input type="number" class="pid-num d" id="pid_d_roll" aria-label="Roll D gain" value="38" min="0" max="200" oninput="onPidChange()">
         </div>
       </div>
 
@@ -1243,15 +1243,15 @@ body::after{
       <div class="pid-grid" style="margin-bottom:10px">
         <div class="pid-input-wrap">
           <div class="pid-term-label">P</div>
-          <input type="number" class="pid-num p" id="pid_p_pitch" value="52" min="0" max="200" oninput="onPidChange()">
+          <input type="number" class="pid-num p" id="pid_p_pitch" aria-label="Pitch P gain" value="52" min="0" max="200" oninput="onPidChange()">
         </div>
         <div class="pid-input-wrap">
           <div class="pid-term-label">I</div>
-          <input type="number" class="pid-num i" id="pid_i_pitch" value="90" min="0" max="200" oninput="onPidChange()">
+          <input type="number" class="pid-num i" id="pid_i_pitch" aria-label="Pitch I gain" value="90" min="0" max="200" oninput="onPidChange()">
         </div>
         <div class="pid-input-wrap">
           <div class="pid-term-label">D</div>
-          <input type="number" class="pid-num d" id="pid_d_pitch" value="40" min="0" max="200" oninput="onPidChange()">
+          <input type="number" class="pid-num d" id="pid_d_pitch" aria-label="Pitch D gain" value="40" min="0" max="200" oninput="onPidChange()">
         </div>
       </div>
 
@@ -1260,15 +1260,15 @@ body::after{
       <div class="pid-grid" style="margin-bottom:10px">
         <div class="pid-input-wrap">
           <div class="pid-term-label">P</div>
-          <input type="number" class="pid-num p" id="pid_p_yaw" value="40" min="0" max="200" oninput="onPidChange()">
+          <input type="number" class="pid-num p" id="pid_p_yaw" aria-label="Yaw P gain" value="40" min="0" max="200" oninput="onPidChange()">
         </div>
         <div class="pid-input-wrap">
           <div class="pid-term-label">I</div>
-          <input type="number" class="pid-num i" id="pid_i_yaw" value="90" min="0" max="200" oninput="onPidChange()">
+          <input type="number" class="pid-num i" id="pid_i_yaw" aria-label="Yaw I gain" value="90" min="0" max="200" oninput="onPidChange()">
         </div>
         <div class="pid-input-wrap">
           <div class="pid-term-label">D</div>
-          <input type="number" class="pid-num d" id="pid_d_yaw" value="0" min="0" max="200" oninput="onPidChange()">
+          <input type="number" class="pid-num d" id="pid_d_yaw" aria-label="Yaw D gain" value="0" min="0" max="200" oninput="onPidChange()">
         </div>
       </div>
 
@@ -1276,19 +1276,19 @@ body::after{
       <div class="filter-row">
         <div class="filt-group">
           <div class="filt-label">Gyro LPF1 Hz</div>
-          <input type="number" class="filt-num" id="filt_gyro" value="200" min="0" max="500" oninput="onPidChange()">
+          <input type="number" class="filt-num" id="filt_gyro" aria-label="Gyro LPF1 Hz" value="200" min="0" max="500" oninput="onPidChange()">
         </div>
         <div class="filt-group">
           <div class="filt-label">D-term LPF Hz</div>
-          <input type="number" class="filt-num" id="filt_dterm" value="110" min="0" max="500" oninput="onPidChange()">
+          <input type="number" class="filt-num" id="filt_dterm" aria-label="D-term LPF Hz" value="110" min="0" max="500" oninput="onPidChange()">
         </div>
         <div class="filt-group">
           <div class="filt-label">Anti-Gravity</div>
-          <input type="number" class="filt-num" id="filt_ag" value="5" min="0" max="30" oninput="onPidChange()">
+          <input type="number" class="filt-num" id="filt_ag" aria-label="Anti-Gravity" value="5" min="0" max="30" oninput="onPidChange()">
         </div>
         <div class="filt-group">
           <div class="filt-label">Feedforward</div>
-          <input type="number" class="filt-num" id="filt_ff" value="100" min="0" max="300" oninput="onPidChange()">
+          <input type="number" class="filt-num" id="filt_ff" aria-label="Feedforward" value="100" min="0" max="300" oninput="onPidChange()">
         </div>
       </div>
     </div>
@@ -1307,7 +1307,7 @@ body::after{
     <div class="symptom-section">
       <div class="symptom-search-wrap">
         <span class="symptom-search-icon">🔍</span>
-        <input type="search" class="symptom-search" id="symptomSearch" placeholder="ค้นหาอาการ..." autocomplete="off" oninput="filterSymptoms(this.value)">
+        <input type="search" class="symptom-search" id="symptomSearch" aria-label="Search symptoms" placeholder="ค้นหาอาการ..." autocomplete="off" oninput="filterSymptoms(this.value)">
       </div>
 
       <div id="symptomList">

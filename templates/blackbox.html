@@ -95,7 +95,7 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opac
       เลือกไฟล์ CSV
     </button>
     <div class="upload-hint">รองรับไฟล์ถึง 10MB · ข้อมูลไม่ถูกเก็บบันทึก</div>
-    <input type="file" id="csvFileInput" accept=".csv,.txt" onchange="handleFileSelect(event)">
+    <input type="file" id="csvFileInput" aria-label="Upload Blackbox CSV file" accept=".csv,.txt" onchange="handleFileSelect(event)">
   </div>
 
   <!-- Analyzing bar -->
