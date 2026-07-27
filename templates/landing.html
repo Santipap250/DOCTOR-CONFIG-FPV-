@@ -312,6 +312,19 @@
     filter:saturate(1.05) contrast(1.06) brightness(.72);
     transform:scale(1.01);
   }
+  .hero-bg-video{
+    display:none;
+  }
+  .hero.has-bg-video .hero-bg-video{
+    display:block;
+  }
+  .hero.has-bg-video img.hero-bg{
+    display:none;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .hero-bg-video{display:none !important;}
+    .hero.has-bg-video img.hero-bg{display:block !important;}
+  }
   .hero-overlay{
     position:absolute;
     inset:0;
@@ -1018,6 +1031,16 @@
 
 <main class="landing-shell">
   <section class="hero" aria-labelledby="hero-title">
+    <video
+      class="hero-bg hero-bg-video"
+      id="heroBgVideo"
+      autoplay muted loop playsinline preload="none"
+      poster="{{ url_for('static', filename='img/hero-bg-poster.jpg') }}"
+      aria-hidden="true"
+    >
+      <source data-src="{{ url_for('static', filename='video/hero-bg.webm') }}" type="video/webm">
+      <source data-src="{{ url_for('static', filename='video/hero-bg.mp4') }}" type="video/mp4">
+    </video>
     <img
       class="hero-bg"
       src="{{ url_for('static', filename='img/landing-bg-mobile.jpg') }}"
@@ -1331,6 +1354,36 @@
   });
 
   onScroll();
+})();
+
+/* ── Hero background video: lazy-load only when the device/network can handle it ── */
+(() => {
+  const v = document.getElementById('heroBgVideo');
+  const hero = document.querySelector('.hero');
+  if (!v || !hero) return;
+
+  const conn = navigator.connection || navigator.webkitConnection || navigator.mozConnection;
+  const saveData = !!(conn && conn.saveData);
+  const slow = !!(conn && /(^|[^0-9])2g/i.test(conn.effectiveType || ''));
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (saveData || slow || reduceMotion) return;
+
+  v.querySelectorAll('source[data-src]').forEach((s) => {
+    if (!s.getAttribute('src')) s.setAttribute('src', s.getAttribute('data-src'));
+  });
+
+  try { v.load(); } catch (e) {}
+  const playPromise = v.play();
+  if (playPromise && typeof playPromise.catch === 'function') {
+    playPromise
+      .then(() => hero.classList.add('has-bg-video'))
+      .catch(() => {
+        // Autoplay blocked — the responsive img (or poster) stays visible.
+      });
+  } else {
+    hero.classList.add('has-bg-video');
+  }
 })();
 </script>
 {% endblock %}
