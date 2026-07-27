@@ -118,9 +118,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-t);min-height
 .entry-date{font-family:var(--font-m);font-size:10px;color:var(--muted2)}
 .entry-badge{font-family:var(--font-d);font-size:9px;letter-spacing:.07em;padding:4px 10px;
   border-radius:100px;white-space:nowrap}
-.badge-ok{background:rgba(0,255,136,.1);border:1px solid rgba(0,255,136,.3);color:var(--green)}
-.badge-warn{background:rgba(255,183,0,.1);border:1px solid rgba(255,183,0,.3);color:var(--amber)}
-.badge-bad{background:rgba(255,68,85,.1);border:1px solid rgba(255,68,85,.3);color:var(--red)}
 .entry-pid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
 .pid-block{background:var(--panel);border:1px solid var(--border);border-radius:var(--r);padding:10px}
 .pid-block-lbl{font-family:var(--font-d);font-size:8px;letter-spacing:.08em;margin-bottom:6px}
@@ -409,7 +406,7 @@ function renderLog(){
   tl.innerHTML=filtered.map((e,i)=>{
     const prev=filtered[i+1];
     const dotCls=e.result==='BETTER'?'ok':e.result==='WORSE'?'bad':'warn';
-    const badgeCls=e.result==='BETTER'?'badge-ok':e.result==='WORSE'?'badge-bad':'badge-warn';
+    const badgeCls=e.result==='BETTER'?'badge-success':e.result==='WORSE'?'badge-danger':'badge-warning';
     const badgeTxt=e.result==='BETTER'?'🟢 Better':e.result==='WORSE'?'🔴 Worse':'🟡 Neutral';
     const pid=e.pid||{};
     const pp=prev?.pid||{};

@@ -43,6 +43,17 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opac
 
 .page-wrap{position:relative;z-index:1;max-width:min(1080px,100%);margin:0 auto;padding:0 16px 90px}
 
+/* ── Status badges (canonical naming shared with the rest of the site:
+     badge-success / badge-info / badge-warning / badge-danger) — colors
+     use this page's own palette since blackbox.html defines its own
+     --gr/--bl/--am/--rd rather than the site-wide --green/--blue/etc. ── */
+.badge{display:inline-flex;align-items:center;font-size:9px;font-weight:700;letter-spacing:.07em;
+  padding:4px 10px;border-radius:100px;white-space:nowrap}
+.badge-success{background:rgba(0,255,136,.1);border:1px solid rgba(0,255,136,.3);color:var(--gr)}
+.badge-info{background:rgba(91,140,255,.1);border:1px solid rgba(91,140,255,.3);color:var(--bl)}
+.badge-warning{background:rgba(255,176,32,.1);border:1px solid rgba(255,176,32,.3);color:var(--am)}
+.badge-danger{background:rgba(255,51,85,.1);border:1px solid rgba(255,51,85,.3);color:var(--rd)}
+
 
 /* ── ChatGPT-style top bar ── */
 </style>
@@ -185,6 +196,13 @@ uploadZone.addEventListener('click', e=>{
 });
 function handleFileSelect(evt){const file=evt.target.files[0]; if(file) processFile(file);}
 
+/* Map this page's internal severity vocabulary (good/info/warning/danger)
+   onto the site's shared badge system (components.css: .badge-success/-info/-warning/-danger)
+   so every status pill here gets the same shape + color as the rest of the site. */
+function badgeCls(sev){
+  return sev === 'good' ? 'badge badge-success' : 'badge badge-' + sev;
+}
+
 function processFile(file){
   if(file.size > 10*1024*1024){showToast('❌ ไฟล์ใหญ่เกิน 10MB');return}
   const reader=new FileReader();
@@ -268,11 +286,11 @@ function renderGrade(pq){
   const dash = CIRC*Math.max(0,Math.min(100,score))/100;
 
   const issueHtml = all.length===0
-    ? `<div class="issue-row issue-good"><span class="issue-badge badge-good">GOOD</span>
+    ? `<div class="issue-row issue-good"><span class="issue-badge ${badgeCls('good')}">GOOD</span>
         <div class="issue-body"><div class="issue-title">ไม่พบปัญหา</div><div class="issue-desc">PID และ filter ทำงานได้ดี</div></div></div>`
     : all.map(issue=>{
         const sev=issue.severity||'info';
-        return `<div class="issue-row issue-${sev}"><span class="issue-badge badge-${sev}">${sev.toUpperCase()}</span>
+        return `<div class="issue-row issue-${sev}"><span class="issue-badge ${badgeCls(sev)}">${sev.toUpperCase()}</span>
           <div class="issue-body"><div class="issue-title">${esc(issue.axis||'')} ${esc(issue.diagnosis||issue.msg||issue.type||'')}</div>
           ${issue.fix?`<div class="issue-fix">💡 ${esc(issue.fix)}</div>`:''}</div></div>`;
       }).join('');
@@ -340,7 +358,7 @@ function renderMotors(mb){
   const sev=mb.balance_severity||'good';
   const balRow=document.getElementById('motorBalanceRow');
   balRow.className='issue-row issue-'+sev;
-  balRow.innerHTML = `<span class="issue-badge badge-${sev}">${sev.toUpperCase()}</span>
+  balRow.innerHTML = `<span class="issue-badge ${badgeCls(sev)}">${sev.toUpperCase()}</span>
     <div class="issue-body"><div class="issue-title">Diagonal Imbalance ${mb.imbalance_pct??'—'}%</div>
     <div class="issue-desc">${esc(mb.balance_msg||'')}</div>
     ${(mb.stuck_motors||[]).length>0 ? `<div class="issue-fix">⚠️ Motor ผิดปกติ: ${mb.stuck_motors.join(', ')}</div>` : ''}</div>`;
@@ -480,7 +498,7 @@ function renderCliRecs(recs){
     return `<div class="cli-rec sev-${sev}" id="rec-${i}">
       <div class="cli-rec-header" onclick="toggleRec(${i})">
         <span class="cli-rec-num">#${r.priority||i+1}</span>
-        <span class="issue-badge badge-${sev}">${sev.toUpperCase()}</span>
+        <span class="issue-badge ${badgeCls(sev)}">${sev.toUpperCase()}</span>
         <div><div class="cli-rec-title">${esc(r.title||'')}</div><div class="cli-rec-reason">${esc(r.reason||'')}</div></div>
         <span class="cli-chevron">▼</span>
       </div>
