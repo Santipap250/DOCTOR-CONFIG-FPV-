@@ -109,10 +109,10 @@ select option{background:#1a2030}
       <div class="form-card-title">Motor Specs</div>
 
       <div class="field">
-        <label>Stator Size
+        <label for="stator">Stator Size
           <span class="tip">เช่น 2306 = 23mm diameter, 6mm height</span>
         </label>
-        <select id="stator">
+        <select id="stator" aria-label="Stator Size">
           <option value="1105">1105 (Micro/Whoop 2.5")</option>
           <option value="1306">1306 (Toothpick 3")</option>
           <option value="1507">1507 (Cinewhoop 3.5")</option>
@@ -132,8 +132,8 @@ select option{background:#1a2030}
       </div>
 
       <div class="field">
-        <label>Battery (S)</label>
-        <select id="motorCells">
+        <label for="motorCells">Battery (S)</label>
+        <select id="motorCells" aria-label="Battery Cell Count (S)">
           <option value="3">3S (11.1V)</option>
           <option value="4" selected>4S (14.8V)</option>
           <option value="5">5S (18.5V)</option>
@@ -144,8 +144,8 @@ select option{background:#1a2030}
       <div class="form-card-title" style="margin-top:24px">Flight Conditions</div>
 
       <div class="field">
-        <label>Flight Style</label>
-        <select id="mStyle">
+        <label for="mStyle">Flight Style</label>
+        <select id="mStyle" aria-label="Flight Style">
           <option value="freestyle" selected>Freestyle (bursts, tricks)</option>
           <option value="racing">Racing (full throttle ยาว)</option>
           <option value="longrange">Long Range (cruise ต่อเนื่อง)</option>

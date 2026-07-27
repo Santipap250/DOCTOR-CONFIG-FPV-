@@ -272,8 +272,8 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   <div class="ctitle"><span class="ctitle-icon">⚙️</span>ข้อมูลระบบ</div>
   <div class="fg4" style="margin-bottom:13px">
     <div class="fld">
-      <label>CELL COUNT <em>*</em></label>
-      <select id="cells" onchange="liveCheck()">
+      <label for="cells">CELL COUNT <em>*</em></label>
+      <select id="cells" aria-label="Battery Cell Count" onchange="liveCheck()">
         <option value="2">2S — 8.4V</option>
         <option value="3">3S — 12.6V</option>
         <option value="4" selected>4S — 16.8V</option>
@@ -290,8 +290,8 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
       <span id="kv-live" class="live-tag"></span>
     </div>
     <div class="fld">
-      <label>STATOR SIZE</label>
-      <select id="stator">
+      <label for="stator">STATOR SIZE</label>
+      <select id="stator" aria-label="Motor Stator Size">
         <option value="1105">1105 — 1S Whoop</option>
         <option value="1404">1404 — Toothpick</option>
         <option value="1507">1507 — Micro</option>
@@ -305,8 +305,8 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
       </select>
     </div>
     <div class="fld">
-      <label>FLIGHT STYLE</label>
-      <select id="style">
+      <label for="style">FLIGHT STYLE</label>
+      <select id="style" aria-label="Flight Style">
         <option value="freestyle" selected>Freestyle</option>
         <option value="racing">Racing</option>
         <option value="longrange">Long Range</option>
@@ -320,8 +320,8 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
       <input type="number" id="escA" value="45" min="10" max="200" oninput="liveCheck()">
     </div>
     <div class="fld">
-      <label>ESC MAX VOLTAGE (S)</label>
-      <select id="escVolt" onchange="liveCheck()">
+      <label for="escVolt">ESC MAX VOLTAGE (S)</label>
+      <select id="escVolt" aria-label="ESC Maximum Voltage" onchange="liveCheck()">
         <option value="2">2S Max</option>
         <option value="3">3S Max</option>
         <option value="4" selected>4S Max</option>
@@ -332,8 +332,8 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
       <span id="volt-live" class="live-tag"></span>
     </div>
     <div class="fld">
-      <label>FC PROCESSOR</label>
-      <select id="cpu">
+      <label for="cpu">FC PROCESSOR</label>
+      <select id="cpu" aria-label="FC Processor">
         <option value="f4" selected>F4 — 168MHz</option>
         <option value="g4">G4 — 170MHz</option>
         <option value="f7">F7 — 216MHz</option>
@@ -341,8 +341,8 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
       </select>
     </div>
     <div class="fld">
-      <label>MOTOR POLES</label>
-      <select id="poles">
+      <label for="poles">MOTOR POLES</label>
+      <select id="poles" aria-label="Motor Poles">
         <option value="12">12 — Micro</option>
         <option value="14" selected>14 — Standard</option>
         <option value="22">22 — Large LR</option>
@@ -360,8 +360,8 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
       <span class="fld-hint">อุณหภูมิแวดล้อมขณะบิน</span>
     </div>
     <div class="fld">
-      <label>NUM MOTORS</label>
-      <select id="numMot">
+      <label for="numMot">NUM MOTORS</label>
+      <select id="numMot" aria-label="Number of Motors">
         <option value="4" selected>4 Motors (Quad)</option>
         <option value="6">6 Motors (Hex)</option>
         <option value="8">8 Motors (Octo)</option>

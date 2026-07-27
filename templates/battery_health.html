@@ -167,8 +167,8 @@ select option{background:#111820}
         <div class="card-title">Battery Specifications</div>
 
         <div class="field">
-          <label>Cell Count <span class="unit">S</span></label>
-          <select id="cells">
+          <label for="cells">Cell Count <span class="unit">S</span></label>
+          <select id="cells" aria-label="Battery Cell Count">
             <option value="1">1S</option><option value="2">2S</option>
             <option value="3">3S</option><option value="4" selected>4S</option>
             <option value="5">5S</option><option value="6">6S</option>
@@ -206,8 +206,8 @@ select option{background:#111820}
           <input type="number" id="cycles" value="50" min="0" max="1000" step="5">
         </div>
         <div class="field">
-          <label>Build Style</label>
-          <select id="bstyle">
+          <label for="bstyle">Build Style</label>
+          <select id="bstyle" aria-label="Build / Flight Style">
             <option value="freestyle">Freestyle (bursts สูง)</option>
             <option value="racing">Racing (full throttle บ่อย)</option>
             <option value="longrange" selected>Long Range (cruise ต่อเนื่อง)</option>
