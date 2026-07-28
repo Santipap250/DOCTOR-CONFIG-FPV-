@@ -1,4 +1,6 @@
-import { Zap, Shield, EyeOff, Heart } from "lucide-react";
+import { motion } from "framer-motion";
+import { Zap, Shield, EyeOff, Heart, ArrowUp } from "lucide-react";
+import Logo from "@/components/Logo";
 
 const trustItems = [
   { icon: Zap, title: "22+ เครื่องมือ", desc: "ครบทุกหมวด FPV", en: "Complete toolkit" },
@@ -12,14 +14,18 @@ export function TrustSection() {
     <section className="section-top-border py-16">
       <div className="container">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {trustItems.map((item) => {
+          {trustItems.map((item, i) => {
             const Icon = item.icon;
             return (
-              <div
+              <motion.div
                 key={item.title}
-                className="border border-border/30 p-6 text-center hover:border-accent-green/20 transition-all duration-150"
+                className="border border-border/30 p-6 text-center hover:border-accent-green/30 hover:bg-card/40 transition-all duration-200"
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-10% 0px" }}
+                transition={{ duration: 0.4, ease: "easeOut", delay: i * 0.08 }}
               >
-                <Icon size={24} className="text-accent-green mx-auto mb-3" strokeWidth={1.5} />
+                <Icon size={24} className="text-accent-green mx-auto mb-3" strokeWidth={1.5} aria-hidden="true" />
                 <div className="font-heading text-sm font-bold text-foreground mb-1">
                   {item.title}
                 </div>
@@ -29,7 +35,7 @@ export function TrustSection() {
                 <div className="text-xs text-muted-foreground">
                   {item.desc}
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>
@@ -46,11 +52,7 @@ export function Footer() {
           {/* Brand */}
           <div className="md:col-span-1">
             <div className="flex items-center gap-2 mb-4">
-              <img
-                src="/manus-storage/logo_b3ac4a6e.png"
-                alt="ConfigDoctor"
-                className="w-6 h-6 object-contain"
-              />
+              <Logo size={22} />
               <span className="font-heading text-sm font-bold text-foreground tracking-wider">
                 CONFIG<span className="text-accent-green">DOCTOR</span>
               </span>
@@ -66,10 +68,10 @@ export function Footer() {
               TOOLS
             </h4>
             <ul className="space-y-2 text-xs text-muted-foreground">
-              <li><a href="#" className="hover:text-accent-green transition-colors">Drone Config Analyzer</a></li>
-              <li><a href="#" className="hover:text-accent-green transition-colors">PID Advisor</a></li>
-              <li><a href="#" className="hover:text-accent-green transition-colors">Blackbox Analyzer</a></li>
-              <li><a href="#" className="hover:text-accent-green transition-colors">Motor Thermal</a></li>
+              <li><a href="#tools" className="hover:text-accent-green transition-colors">Drone Config Analyzer</a></li>
+              <li><a href="#tools" className="hover:text-accent-green transition-colors">PID Advisor</a></li>
+              <li><a href="#tools" className="hover:text-accent-green transition-colors">Blackbox Analyzer</a></li>
+              <li><a href="#tools" className="hover:text-accent-green transition-colors">Motor Thermal</a></li>
             </ul>
           </div>
 
@@ -79,10 +81,10 @@ export function Footer() {
               RESOURCES
             </h4>
             <ul className="space-y-2 text-xs text-muted-foreground">
-              <li><a href="#" className="hover:text-accent-green transition-colors">CLI Reference</a></li>
-              <li><a href="#" className="hover:text-accent-green transition-colors">FPV Glossary</a></li>
-              <li><a href="#" className="hover:text-accent-green transition-colors">Firmware Checker</a></li>
-              <li><a href="#" className="hover:text-accent-green transition-colors">Build Card</a></li>
+              <li><a href="#tools" className="hover:text-accent-green transition-colors">CLI Reference</a></li>
+              <li><a href="#tools" className="hover:text-accent-green transition-colors">FPV Glossary</a></li>
+              <li><a href="#tools" className="hover:text-accent-green transition-colors">Firmware Checker</a></li>
+              <li><a href="#tools" className="hover:text-accent-green transition-colors">Build Card</a></li>
             </ul>
           </div>
 
@@ -105,8 +107,17 @@ export function Footer() {
           <div className="text-xs text-muted-foreground">
             &copy; {new Date().getFullYear()} ConfigDoctor. Open source under MIT License.
           </div>
-          <div className="text-xs text-muted-foreground">
-            Made with <span className="text-accent-green">&#9829;</span> in Thailand
+          <div className="flex items-center gap-6">
+            <div className="text-xs text-muted-foreground">
+              Made with <span className="text-accent-green">&#9829;</span> in Thailand
+            </div>
+            <a
+              href="#top"
+              className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-accent-green transition-colors font-heading tracking-wide"
+            >
+              <ArrowUp size={12} aria-hidden="true" />
+              BACK TO TOP
+            </a>
           </div>
         </div>
       </div>

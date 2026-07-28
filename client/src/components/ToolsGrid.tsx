@@ -1,8 +1,18 @@
 import { useState, useMemo } from "react";
+import { motion } from "framer-motion";
 import { Search, ChevronRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { tools, categories, categoryColors, categoryIcons } from "@/lib/tools-data";
+
+const gridContainer = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.04 } },
+};
+
+const cardItem = {
+  hidden: { opacity: 0, y: 12 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.35, ease: "easeOut" as const } },
+};
 
 export default function ToolsGrid() {
   const [activeCategory, setActiveCategory] = useState("all");
@@ -30,12 +40,18 @@ export default function ToolsGrid() {
   }, [activeCategory, searchQuery]);
 
   return (
-    <section id="tools" className="section-top-border py-20 bg-background">
+    <section id="tools" className="relative section-top-border py-20 bg-background">
       <div className="absolute inset-0 bg-grid opacity-50" />
 
       <div className="container relative z-10">
         {/* Section header */}
-        <div className="mb-12">
+        <motion.div
+          className="mb-12"
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-10% 0px" }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+        >
           <div className="text-xs font-heading tracking-widest text-accent-green mb-3">
             TOOLKIT
           </div>
@@ -45,16 +61,17 @@ export default function ToolsGrid() {
           <p className="text-muted-foreground max-w-2xl">
             22 เครื่องมือจัดหมวดหมู่ 5 กลุ่ม — วิเคราะห์, ตั้งค่า, ฝึกซ้อม, ฮาร์ดแวร์, ยูทิลิตี้
           </p>
-        </div>
+        </motion.div>
 
         {/* Category tabs + Search */}
-        <div className="flex flex-col md:flex-row gap-4 mb-8">
+        <div className="flex flex-col md:flex-row gap-4 mb-8" role="group" aria-label="ตัวกรองเครื่องมือ">
           <div className="flex flex-wrap gap-2">
             {categories.map((cat) => (
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
-                className={`px-4 py-2 text-xs font-heading tracking-wider border transition-all duration-150 ${
+                aria-pressed={activeCategory === cat.id}
+                className={`px-4 py-2 min-h-[40px] text-xs font-heading tracking-wider border transition-all duration-150 ${
                   activeCategory === cat.id
                     ? "border-accent-green/60 bg-accent-green/10 text-accent-green"
                     : "border-border/40 text-muted-foreground hover:border-accent-green/30 hover:text-accent-green"
@@ -70,31 +87,41 @@ export default function ToolsGrid() {
               size={14}
               className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
             />
+            <label htmlFor="tool-search" className="sr-only">ค้นหาเครื่องมือ</label>
             <Input
+              id="tool-search"
               type="text"
               placeholder="ค้นหาเครื่องมือ..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-9 h-9 bg-card border-border/40 text-sm font-body focus:border-accent-green/50"
+              className="pl-9 h-10 bg-card border-border/40 text-sm font-body focus:border-accent-green/50"
             />
           </div>
         </div>
 
         {/* Results count */}
-        <div className="text-xs text-muted-foreground mb-6 font-mono">
+        <div className="text-xs text-muted-foreground mb-6 font-mono" role="status" aria-live="polite">
           {filteredTools.length} tools found
         </div>
 
         {/* Tools grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filteredTools.map((tool, i) => (
-            <a
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+          variants={gridContainer}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-5% 0px" }}
+        >
+          {filteredTools.map((tool) => (
+            <motion.a
               key={tool.id}
               href={tool.href}
+              variants={cardItem}
+              whileHover={{ y: -3 }}
+              transition={{ duration: 0.18 }}
               className={`group relative border ${
                 categoryColors[tool.category] || "border-border/30"
-              } bg-card/50 p-5 transition-all duration-150 hover:bg-card`}
-              style={{ animationDelay: `${i * 30}ms` }}
+              } bg-card/50 p-5 transition-colors duration-150 hover:bg-card`}
             >
               {/* Category indicator */}
               <div className={`absolute top-0 right-0 w-1 h-full ${
@@ -124,9 +151,9 @@ export default function ToolsGrid() {
               <p className="text-xs text-muted-foreground leading-relaxed">
                 {tool.description}
               </p>
-            </a>
+            </motion.a>
           ))}
-        </div>
+        </motion.div>
 
         {/* Empty state */}
         {filteredTools.length === 0 && (
@@ -151,6 +178,7 @@ function ToolIcon({ name }: { name: string }) {
       strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
+      aria-hidden="true"
     >
       <path d={path} />
     </svg>
