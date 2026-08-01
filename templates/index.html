@@ -208,6 +208,15 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .qf-s{font-size:10px;color:var(--t2);margin-top:3px;line-height:1.5}
 .gc{color:var(--g)}.ac{color:var(--a)}.bc{color:var(--b)}.rc{color:var(--r)}.pc{color:var(--p)}
 
+/* Metric row — Thrust / TWR / Current (reference-style 3-card strip) */
+.mtr-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.mtr{background:var(--surf);border:1px solid var(--bd);border-radius:12px;padding:12px 10px;text-align:left}
+.mtr-l{display:flex;align-items:center;gap:5px;font-size:10.5px;color:var(--t2);letter-spacing:.04em;margin-bottom:6px;font-weight:700}
+.mtr-v{font-family:var(--fd);font-size:19px;font-weight:800;line-height:1}
+.mtr-v small{font-size:11px;font-weight:600;opacity:.75;margin-left:1px}
+.mtr-badge{display:inline-block;margin-top:7px;padding:2px 8px;border-radius:6px;font-size:9.5px;font-weight:700;letter-spacing:.03em}
+@media(max-width:420px){.mtr-grid{gap:6px}.mtr{padding:10px 8px}.mtr-v{font-size:16.5px}}
+
 /* CLI — the hero of this page */
 .cli-card{background:rgba(0,0,0,.5);border:1.5px solid rgba(0,255,68,.18);border-radius:13px;
   overflow:hidden;margin-bottom:16px;box-shadow:0 8px 32px rgba(0,0,0,.4)}
@@ -553,6 +562,8 @@ pre::-webkit-scrollbar-thumb{background:rgba(0,255,68,.2);border-radius:2px}
 {% set _wt   = analysis.weight | default(750) | float %}
 {% set _kv   = analysis.motor_kv | default(0) | int %}
 {% set _sz   = analysis.size | default(5) | float %}
+{% set _thrust_kg = ((_twr * _wt) / 1000) | round(2) if _twr and _wt else 0 %}
+{% set _curr_a    = adv.avg_current_a | default(0) | float %}
 {% set _sy   = analysis.style | default('freestyle') %}
 {% set _cls  = analysis.detected_class | default('freestyle') %}
 {% set _eff  = adv.efficiency_class | default('nominal') %}
@@ -586,18 +597,7 @@ pre::-webkit-scrollbar-thumb{background:rgba(0,255,68,.2);border-radius:2px}
 {% set _warns = analysis.warnings | default([]) %}
 {% set _rules = analysis.rules | default([]) %}
 
-{# Alerts #}
-{% if _warns or _rules %}
-<div style="margin-bottom:12px">
-  {% for w in _warns %}<div class="alert {{ w.level }}">{% if w.level=='danger' %}❌{% elif w.level=='warning' %}⚠️{% else %}ℹ️{% endif %} {{ w.msg }}</div>{% endfor %}
-  {% for r in _rules %}{% if r.level in ['danger','warning'] %}<div class="alert {{ r.level }}">{% if r.level=='danger' %}❌{% else %}⚠️{% endif %} {{ r.msg }}{% if r.suggestion %} → {{ r.suggestion }}{% endif %}</div>{% endif %}{% endfor %}
-</div>
-{% endif %}
-
-<!-- Accuracy badge -->
-<div class="acc-badge {{ 'acc-high' if _accurate else 'acc-med' }}">
-  {% if _accurate %}✅ ความแม่นยำสูง — คำนวณจาก Motor KV จริง{% else %}⚡ ความแม่นยำปานกลาง — ใส่ Motor KV เพื่อความแม่นยำสูงสุด{% endif %}
-</div>
+{# Alerts moved below header/metrics to match reference order #}
 
 <!-- Result header -->
 <div class="res-head">
@@ -620,6 +620,37 @@ pre::-webkit-scrollbar-thumb{background:rgba(0,255,68,.2);border-radius:2px}
     <div class="rv"><div class="rv-v" style="color:{% if _twr>=3.5 %}var(--g){% elif _twr>=2 %}var(--a){% else %}var(--r){% endif %}">{{ _twr|round(2) }}</div><div class="rv-l">TWR</div></div>
     <div class="rv"><div class="rv-v" style="color:var(--b)">{{ _ft|round(1) }}m</div><div class="rv-l">FLIGHT</div></div>
   </div>
+</div>
+
+<!-- Thrust / TWR / Current — 3-card metric strip (reference layout) -->
+<div class="mtr-grid">
+  <div class="mtr" style="border-color:rgba(0,255,68,.22)">
+    <div class="mtr-l">⚡ THRUST</div>
+    <div class="mtr-v gc">{{ _thrust_kg }}<small>kg</small></div>
+    <span class="mtr-badge" style="background:rgba(0,255,68,.12);color:var(--g)">{% if _thrust_kg>=4 %}GOOD{% elif _thrust_kg>=2 %}OK{% else %}LOW{% endif %}</span>
+  </div>
+  <div class="mtr" style="border-color:rgba(0,168,255,.22)">
+    <div class="mtr-l">📈 TWR</div>
+    <div class="mtr-v bc">{{ _twr|round(1) }}<small>x</small></div>
+    <span class="mtr-badge" style="background:rgba(0,168,255,.12);color:var(--b)">{% if _twr>=3.5 %}EXCELLENT{% elif _twr>=2 %}GOOD{% else %}LOW{% endif %}</span>
+  </div>
+  <div class="mtr" style="border-color:{% if _curr_a>40 %}rgba(255,153,0,.28){% else %}rgba(0,255,68,.22){% endif %}">
+    <div class="mtr-l">🔋 CURRENT</div>
+    <div class="mtr-v" style="color:{% if _curr_a>40 %}var(--a){% else %}var(--g){% endif %}">{{ _curr_a|round(0)|int }}<small>A</small></div>
+    <span class="mtr-badge" style="background:{% if _curr_a>40 %}rgba(255,153,0,.14){% else %}rgba(0,255,68,.12){% endif %};color:{% if _curr_a>40 %}var(--a){% else %}var(--g){% endif %}">{% if _curr_a>40 %}HIGH{% elif _curr_a>15 %}MODERATE{% else %}LOW{% endif %}</span>
+  </div>
+</div>
+
+{% if _warns or _rules %}
+<div style="margin-bottom:12px">
+  {% for w in _warns %}<div class="alert {{ w.level }}">{% if w.level=='danger' %}❌{% elif w.level=='warning' %}⚠️{% else %}ℹ️{% endif %} {{ w.msg }}</div>{% endfor %}
+  {% for r in _rules %}{% if r.level in ['danger','warning'] %}<div class="alert {{ r.level }}">{% if r.level=='danger' %}❌{% else %}⚠️{% endif %} {{ r.msg }}{% if r.suggestion %} → {{ r.suggestion }}{% endif %}</div>{% endif %}{% endfor %}
+</div>
+{% endif %}
+
+<!-- Accuracy badge -->
+<div class="acc-badge {{ 'acc-high' if _accurate else 'acc-med' }}">
+  {% if _accurate %}✅ ความแม่นยำสูง — คำนวณจาก Motor KV จริง{% else %}⚡ ความแม่นยำปานกลาง — ใส่ Motor KV เพื่อความแม่นยำสูงสุด{% endif %}
 </div>
 
 <!-- Quick facts -->
