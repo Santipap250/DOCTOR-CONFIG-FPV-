@@ -18,7 +18,7 @@
     </svg>
     <span>Home</span>
   </a>
-  <a href="/app" class="bnav-item {% if _bn_active=='tools' %}bnav-act{% endif %}">
+  <a href="/app" class="bnav-item {% if _bn_active=='tools' %}bnav-act{% endif %} js-bottom-tools" data-tools-launcher>
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M14.7 6.3a4 4 0 0 1-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 1 5.4-5.4L21 6l-3-3-3.3 3.3Z"/>
     </svg>
@@ -40,3 +40,16 @@
     <span>Profile</span>
   </a>
 </nav>
+
+<script>
+(function(){
+  var toolsBtn = document.querySelector('.js-bottom-tools[data-tools-launcher]');
+  if(!toolsBtn) return;
+  toolsBtn.addEventListener('click', function(e){
+    if(typeof window.openTP === 'function'){
+      e.preventDefault();
+      window.openTP();
+    }
+  });
+}());
+</script>
