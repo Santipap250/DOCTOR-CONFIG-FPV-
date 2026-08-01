@@ -213,3 +213,14 @@
   .bnav{ display:flex; }
   body{ padding-bottom:calc(64px + env(safe-area-inset-bottom,0px)); }
 }
+
+/* ── Bottom nav — light theme ── */
+body.light .bnav{
+  background:rgba(248,250,252,0.95);
+  border-top:1px solid rgba(0,0,0,0.08);
+  box-shadow:0 -8px 24px rgba(0,0,0,0.08);
+}
+body.light .bnav-item{ color:#5b6b76; }
+body.light .bnav-item:active{ background:rgba(5,150,105,0.08); }
+body.light .bnav-item.bnav-act{ color:#059669; }
+body.light .bnav-item.bnav-act svg{ filter:drop-shadow(0 0 4px rgba(5,150,105,0.35)); }
