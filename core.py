@@ -910,3 +910,7 @@ def _generate_cli_from_model(model):
         lines.append(f"// command: osd_add {it.get('type')} {it.get('x')} {it.get('y')} \"{it.get('label')}\" size={it.get('size')}")
     return "\n".join(lines)
 
+
+# ── BASE_URL & Sitemap Cache (Shared state) ──────────────────────────────────
+_BASE_URL = os.environ.get("BASE_URL", "https://configdoctor.onrender.com").rstrip("/")
+_SITEMAP_CACHE: dict = {}

@@ -7,6 +7,7 @@
 from datetime import datetime
 
 from flask import Blueprint, jsonify, Response
+from core import _BASE_URL, _SITEMAP_CACHE
 
 bp = Blueprint('meta', __name__)
 
@@ -19,7 +20,6 @@ def healthz():
 
 @bp.route("/robots.txt")
 def robots_txt():
-    from app import _BASE_URL
     content = (
         "User-agent: *\n"
         "Crawl-delay: 10\n"
@@ -49,7 +49,6 @@ def robots_txt():
 
 @bp.route("/sitemap.xml")
 def sitemap_xml():
-    from app import _BASE_URL, _SITEMAP_CACHE
     today = datetime.now().strftime("%Y-%m-%d")
     if (_SITEMAP_CACHE.get("date") == today
             and _SITEMAP_CACHE.get("base") == _BASE_URL

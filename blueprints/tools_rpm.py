@@ -5,7 +5,8 @@
 #    after those names exist. ───────────────────────────────────────────
 from flask import Blueprint, request, render_template
 
-from app import calculate_rpm_filter, logger
+from extensions import logger
+from core import calculate_rpm_filter
 
 bp = Blueprint('tools_rpm', __name__)
 

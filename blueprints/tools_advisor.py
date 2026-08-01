@@ -9,12 +9,12 @@ import json
 import re
 
 from flask import Blueprint, render_template, jsonify
+from core import get_all_symptoms, _get_symptom_advice
 
 bp = Blueprint('tools_advisor', __name__)
 
 
 def _build_advice_json():
-    from app import get_all_symptoms, _get_symptom_advice
     symptoms_list = get_all_symptoms()
     advice_dict = {s['id']: _get_symptom_advice(s['id']) for s in symptoms_list}
     return symptoms_list, json.dumps(advice_dict, ensure_ascii=False)
@@ -34,7 +34,6 @@ def quick_tune():
 
 @bp.route('/api/symptom/<symptom_id>')
 def api_symptom(symptom_id):
-    from app import _get_symptom_advice
     # SECURITY: allow only alphanumeric + underscore IDs
     if not re.match(r'^[a-zA-Z0-9_]{1,80}$', str(symptom_id)):
         return jsonify({"error": "invalid symptom ID"}), 400

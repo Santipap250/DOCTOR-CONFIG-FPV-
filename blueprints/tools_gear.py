@@ -9,8 +9,8 @@
 #    module. Registered at the bottom of app.py, after those names exist. ──
 from flask import Blueprint, request, render_template
 
-from app import (
-    logger,
+from extensions import logger
+from core import (
     GEAR_MODULE_AVAILABLE,
     _gear_recommend,
     _gear_starter_kits,

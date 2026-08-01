@@ -9,10 +9,8 @@ import json
 from flask import Blueprint, request, jsonify, send_file, url_for
 from werkzeug.utils import secure_filename
 
-from app import (
-    app,
-    logger,
-    _rate,
+from extensions import _rate, logger
+from core import (
     _cleanup_osd_files,
     _timestamped_filename,
     _generate_osd_text_from_model,
@@ -39,6 +37,7 @@ def osd_export():
     else:
         content, ext = _generate_osd_text_from_model(data), 'txt'
     if save_flag:
+        from app import app
         # SECURITY: limit OSD save to 100KB to prevent disk fill attacks
         if len(content.encode('utf-8')) > 100_000:
             return ("Content too large (max 100KB)", 413)

@@ -7,6 +7,7 @@ import os
 
 from flask import Blueprint, abort, send_from_directory, render_template
 from werkzeug.utils import secure_filename
+from core import _file_sha256
 
 bp = Blueprint('downloads', __name__)
 
@@ -32,7 +33,7 @@ def download_diff(fc, filename):
 
 @bp.route('/downloads')
 def downloads_index():
-    from app import app, _file_sha256
+    from app import app
     base = os.path.realpath(os.path.join(app.root_path, 'static', 'downloads', 'diff_all'))
     items = []
     if os.path.isdir(base):

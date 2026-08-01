@@ -6,7 +6,8 @@
 #    app.py, after those names exist. ──────────────────────────────────────
 from flask import Blueprint, request, jsonify
 
-from app import _get_db, _db_lock, _ip_hash, _rate, logger
+from extensions import _rate, logger
+from core import _get_db, _db_lock, _ip_hash
 
 bp = Blueprint('api_community', __name__)
 

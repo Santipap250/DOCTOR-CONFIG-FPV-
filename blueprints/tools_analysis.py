@@ -7,9 +7,8 @@
 #    at the bottom of app.py, after those names exist. ─────────────────────
 from flask import Blueprint, request, render_template, jsonify
 
-from app import (
-    logger,
-    _rate,
+from extensions import _rate, logger
+from core import (
     _handle_analysis_post,
     _handle_analysis_get_params,
     _recommend_motor_prop,
