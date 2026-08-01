@@ -12,7 +12,6 @@
 <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
 {% set _page_css = self.page_css() %}
 {% if _page_css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/' ~ _page_css) }}">{% endif %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/components.css') }}">
 {% block extra_css_links %}{% endblock %}
 {% block extra_head %}{% endblock %}
 {% set nav_page = self.page_nav_page() %}
