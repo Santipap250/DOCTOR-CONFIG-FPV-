@@ -16,8 +16,6 @@ except ImportError:
 
 from flask import (Flask, render_template, request, send_from_directory,
                    abort, send_file, jsonify, url_for)
-from flask import (Flask, render_template, request, send_from_directory,
-                   abort, send_file, jsonify, url_for)
 from werkzeug.middleware.proxy_fix import ProxyFix
 import os, time, logging, hashlib
 from datetime import datetime
@@ -263,8 +261,12 @@ app.register_blueprint(_tools_cli_api_bp)
 app.register_blueprint(_tools_osd_bp)
 
 
-if __name__ == "__main__":
-    # ส่วนการตรวจสอบ Template ทำงานปกติได้
+def _startup_validate_templates() -> None:
+    """Validate that the main landing template exists before serving.
+
+    This keeps production startup honest, while still allowing local
+    development to run with a clear error if the template tree is broken.
+    """
     try:
         from jinja2 import Environment, FileSystemLoader as _FL
         _env = Environment(loader=_FL("templates"))
@@ -272,5 +274,11 @@ if __name__ == "__main__":
         logger.info("Startup: template validation passed ✓")
     except Exception as _te:
         logger.error("Startup: template validation FAILED - %s", _te)
+        raise
 
-# ลบชุดคำสั่ง app.run() ด้านล่างทิ้งไปเลยให้เหลือแค่นี้พอค่ะ คลีนที่สุดสำหรับ Vercel
+
+if __name__ == "__main__":
+    _startup_validate_templates()
+    port = int(os.environ.get("PORT", "10000"))
+    debug = os.environ.get("FLASK_DEBUG", "0") in ("1", "true", "True")
+    app.run(host="0.0.0.0", port=port, debug=debug)
