@@ -1,15 +1,13 @@
-<!DOCTYPE html>
-<html lang="th">
-<head>
-<meta charset="UTF-8">
-<title>Build Card Generator — OBIXConfig Doctor</title>
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-{% set og_title = "Build Card Generator — OBIXConfig Doctor" %}
-{% set og_description = "สร้างรูปสเปคโดรนสวยๆ แชร์ Facebook · LINE · Instagram ได้เลย" %}
-{% set og_url = BASE_URL ~ '/build-card' %}
-{% include "partials/og_tags.html" %}
-<link rel="icon" href="{{ url_for('static',filename='favicon.ico') }}">
-{% set nav_page = "build_card" %}
+{% extends "base.html" %}
+{% block title %}Build Card Generator — OBIXConfig Doctor{% endblock %}
+{% block page_og_title %}Build Card Generator — OBIXConfig Doctor{% endblock %}
+{% block page_og_description %}สร้างรูปสเปคโดรนสวยๆ แชร์ Facebook · LINE · Instagram ได้เลย{% endblock %}
+{% block page_og_path %}/build-card{% endblock %}
+{% block page_nav_page %}build_card{% endblock %}
+{% block page_css %}{% endblock %}
+{% block extra_head %}
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=JetBrains+Mono:wght@400;600;700&family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=JetBrains+Mono:wght@400;600;700&family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -119,12 +117,9 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-t);min-height
   .hero h1{font-size:20px}
 }
 </style>
-
 <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
-</head>
-<body>
-{% include "partials/nav.html" %}
-{% include "partials/page_actions.html" %}
+{% endblock %}
+{% block content %}
 <div class="scan-line"></div>
 
 <div class="wrap">
@@ -222,6 +217,9 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-t);min-height
 </div><!-- end layout -->
 </div><!-- end wrap -->
 
+{% endblock %}
+{% block extra_scripts %}
+<script>
 <script>
 'use strict';
 // ── State ─────────────────────────────────────────
@@ -475,6 +473,4 @@ if (document.fonts && document.fonts.ready) {
   window.addEventListener('load', drawCard);
 }
 </script>
-{% include "partials/footer_nav.html" %}
-</body>
-</html>
+{% endblock %}
