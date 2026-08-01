@@ -11,734 +11,469 @@
 {% block extra_head %}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Sarabun:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Sarabun:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-    :root {
-        --bg: #020604;
-        --green: #00ff44;
-        --green-glow: rgba(0, 255, 68, 0.4);
-        --blue: #00f2ff;
-        --blue-glow: rgba(0, 242, 255, 0.4);
-        --card-bg: rgba(5, 10, 8, 0.7);
-        --text: #ffffff;
-        --text-dim: rgba(255, 255, 255, 0.6);
-        --font-main: 'Sarabun', sans-serif;
-        --font-header: 'Orbitron', sans-serif;
-        --glass: rgba(255, 255, 255, 0.03);
-        --glass-border: rgba(255, 255, 255, 0.08);
-    }
+:root{
+  --bg:#020604;
+  --bg2:#07110d;
+  --panel:rgba(7,14,11,.72);
+  --panel-strong:rgba(7,14,11,.9);
+  --glass:rgba(255,255,255,.03);
+  --glass-border:rgba(255,255,255,.08);
+  --green:#00ff66;
+  --green-soft:rgba(0,255,102,.18);
+  --green-glow:rgba(0,255,102,.35);
+  --cyan:#00e5ff;
+  --cyan-glow:rgba(0,229,255,.26);
+  --text:#f8fbff;
+  --muted:#a8b6c0;
+  --muted2:#6f8592;
+  --shadow:0 22px 70px rgba(0,0,0,.42);
+  --radius:24px;
+  --radius-lg:30px;
+  --header-h:72px;
+  --footer-h:82px;
+  --font-main:'Sarabun',sans-serif;
+  --font-head:'Orbitron',sans-serif;
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;font-family:var(--font-main);color:var(--text);background:var(--bg);overflow-x:hidden;-webkit-tap-highlight-color:transparent;padding-bottom:calc(var(--footer-h) + 14px)}
+body::before{content:'';position:fixed;inset:0;z-index:-3;background:
+  radial-gradient(circle at 12% 8%, rgba(0,255,102,.09), transparent 30%),
+  radial-gradient(circle at 85% 12%, rgba(0,229,255,.08), transparent 28%),
+  radial-gradient(circle at 75% 86%, rgba(0,255,102,.05), transparent 32%),
+  linear-gradient(180deg, rgba(2,6,4,.55), rgba(3,9,7,.84)),
+  url("{{ url_for('static', filename='img/landing-bg-desktop.jpg') }}");
+  background-size:auto,auto,auto,auto,cover;background-position:center;background-repeat:no-repeat;background-attachment:fixed;}
+body::after{content:'';position:fixed;inset:0;z-index:-2;pointer-events:none;background:linear-gradient(180deg, rgba(255,255,255,.02), transparent 18%, transparent 82%, rgba(0,0,0,.18));}
+@media (max-width: 760px){body::before{background:
+  radial-gradient(circle at 12% 8%, rgba(0,255,102,.08), transparent 30%),
+  radial-gradient(circle at 85% 12%, rgba(0,229,255,.07), transparent 28%),
+  linear-gradient(180deg, rgba(2,6,4,.62), rgba(3,9,7,.88)),
+  url("{{ url_for('static', filename='img/landing-bg-mobile.jpg') }}");background-attachment:scroll;}}
 
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-        -webkit-tap-highlight-color: transparent;
-    }
+a{color:inherit;text-decoration:none} button,input{font:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding:0 18px}
 
-    body {
-        background-color: var(--bg);
-        color: var(--text);
-        font-family: var(--font-main);
-        line-height: 1.6;
-        overflow-x: hidden;
-        padding-bottom: 80px;
-    }
+/* Header */
+.header{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px) saturate(1.25);-webkit-backdrop-filter:blur(20px) saturate(1.25);background:rgba(2,6,4,.64);border-bottom:1px solid rgba(255,255,255,.06)}
+.header-inner{height:var(--header-h);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.brand img{width:auto;height:32px;filter:drop-shadow(0 0 10px rgba(0,255,102,.28))}
+.brand-badge{display:inline-flex;align-items:center;gap:6px;padding:7px 10px;border-radius:999px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);font-size:12px;color:var(--muted);white-space:nowrap}
+.brand-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green-glow)}
+.header-actions{display:flex;align-items:center;gap:10px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:46px;padding:0 16px;border-radius:14px;font-family:var(--font-head);font-size:12px;letter-spacing:.08em;font-weight:800;border:1px solid transparent;transition:transform .2s ease,box-shadow .2s ease,background .2s ease,border-color .2s ease;cursor:pointer}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:linear-gradient(135deg,var(--green),#00cc55);color:#04110b;box-shadow:0 12px 28px rgba(0,255,102,.22)}
+.btn-primary:hover{box-shadow:0 16px 34px rgba(0,255,102,.28)}
+.btn-outline{background:rgba(255,255,255,.03);border-color:rgba(0,229,255,.22);color:#baf5ff}
+.btn-outline:hover{border-color:rgba(0,229,255,.45);background:rgba(0,229,255,.07);box-shadow:0 10px 24px rgba(0,229,255,.10)}
+.btn-ghost{background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.08);color:var(--text)}
+.btn-ghost:hover{border-color:rgba(255,255,255,.16);background:rgba(255,255,255,.05)}
+.btn-icon{width:46px;padding:0;font-size:18px}
+@media (max-width: 760px){.brand-badge{display:none}.header-actions .btn-ghost{display:none}.header-inner{height:64px}}
 
-    /* --- Animated Background --- */
-    body::before {
-        content: '';
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: 
-            radial-gradient(circle at 20% 30%, rgba(0, 255, 68, 0.05) 0%, transparent 50%),
-            radial-gradient(circle at 80% 70%, rgba(0, 242, 255, 0.05) 0%, transparent 50%);
-        z-index: -2;
-    }
+/* Hero */
+.hero{padding:26px 0 18px}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:24px;align-items:center;min-height:calc(100dvh - var(--header-h) - var(--footer-h) - 24px)}
+.hero-copy{padding:8px 0 18px}
+.kicker{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;background:rgba(0,255,102,.08);border:1px solid rgba(0,255,102,.16);color:#8cffb6;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px}
+.kicker i{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green-glow)}
+.hero h1{margin:0;font-family:var(--font-main);font-size:clamp(38px,8.4vw,72px);line-height:1.03;font-weight:900;letter-spacing:-.03em;max-width:12ch;text-wrap:balance}
+.hero h1 .accent{display:block;color:var(--green);text-shadow:0 0 28px rgba(0,255,102,.28)}
+.hero-sub{margin:18px 0 0;max-width:54ch;font-size:clamp(15px,2vw,18px);line-height:1.8;color:var(--muted)}
+.hero-pills{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.pill{padding:9px 12px;border-radius:999px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);color:#d8e6ee;font-size:12px;display:inline-flex;align-items:center;gap:8px}
+.pill b{color:#fff}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.hero-actions .btn{min-width:190px}
 
-    /* --- Header --- */
-    header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 1000;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px 24px;
-        background: rgba(2, 6, 4, 0.7);
-        backdrop-filter: blur(20px);
-        border-bottom: 1px solid var(--glass-border);
-    }
+.hero-visual{position:relative;isolation:isolate;display:grid;place-items:center}
+.hero-card{position:relative;width:min(100%,520px);aspect-ratio:1/1.06;border-radius:34px;padding:16px;background:linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.022));border:1px solid rgba(255,255,255,.08);box-shadow:var(--shadow);overflow:hidden}
+.hero-card::before{content:'';position:absolute;inset:-2px;background:radial-gradient(circle at 20% 20%, rgba(0,255,102,.16), transparent 30%), radial-gradient(circle at 82% 18%, rgba(0,229,255,.13), transparent 28%), radial-gradient(circle at 55% 82%, rgba(0,255,102,.08), transparent 30%);filter:blur(14px);z-index:-1}
+.hero-card::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,.06), rgba(0,0,0,.24));pointer-events:none}
+.hero-drone{position:absolute;inset:0;margin:auto;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 26px 30px rgba(0,0,0,.34)) drop-shadow(0 0 26px rgba(0,255,102,.12));animation:float 7.5s ease-in-out infinite;z-index:1}
+.hero-glass{position:absolute;left:16px;right:16px;bottom:16px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;z-index:2}
+.mini{padding:12px;border-radius:18px;background:rgba(5,12,10,.72);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(12px)}
+.mini .n{display:block;font-family:var(--font-head);font-size:11px;letter-spacing:.08em;color:#dfffe6}
+.mini .v{display:block;margin-top:6px;font-size:15px;font-weight:800;color:#fff}
+.mini .s{display:block;margin-top:4px;font-size:11px;color:var(--muted2)}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-7deg)}50%{transform:translateY(-14px) rotate(-5deg)}}
 
-    .logo {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        text-decoration: none;
-        color: var(--text);
-        transition: 0.3s;
-    }
-    
-    .logo:hover {
-        transform: scale(1.02);
-    }
+/* Feature strip */
+.feature-strip{padding:18px 0 30px}
+.feature-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.feature{padding:16px;border-radius:22px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);box-shadow:0 12px 30px rgba(0,0,0,.18)}
+.feature .ic{width:40px;height:40px;border-radius:14px;display:grid;place-items:center;background:rgba(0,255,102,.1);border:1px solid rgba(0,255,102,.16);margin-bottom:12px}
+.feature .ic svg{width:20px;height:20px;color:var(--green)}
+.feature h3{margin:0;font-size:15px;line-height:1.2}
+.feature p{margin:8px 0 0;color:var(--muted);font-size:13px;line-height:1.65}
 
-    .logo-icon {
-        height: 32px;
-        width: auto;
-        filter: drop-shadow(0 0 8px var(--green-glow));
-    }
+/* Tools section */
+.section{padding:8px 0 24px}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:8px 0 16px}
+.section-head h2{margin:0;font-family:var(--font-head);font-size:18px;letter-spacing:.08em;color:#dfffe6}
+.section-head p{margin:0;color:var(--muted);font-size:13px;max-width:56ch}
+.tools-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.tool-card{position:relative;overflow:hidden;display:flex;gap:14px;align-items:flex-start;padding:18px;border-radius:24px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(12px);box-shadow:0 12px 30px rgba(0,0,0,.16);transition:transform .2s ease,border-color .2s ease,background .2s ease}
+.tool-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 15% 10%, rgba(0,255,102,.09), transparent 24%), radial-gradient(circle at 92% 12%, rgba(0,229,255,.08), transparent 22%);opacity:.9;pointer-events:none}
+.tool-card:hover{transform:translateY(-2px);border-color:rgba(0,255,102,.22);background:rgba(255,255,255,.045)}
+.tool-ic{flex:0 0 54px;width:54px;height:54px;border-radius:18px;display:grid;place-items:center;background:rgba(0,255,102,.08);border:1px solid rgba(0,255,102,.14);color:var(--green);position:relative;z-index:1}
+.tool-ic.blue{background:rgba(0,229,255,.08);border-color:rgba(0,229,255,.14);color:var(--cyan)}
+.tool-ic svg{width:24px;height:24px}
+.tool-body{position:relative;z-index:1;min-width:0;flex:1}
+.tool-name{font-size:16px;font-weight:800;margin:1px 0 6px}
+.tool-desc{font-size:13px;line-height:1.7;color:var(--muted)}
+.tool-meta{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:12px}
+.tag{font-size:11px;padding:6px 9px;border-radius:999px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:#d5e4ea}
+.chev{color:#dfffe6;opacity:.8}
 
-    /* Hamburger Menu Button */
-    .menu-btn {
-        background: rgba(0, 255, 68, 0.1);
-        border: 1px solid rgba(0, 255, 68, 0.2);
-        color: var(--green);
-        cursor: pointer;
-        width: 44px;
-        height: 44px;
-        border-radius: 10px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 5px;
-        transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        z-index: 1100;
-    }
+/* Bottom nav */
+.bottom-nav{position:fixed;left:0;right:0;bottom:0;z-index:120;background:rgba(4,9,7,.82);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,.08);padding:10px 14px calc(10px + env(safe-area-inset-bottom))}
+.bottom-inner{max-width:680px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.nav-item,.nav-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-height:58px;border-radius:16px;background:transparent;border:1px solid rgba(255,255,255,.06);color:var(--muted);font-size:11px;font-weight:700}
+.nav-item svg,.nav-btn svg{width:20px;height:20px}
+.nav-item.active,.nav-btn.active{background:rgba(0,255,102,.09);border-color:rgba(0,255,102,.2);color:#dfffeb}
+.nav-btn{width:100%;cursor:pointer}
 
-    .menu-btn span {
-        display: block;
-        width: 22px;
-        height: 2px;
-        background-color: var(--green);
-        border-radius: 2px;
-        transition: 0.3s;
-    }
+/* Modal Tools Sheet */
+.tools-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.62);opacity:0;visibility:hidden;transition:opacity .2s ease,visibility .2s ease;z-index:200}
+.tools-backdrop.open{opacity:1;visibility:visible}
+.tools-sheet{position:fixed;left:50%;top:50%;transform:translate(-50%,calc(-50% + 24px)) scale(.98);width:min(1120px,calc(100vw - 18px));height:min(84dvh,780px);background:linear-gradient(180deg, rgba(10,18,14,.98), rgba(6,12,10,.98));border:1px solid rgba(255,255,255,.08);border-radius:30px;box-shadow:0 24px 90px rgba(0,0,0,.55);opacity:0;visibility:hidden;transition:opacity .22s ease,transform .22s ease,visibility .22s ease;z-index:210;overflow:hidden;display:grid;grid-template-rows:auto auto 1fr}
+.tools-sheet.open{opacity:1;visibility:visible;transform:translate(-50%,-50%) scale(1)}
+.tools-top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 16px 12px;border-bottom:1px solid rgba(255,255,255,.07)}
+.tools-title{display:flex;align-items:center;gap:12px;min-width:0}
+.tools-title h3{margin:0;font-family:var(--font-head);font-size:14px;letter-spacing:.12em}
+.tools-title p{margin:4px 0 0;color:var(--muted);font-size:12px}
+.tools-close{width:44px;height:44px;border-radius:14px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);color:#fff;cursor:pointer}
+.tools-search{padding:0 16px 14px;border-bottom:1px solid rgba(255,255,255,.05)}
+.searchbox{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}
+.searchbox input{flex:1;background:transparent;border:none;outline:none;color:#fff;font-size:14px}
+.searchbox .count{font-size:12px;color:var(--muted)}
+.tools-body{display:grid;grid-template-columns:220px 1fr;min-height:0}
+.cat-list{padding:14px;background:rgba(255,255,255,.02);border-right:1px solid rgba(255,255,255,.05);overflow:auto}
+.cat-btn{width:100%;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 12px;margin-bottom:8px;border-radius:16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);color:#eaf3f7;cursor:pointer;text-align:left}
+.cat-btn span{display:block;font-size:12px}
+.cat-btn small{color:var(--muted);font-size:11px}
+.cat-btn.active{border-color:rgba(0,255,102,.24);background:rgba(0,255,102,.08)}
+.cat-btn .dot{width:10px;height:10px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green-glow);flex:0 0 auto}
+.list-wrap{padding:14px;overflow:auto}
+.list-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.list-head strong{font-family:var(--font-head);font-size:12px;letter-spacing:.12em;color:#dfffe6}
+.list-head span{color:var(--muted);font-size:12px}
+.tool-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.sheet-item{display:flex;align-items:center;gap:12px;padding:14px;border-radius:18px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);transition:transform .18s ease,border-color .18s ease,background .18s ease}
+.sheet-item:hover{transform:translateY(-1px);border-color:rgba(0,255,102,.2);background:rgba(255,255,255,.05)}
+.sheet-icon{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;flex:0 0 auto;background:rgba(0,255,102,.08);border:1px solid rgba(0,255,102,.14);color:var(--green)}
+.sheet-icon.blue{background:rgba(0,229,255,.08);border-color:rgba(0,229,255,.14);color:var(--cyan)}
+.sheet-icon svg{width:20px;height:20px}
+.sheet-copy{min-width:0;flex:1}
+.sheet-copy b{display:block;font-size:14px;margin-bottom:4px}
+.sheet-copy em{display:block;font-style:normal;font-size:12px;color:var(--muted);line-height:1.55}
+.sheet-arrow{color:#dfffe6;opacity:.75}
+.sheet-empty{display:none;padding:28px;text-align:center;color:var(--muted)}
+.sheet-empty strong{display:block;color:#fff;margin-bottom:6px}
 
-    .menu-btn.open span:nth-child(1) {
-        transform: translateY(7px) rotate(45deg);
-    }
-    .menu-btn.open span:nth-child(2) {
-        opacity: 0;
-        transform: translateX(-10px);
-    }
-    .menu-btn.open span:nth-child(3) {
-        transform: translateY(-7px) rotate(-45deg);
-    }
-
-    .menu-btn:hover {
-        background: rgba(0, 255, 68, 0.2);
-        box-shadow: 0 0 15px var(--green-glow);
-    }
-
-    /* Drawer Menu */
-    .drawer {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        width: 100%;
-        max-width: 300px;
-        height: 100vh;
-        background: rgba(5, 10, 8, 0.95);
-        backdrop-filter: blur(20px);
-        z-index: 1050;
-        padding: 100px 30px;
-        transition: 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
-        border-left: 1px solid var(--glass-border);
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .drawer.open {
-        right: 0;
-        box-shadow: -20px 0 50px rgba(0,0,0,0.5);
-    }
-
-    .drawer-link {
-        color: var(--text);
-        text-decoration: none;
-        font-family: var(--font-header);
-        font-size: 20px;
-        font-weight: 700;
-        padding: 10px 0;
-        border-bottom: 1px solid var(--glass-border);
-        transition: 0.3s;
-        display: flex;
-        align-items: center;
-        gap: 15px;
-    }
-
-    .drawer-link:hover {
-        color: var(--green);
-        padding-left: 10px;
-        text-shadow: 0 0 10px var(--green-glow);
-    }
-
-    .drawer-link svg {
-        width: 20px;
-        height: 20px;
-        color: var(--green);
-    }
-
-    .overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,0.5);
-        opacity: 0;
-        visibility: hidden;
-        z-index: 1040;
-        transition: 0.3s;
-    }
-
-    .overlay.open {
-        opacity: 1;
-        visibility: visible;
-    }
-
-    /* --- Hero --- */
-    .hero {
-        position: relative;
-        padding: 120px 24px 60px;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        min-height: 550px;
-    }
-
-    .hero-drone {
-        position: absolute;
-        top: 40px;
-        right: -40px;
-        width: 100%;
-        max-width: 450px;
-        z-index: -1;
-        filter: drop-shadow(0 0 30px var(--green-glow));
-        animation: float 6s ease-in-out infinite;
-    }
-
-    @keyframes float {
-        0%, 100% { transform: translateY(0) rotate(-15deg); }
-        50% { transform: translateY(-20px) rotate(-12deg); }
-    }
-
-    .hero-title {
-        font-family: var(--font-main);
-        font-size: clamp(36px, 10vw, 56px);
-        font-weight: 800;
-        line-height: 1.1;
-        margin-bottom: 15px;
-        max-width: 400px;
-        animation: fadeInUp 0.8s ease-out both;
-    }
-
-    .hero-title span {
-        color: var(--green);
-        display: block;
-        text-shadow: 0 0 30px var(--green-glow);
-    }
-
-    .hero-subtitle {
-        color: var(--blue);
-        font-family: var(--font-header);
-        font-size: 14px;
-        font-weight: 600;
-        letter-spacing: 2px;
-        margin-bottom: 40px;
-        animation: fadeInUp 0.8s ease-out 0.2s both;
-    }
-
-    .hero-btns {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        width: 100%;
-        max-width: 350px;
-        animation: fadeInUp 0.8s ease-out 0.4s both;
-    }
-
-    @keyframes fadeInUp {
-        from { opacity: 0; transform: translateY(30px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* --- Premium Buttons --- */
-    .btn {
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 12px;
-        padding: 18px;
-        border-radius: 14px;
-        font-weight: 800;
-        text-decoration: none;
-        font-size: 18px;
-        font-family: var(--font-header);
-        letter-spacing: 1px;
-        overflow: hidden;
-        transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-        z-index: 1;
-    }
-
-    .btn-primary {
-        background: linear-gradient(135deg, var(--green) 0%, #00cc33 100%);
-        color: #020604;
-        border: 1px solid rgba(255,255,255,0.3);
-        box-shadow: 0 10px 20px -5px var(--green-glow);
-    }
-
-    .btn-primary::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-        transition: 0.5s;
-        z-index: -1;
-    }
-
-    .btn-primary:hover {
-        transform: translateY(-3px) scale(1.02);
-        box-shadow: 0 15px 30px -5px var(--green-glow);
-    }
-
-    .btn-primary:hover::before {
-        left: 100%;
-    }
-
-    .btn-outline {
-        background: rgba(0, 242, 255, 0.05);
-        border: 2px solid var(--blue);
-        color: var(--blue);
-        backdrop-filter: blur(5px);
-    }
-
-    .btn-outline:hover {
-        background: rgba(0, 242, 255, 0.15);
-        transform: translateY(-3px);
-        box-shadow: 0 10px 20px -5px var(--blue-glow);
-        color: #fff;
-        border-color: #fff;
-    }
-
-    /* --- Tools Grid --- */
-    .tools-section {
-        padding: 40px 24px;
-    }
-
-    .section-title {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        font-family: var(--font-header);
-        font-size: 20px;
-        color: var(--green);
-        margin-bottom: 30px;
-        font-weight: 700;
-        letter-spacing: 1px;
-    }
-
-    .grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-    }
-
-    .card {
-        background: var(--card-bg);
-        border: 1px solid var(--glass-border);
-        border-radius: 20px;
-        padding: 24px 16px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        text-decoration: none;
-        color: var(--text);
-        transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-        position: relative;
-        overflow: hidden;
-        backdrop-filter: blur(10px);
-    }
-
-    .card::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: radial-gradient(circle at center, rgba(0, 255, 68, 0.1), transparent 70%);
-        opacity: 0;
-        transition: 0.4s;
-    }
-
-    .card-blue::after {
-        background: radial-gradient(circle at center, rgba(0, 242, 255, 0.1), transparent 70%);
-    }
-
-    .card:hover {
-        transform: translateY(-8px);
-        border-color: var(--green);
-        box-shadow: 0 20px 40px -10px rgba(0, 255, 68, 0.2);
-    }
-
-    .card-blue:hover {
-        border-color: var(--blue);
-        box-shadow: 0 20px 40px -10px rgba(0, 242, 255, 0.2);
-    }
-
-    .card:hover::after {
-        opacity: 1;
-    }
-
-    .card-icon {
-        width: 48px;
-        height: 48px;
-        margin-bottom: 15px;
-        color: var(--green);
-        transition: 0.4s;
-        filter: drop-shadow(0 0 5px var(--green-glow));
-    }
-
-    .card-blue .card-icon {
-        color: var(--blue);
-        filter: drop-shadow(0 0 5px var(--blue-glow));
-    }
-
-    .card:hover .card-icon {
-        transform: scale(1.1) rotate(5deg);
-    }
-
-    .card-name {
-        font-family: var(--font-header);
-        font-size: 16px;
-        font-weight: 700;
-        margin-bottom: 6px;
-        letter-spacing: 0.5px;
-    }
-
-    .card-desc {
-        font-size: 12px;
-        color: var(--text-dim);
-        line-height: 1.5;
-    }
-
-    /* --- Bottom Nav --- */
-    .bottom-nav {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: rgba(2, 6, 4, 0.85);
-        backdrop-filter: blur(25px);
-        display: flex;
-        justify-content: space-around;
-        padding: 12px 0 calc(12px + env(safe-area-inset-bottom, 0px));
-        border-top: 1px solid var(--glass-border);
-        z-index: 1000;
-    }
-
-    .nav-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-decoration: none;
-        color: var(--text-dim);
-        font-size: 11px;
-        font-family: var(--font-header);
-        font-weight: 700;
-        letter-spacing: 0.5px;
-        gap: 6px;
-        transition: 0.3s;
-    }
-
-    .nav-item.active {
-        color: var(--green);
-    }
-
-    .nav-item svg {
-        width: 24px;
-        height: 24px;
-        transition: 0.3s;
-    }
-
-    .nav-item:hover {
-        color: var(--text);
-    }
-
-    .nav-item:hover svg {
-        transform: translateY(-2px);
-    }
-
-    @media (min-width: 768px) {
-        .grid {
-            grid-template-columns: repeat(3, 1fr);
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        .hero {
-            align-items: center;
-            text-align: center;
-            padding-top: 180px;
-        }
-        .hero-title {
-            max-width: 800px;
-        }
-        .hero-drone {
-            right: 10%;
-            top: 80px;
-            max-width: 550px;
-        }
-        .hero-btns {
-            flex-direction: row;
-            max-width: 500px;
-            justify-content: center;
-        }
-        .btn {
-            flex: 1;
-        }
-    }
+@media (max-width: 960px){.hero-grid{grid-template-columns:1fr;gap:18px;min-height:auto;padding-top:10px}.hero-copy{order:1}.hero-visual{order:0}.feature-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.tools-grid{grid-template-columns:1fr}.tool-list{grid-template-columns:1fr}.tools-body{grid-template-columns:1fr}.cat-list{display:flex;gap:8px;overflow-x:auto;overflow-y:hidden;padding:12px;border-right:none;border-bottom:1px solid rgba(255,255,255,.05)}.cat-btn{min-width:150px;white-space:nowrap;flex-direction:row}.cat-btn .dot{margin-left:auto}}
+@media (max-width: 760px){:root{--header-h:64px;--footer-h:88px}.hero{padding-top:16px}.hero h1{font-size:clamp(34px,12vw,48px)}.hero-sub{font-size:14px;line-height:1.7}.hero-actions .btn{width:100%}.feature-grid{grid-template-columns:1fr}.hero-card{border-radius:28px;aspect-ratio:1/1.12}.hero-glass{grid-template-columns:1fr;left:12px;right:12px;bottom:12px}.mini .v{font-size:14px}.tools-sheet{width:100vw;height:100dvh;border-radius:0;left:0;top:0;transform:none}.tools-sheet.open{transform:none}.tools-top,.tools-search,.list-wrap{padding-left:12px;padding-right:12px}.tool-list{grid-template-columns:1fr}.section-head{flex-direction:column;align-items:flex-start}.bottom-nav{padding:9px 10px calc(9px + env(safe-area-inset-bottom))}.bottom-inner{gap:8px}.nav-item,.nav-btn{min-height:60px}}
+@media (prefers-reduced-motion: reduce){*{scroll-behavior:auto}.hero-drone{animation:none}.btn,.tool-card,.sheet-item{transition:none}}
 </style>
 {% endblock %}
 
 {% block content %}
-<header>
-    <a href="/" class="logo">
-        <img src="{{ url_for('static', filename='img/configdoctor-logo.png') }}" alt="ConfigDoctor" class="logo-icon">
+<div class="header">
+  <div class="wrap header-inner">
+    <a class="brand" href="/landing" aria-label="ConfigDoctor Home">
+      <img src="{{ url_for('static', filename='img/configdoctor-landing-logo.png') }}" alt="ConfigDoctor">
+      <span class="brand-badge"><span class="brand-dot"></span> FPV Diagnostic Platform</span>
     </a>
-    <button class="menu-btn" id="menuBtn" aria-label="เปิดเมนู">
-        <span></span>
-        <span></span>
-        <span></span>
-    </button>
-</header>
-
-<!-- Drawer Menu -->
-<div class="overlay" id="overlay"></div>
-<div class="drawer" id="drawer">
-    <a href="/" class="drawer-link">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-        Home
-    </a>
-    <a href="/app" class="drawer-link">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
-        Drone Analyzer
-    </a>
-    <a href="/pid-advisor" class="drawer-link">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="5" x2="8" y2="19"></line><line x1="12" y1="5" x2="12" y2="19"></line><line x1="16" y1="5" x2="16" y2="19"></line><circle cx="8" cy="12" r="2" fill="currentColor"></circle><circle cx="12" cy="8" r="2" fill="currentColor"></circle><circle cx="16" cy="16" r="2" fill="currentColor"></circle></svg>
-        PID Advisor
-    </a>
-    <a href="/blackbox" class="drawer-link">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M7 12h2l1-3 2 6 1-3h2"></path></svg>
-        Blackbox Analysis
-    </a>
-    <a href="/tuning-log" class="drawer-link">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
-        Tuning Log
-    </a>
-    <a href="/team" class="drawer-link">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-        Profile / Team
-    </a>
+    <div class="header-actions">
+      <button type="button" class="btn btn-ghost btn-icon js-open-tools" aria-label="Open tools">⊞</button>
+      <a href="/app" class="btn btn-primary">เริ่มวิเคราะห์</a>
+    </div>
+  </div>
 </div>
 
-<section class="hero">
-    <img class="hero-drone" src="{{ url_for('static', filename='img/hero-drone.webp') }}" alt="FPV Drone">
-    
-    <h1 class="hero-title">
-        วิเคราะห์โดรน
-        <span>FPV ของคุณ</span>
-    </h1>
-    
-    <p class="hero-subtitle">PID • Filter • Blackbox • CLI • Battery</p>
-    
-    <div class="hero-btns">
-        <a href="/app" class="btn btn-primary">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
-            </svg>
-            เริ่มวิเคราะห์
-        </a>
-        <a href="#tools" class="btn btn-outline">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="3" y="3" width="7" height="7"></rect>
-                <rect x="14" y="3" width="7" height="7"></rect>
-                <rect x="14" y="14" width="7" height="7"></rect>
-                <rect x="3" y="14" width="7" height="7"></rect>
-            </svg>
-            ดูเครื่องมือทั้งหมด
-        </a>
-    </div>
+<main class="wrap hero">
+  <div class="hero-grid">
+    <section class="hero-copy">
+      <div class="kicker"><i></i> ConfigDoctor Pro</div>
+      <h1>อ่านอาการโดรนให้ขาด <span class="accent">ก่อนปัญหาจะลุกลามกลางอากาศ</span></h1>
+      <p class="hero-sub">รวมเครื่องมือ FPV ไว้ในที่เดียว ทั้งการวิเคราะห์ PID, Filter, Blackbox, CLI, Battery และระบบช่วยตัดสินใจแบบใช้งานจริงบนมือถือได้ลื่น ๆ</p>
+
+      <div class="hero-pills">
+        <span class="pill"><b>Mobile-first</b> layout</span>
+        <span class="pill"><b>Smart tools</b> launcher</span>
+        <span class="pill"><b>Fast</b> analysis workflow</span>
+      </div>
+
+      <div class="hero-actions">
+        <a href="/app" class="btn btn-primary">เริ่มวิเคราะห์ทันที</a>
+        <button type="button" class="btn btn-outline js-open-tools">ดูเครื่องมือทั้งหมด</button>
+      </div>
+    </section>
+
+    <section class="hero-visual" aria-label="Hero visual">
+      <div class="hero-card">
+        <img class="hero-drone" src="{{ url_for('static', filename='img/hero-drone.webp') }}" alt="FPV Drone">
+        <div class="hero-glass">
+          <div class="mini"><span class="n">DRONE CLASS</span><span class="v">5" / 7" / FPV</span><span class="s">รองรับการใช้งานหลากหลาย</span></div>
+          <div class="mini"><span class="n">ANALYSIS</span><span class="v">PID + Filter</span><span class="s">พร้อมคำแนะนำใช้งานจริง</span></div>
+          <div class="mini"><span class="n">OUTPUT</span><span class="v">CLI Ready</span><span class="s">คัดลอกไปใช้ได้ทันที</span></div>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<section class="feature-strip">
+  <div class="wrap feature-grid">
+    <article class="feature">
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11H3l9-9 9 9h-6v10H9z"></path></svg></div>
+      <h3>รวบทุกเครื่องมือในที่เดียว</h3>
+      <p>ไม่ต้องไล่หาเมนูหลายหน้า กดแล้วเจอ tool launcher ที่ค้นหาได้ทันที</p>
+    </article>
+    <article class="feature">
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20"></path><path d="M5 5h14"></path><path d="M5 19h14"></path></svg></div>
+      <h3>เหมาะกับมือถือจริง</h3>
+      <p>จัดสัดส่วนใหม่ให้ภาพหลัก, ปุ่ม, และ card อ่านง่ายแตะง่ายบนจอเล็ก</p>
+    </article>
+    <article class="feature">
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19l4-4 4 4 8-8"></path><path d="M14 7h6v6"></path></svg></div>
+      <h3>พร้อมต่อยอดสู่โปรดักชัน</h3>
+      <p>โครงเนื้อหาและ navigation ชัดขึ้น เหมาะกับการเพิ่มฟีเจอร์ในรอบถัดไป</p>
+    </article>
+    <article class="feature">
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18"></path><path d="M3 12h18"></path><path d="M6 6l12 12"></path></svg></div>
+      <h3>โทน premium / futuristic</h3>
+      <p>ใช้แสงเรืองเบา ๆ, depth, และ glass พอดี ๆ เพื่อให้ดูเป็นเครื่องมือระดับโปร</p>
+    </article>
+  </div>
 </section>
 
-<section class="tools-section" id="tools">
-    <div class="section-title">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
-        </svg>
-        เครื่องมือวิเคราะห์
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <h2>เครื่องมือเด่น</h2>
+        <p>เลือกใช้งานเร็วจากหน้าหลัก หรือกด Tools เพื่อเปิดกล่องรวมเครื่องมือทั้งหมด</p>
+      </div>
+      <button type="button" class="btn btn-outline js-open-tools">เปิด Tool Launcher</button>
     </div>
-    
-    <div class="grid">
-        <a href="/pid-advisor" class="card">
-            <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="8" y1="5" x2="8" y2="19"></line>
-                <line x1="12" y1="5" x2="12" y2="19"></line>
-                <line x1="16" y1="5" x2="16" y2="19"></line>
-                <circle cx="8" cy="12" r="2" fill="currentColor"></circle>
-                <circle cx="12" cy="8" r="2" fill="currentColor"></circle>
-                <circle cx="16" cy="16" r="2" fill="currentColor"></circle>
-            </svg>
-            <div class="card-name">PID Advisor</div>
-            <div class="card-desc">แนะนำค่า PID ที่เหมาะสมสำหรับสไตล์การบินของคุณ</div>
-        </a>
-        
-        <a href="/blackbox" class="card card-blue">
-            <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="3" y="3" width="18" height="18" rx="2"></rect>
-                <path d="M7 12h2l1-3 2 6 1-3h2"></path>
-            </svg>
-            <div class="card-name">Blackbox</div>
-            <div class="card-desc">วิเคราะห์ Blackbox เพื่อหาปัญหาและปรับปรุง</div>
-        </a>
-        
-        <a href="/motor-prop" class="card">
-            <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 12m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
-                <path d="M12 12c4-4 8-4 8 0s-4 4-8 0"></path>
-                <path d="M12 12c-4-4-4-8 0-8s4 4 0 8"></path>
-                <path d="M12 12c-4 4-8 4-8 0s4-4 8 0"></path>
-                <path d="M12 12c4 4 4 8 0 8s-4-4 0-8"></path>
-            </svg>
-            <div class="card-name">Motor×Prop</div>
-            <div class="card-desc">จับคู่มอเตอร์และใบพัดเพื่อประสิทธิภาพสูงสุด</div>
-        </a>
-        
-        <a href="/vtx" class="card card-blue">
-            <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M5 12a7 7 0 0 1 14 0"></path>
-                <path d="M8 12a4 4 0 0 1 8 0"></path>
-                <circle cx="12" cy="12" r="1"></circle>
-                <path d="M12 12v8"></path>
-                <path d="M9 20h6"></path>
-            </svg>
-            <div class="card-name">VTX Bands</div>
-            <div class="card-desc">วิเคราะห์ย่านความถี่ VTX เพื่อสัญญาณที่เสถียร</div>
-        </a>
-        
-        <a href="/battery-health" class="card">
-            <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="3" y="6" width="16" height="12" rx="2"></rect>
-                <path d="M21 10v4"></path>
-                <path d="M11 9l-3 3h4l-3 3"></path>
-            </svg>
-            <div class="card-name">Battery Health</div>
-            <div class="card-desc">ตรวจสอบสุขภาพแบตเตอรี่และความปลอดภัย</div>
-        </a>
-        
-        <a href="/rpm-filter" class="card card-blue">
-            <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16z"></path>
-                <path d="M12 12l4-4"></path>
-                <path d="M8 19l1-1"></path>
-                <path d="M16 19l-1-1"></path>
-                <path d="M12 4v2"></path>
-            </svg>
-            <div class="card-name">RPM Filter</div>
-            <div class="card-desc">ตั้งค่าและปรับแต่ง RPM Filter</div>
-        </a>
+
+    <div class="tools-grid">
+      <a href="/app" class="tool-card">
+        <div class="tool-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg></div>
+        <div class="tool-body">
+          <div class="tool-name">Drone Analyzer</div>
+          <div class="tool-desc">วิเคราะห์สเปกโดรนและสร้างคำแนะนำ PID / Filter / CLI แบบครบชุด</div>
+          <div class="tool-meta"><span class="tag">Core</span><span class="chev">→</span></div>
+        </div>
+      </a>
+      <a href="/pid-advisor" class="tool-card">
+        <div class="tool-ic blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="5" x2="8" y2="19"></line><line x1="12" y1="5" x2="12" y2="19"></line><line x1="16" y1="5" x2="16" y2="19"></line><circle cx="8" cy="12" r="2" fill="currentColor"></circle><circle cx="12" cy="8" r="2" fill="currentColor"></circle><circle cx="16" cy="16" r="2" fill="currentColor"></circle></svg></div>
+        <div class="tool-body">
+          <div class="tool-name">PID Advisor</div>
+          <div class="tool-desc">ช่วยแนะนำแนวค่า PID ตามสไตล์การบินและขนาดโดรน</div>
+          <div class="tool-meta"><span class="tag">Tune</span><span class="chev">→</span></div>
+        </div>
+      </a>
+      <a href="/blackbox" class="tool-card">
+        <div class="tool-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M7 12h2l1-3 2 6 1-3h2"></path></svg></div>
+        <div class="tool-body">
+          <div class="tool-name">Blackbox</div>
+          <div class="tool-desc">อ่าน log เพื่อหาความผิดปกติและจุดที่ต้องปรับจูน</div>
+          <div class="tool-meta"><span class="tag">Analyze</span><span class="chev">→</span></div>
+        </div>
+      </a>
+      <a href="/battery-health" class="tool-card">
+        <div class="tool-ic blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="16" height="12" rx="2"></rect><path d="M21 10v4"></path><path d="M11 9l-3 3h4l-3 3"></path></svg></div>
+        <div class="tool-body">
+          <div class="tool-name">Battery Health</div>
+          <div class="tool-desc">เช็กสุขภาพแบตเตอรี่และใช้งานให้ปลอดภัยขึ้น</div>
+          <div class="tool-meta"><span class="tag">Hardware</span><span class="chev">→</span></div>
+        </div>
+      </a>
     </div>
+  </div>
 </section>
 
-<nav class="bottom-nav">
-    <a href="/" class="nav-item active">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-            <polyline points="9 22 9 12 15 12 15 22"></polyline>
-        </svg>
-        Home
+<nav class="bottom-nav" aria-label="Mobile navigation">
+  <div class="bottom-inner">
+    <a href="/landing" class="nav-item active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+      <span>Home</span>
     </a>
-    <a href="/app" class="nav-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
-        </svg>
-        Tools
-    </a>
+    <button type="button" class="nav-btn js-open-tools">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="14" width="7" height="7" rx="1"></rect><rect x="3" y="14" width="7" height="7" rx="1"></rect></svg>
+      <span>Tools</span>
+    </button>
     <a href="/tuning-log" class="nav-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-            <polyline points="14 2 14 8 20 8"></polyline>
-            <line x1="16" y1="13" x2="8" y2="13"></line>
-            <line x1="16" y1="17" x2="8" y2="17"></line>
-        </svg>
-        Log
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+      <span>Log</span>
     </a>
     <a href="/team" class="nav-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-            <circle cx="12" cy="7" r="4"></circle>
-        </svg>
-        Profile
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+      <span>Profile</span>
     </a>
+  </div>
 </nav>
 
+<div class="tools-backdrop" id="toolsBackdrop" aria-hidden="true"></div>
+<section class="tools-sheet" id="toolsSheet" role="dialog" aria-modal="true" aria-labelledby="toolsTitle" aria-hidden="true">
+  <div class="tools-top">
+    <div class="tools-title">
+      <div class="tool-ic" style="width:46px;height:46px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="14" width="7" height="7" rx="1"></rect><rect x="3" y="14" width="7" height="7" rx="1"></rect></svg></div>
+      <div>
+        <h3 id="toolsTitle">TOOL LAUNCHER</h3>
+        <p>รวมเครื่องมือทั้งหมดไว้ในที่เดียว ค้นหาแล้วกดเลือกใช้งานได้ทันที</p>
+      </div>
+    </div>
+    <button type="button" class="tools-close" id="toolsClose" aria-label="Close tools">✕</button>
+  </div>
+
+  <div class="tools-search">
+    <div class="searchbox">
+      <span>🔍</span>
+      <input id="toolsSearch" type="search" placeholder="ค้นหาเครื่องมือ..." autocomplete="off" spellcheck="false">
+      <span class="count" id="toolsCount">0</span>
+    </div>
+  </div>
+
+  <div class="tools-body">
+    <aside class="cat-list" id="catList"></aside>
+    <div class="list-wrap">
+      <div class="list-head"><strong id="activeCatName">ALL TOOLS</strong><span id="activeCatHint">เลือกจากหมวดหรือค้นหา</span></div>
+      <div class="tool-list" id="toolList"></div>
+      <div class="sheet-empty" id="sheetEmpty"><strong>ไม่พบเครื่องมือ</strong><span>ลองเปลี่ยนคำค้น หรือเลือกหมวดอื่น</span></div>
+    </div>
+  </div>
+</section>
+
 <script>
-    const menuBtn = document.getElementById('menuBtn');
-    const drawer = document.getElementById('drawer');
-    const overlay = document.getElementById('overlay');
+(function(){
+  const tools = [
+    {cat:'Analyze', name:'Drone Analyzer', desc:'วิเคราะห์โดรนและสร้างคำแนะนำหลัก', href:'/app', icon:'core'},
+    {cat:'Tune', name:'PID Advisor', desc:'แนวทางตั้งค่า PID ตามสไตล์การบิน', href:'/pid-advisor', icon:'tune'},
+    {cat:'Tune', name:'Quick Tune', desc:'ปรับจูนแบบเร็วในไม่กี่ขั้น', href:'/quick-tune', icon:'tune'},
+    {cat:'Tune', name:'Rates Visualizer', desc:'ดู rates แบบอ่านง่ายและปรับได้ไว', href:'/rates-visualizer', icon:'core'},
+    {cat:'Tune', name:'BF Wizard', desc:'ตัวช่วยคอนฟิก Betaflight แบบเป็นขั้น', href:'/bf-wizard', icon:'tune'},
+    {cat:'Tune', name:'RPM Filter', desc:'คำนวณและปรับ RPM filter', href:'/rpm-filter', icon:'core'},
+    {cat:'Analyze', name:'Blackbox', desc:'อ่าน log เพื่อหาสาเหตุอาการบิน', href:'/blackbox', icon:'core'},
+    {cat:'Analyze', name:'CLI Surgeon', desc:'จัดชุดคำสั่ง CLI ให้นำไปใช้ต่อได้', href:'/cli-surgeon', icon:'core'},
+    {cat:'Analyze', name:'CLI Comparator', desc:'เทียบ diff ของคอนฟิกและคำสั่ง', href:'/cli-comparator', icon:'core'},
+    {cat:'Analyze', name:'Build Card', desc:'สร้างการ์ดสเปคโดรนแบบแชร์ได้', href:'/build-card', icon:'core'},
+    {cat:'Analyze', name:'Tuning Log', desc:'บันทึกประวัติการจูนแต่ละครั้ง', href:'/tuning-log', icon:'core'},
+    {cat:'Hardware', name:'Motor×Prop', desc:'จับคู่มอเตอร์กับใบพัดให้เหมาะ', href:'/motor-prop', icon:'hw'},
+    {cat:'Hardware', name:'ESC Checker', desc:'ตรวจเช็กสภาพ ESC และสัญญาณ', href:'/esc-checker', icon:'hw'},
+    {cat:'Hardware', name:'Battery Health', desc:'เช็กสุขภาพแบตเตอรี่และความปลอดภัย', href:'/battery-health', icon:'hw'},
+    {cat:'Hardware', name:'Motor Thermal', desc:'ประเมินความร้อนมอเตอร์', href:'/motor-thermal', icon:'hw'},
+    {cat:'Hardware', name:'VTX Bands', desc:'สำรวจย่าน VTX และช่องสัญญาณ', href:'/vtx', icon:'hw'},
+    {cat:'Hardware', name:'VTX Range', desc:'ประเมินระยะสัญญาณ VTX', href:'/vtx-range', icon:'hw'},
+    {cat:'Hardware', name:'SmartAudio', desc:'คู่มือคำสั่ง SmartAudio / Tramp', href:'/vtx-smartaudio', icon:'hw'},
+    {cat:'Explore', name:'FPV Trainer', desc:'ซ้อมบิน 3D แบบสนุกและลื่นไหล', href:'/fpv-trainer', icon:'explore'},
+    {cat:'Explore', name:'Flight Quiz', desc:'ตอบ 5 ข้อแล้วรับคำแนะนำ rates', href:'/flight-quiz', icon:'explore'},
+    {cat:'Explore', name:'Leaderboard', desc:'ดูและโหวตคอนฟิกจากชุมชน', href:'/leaderboard', icon:'explore'},
+    {cat:'Explore', name:'FPV Hub', desc:'ศูนย์รวมบทความและเครื่องมือ', href:'/fpv', icon:'explore'},
+    {cat:'Explore', name:'Gear Guide', desc:'คู่มือเลือกอุปกรณ์ตาม class/style', href:'/fpv-gear', icon:'explore'},
+    {cat:'Explore', name:'Downloads', desc:'ไฟล์ DIFF และ DUMP สำหรับใช้งาน', href:'/downloads', icon:'explore'},
+    {cat:'Explore', name:'About', desc:'ข้อมูลโครงการและวิธีใช้งาน', href:'/about', icon:'explore'},
+    {cat:'Explore', name:'Team', desc:'ผู้พัฒนาและพาร์ทเนอร์ AI', href:'/team', icon:'explore'},
+    {cat:'Explore', name:'Changelog', desc:'ประวัติการอัปเดตทั้งหมด', href:'/changelog', icon:'explore'},
+    {cat:'Explore', name:'Military UAS', desc:'หน้าวิเคราะห์โดรนเฉพาะทาง', href:'/military-uas', icon:'explore'}
+  ];
+  const cats = [
+    {id:'ALL', label:'All Tools', hint:'ดูทั้งหมด', color:'var(--green)'},
+    {id:'Tune', label:'Tune', hint:'ปรับจูน', color:'var(--green)'},
+    {id:'Analyze', label:'Analyze', hint:'อ่านอาการ', color:'var(--cyan)'},
+    {id:'Hardware', label:'Hardware', hint:'ชิ้นส่วน', color:'var(--green)'},
+    {id:'Explore', label:'Explore', hint:'เพิ่มเติม', color:'var(--cyan)'}
+  ];
 
-    function toggleMenu() {
-        menuBtn.classList.toggle('open');
-        drawer.classList.toggle('open');
-        overlay.classList.toggle('open');
-        document.body.style.overflow = drawer.classList.contains('open') ? 'hidden' : 'auto';
+  const backdrop = document.getElementById('toolsBackdrop');
+  const sheet = document.getElementById('toolsSheet');
+  const closeBtn = document.getElementById('toolsClose');
+  const search = document.getElementById('toolsSearch');
+  const count = document.getElementById('toolsCount');
+  const catList = document.getElementById('catList');
+  const toolList = document.getElementById('toolList');
+  const empty = document.getElementById('sheetEmpty');
+  const activeCatName = document.getElementById('activeCatName');
+  const activeCatHint = document.getElementById('activeCatHint');
+  let activeCat = 'ALL';
+
+  function iconSvg(kind){
+    if(kind === 'hw') return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"></path></svg>';
+    if(kind === 'explore') return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l3.2 6.5L22 10l-5 4.9L18.4 22 12 18.7 5.6 22 7 14.9 2 10l6.8-.5z"></path></svg>';
+    if(kind === 'tune') return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="5" x2="8" y2="19"></line><line x1="12" y1="5" x2="12" y2="19"></line><line x1="16" y1="5" x2="16" y2="19"></line><circle cx="8" cy="12" r="2" fill="currentColor"></circle><circle cx="12" cy="8" r="2" fill="currentColor"></circle><circle cx="16" cy="16" r="2" fill="currentColor"></circle></svg>';
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M7 12h2l1-3 2 6 1-3h2"></path></svg>';
+  }
+
+  function sheetIcon(kind){
+    return '<div class="sheet-icon ' + (kind === "hw" ? 'blue' : '') + '">' + iconSvg(kind) + '</div>';
+  }
+
+  function openSheet(){
+    backdrop.classList.add('open');
+    sheet.classList.add('open');
+    backdrop.setAttribute('aria-hidden','false');
+    sheet.setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
+    render();
+    setTimeout(() => search && search.focus(), 30);
+  }
+  function closeSheet(){
+    backdrop.classList.remove('open');
+    sheet.classList.remove('open');
+    backdrop.setAttribute('aria-hidden','true');
+    sheet.setAttribute('aria-hidden','true');
+    document.body.style.overflow = '';
+  }
+  function renderCats(){
+    catList.innerHTML = '';
+    cats.forEach(cat => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'cat-btn' + (cat.id === activeCat ? ' active' : '');
+      btn.dataset.cat = cat.id;
+      btn.innerHTML = '<span><strong>' + cat.label + '</strong><small>' + cat.hint + '</small></span><span class="dot" style="background:' + cat.color + '"></span>';
+      btn.addEventListener('click', () => { activeCat = cat.id; render(); });
+      catList.appendChild(btn);
+    });
+  }
+  function render(){
+    const q = (search.value || '').trim().toLowerCase();
+    const filtered = tools.filter(t => (activeCat === 'ALL' || t.cat === activeCat) && (!q || (t.name + ' ' + t.desc + ' ' + t.cat).toLowerCase().includes(q)));
+    count.textContent = filtered.length + ' tools';
+    activeCatName.textContent = activeCat === 'ALL' ? 'ALL TOOLS' : activeCat.toUpperCase();
+    activeCatHint.textContent = activeCat === 'ALL' ? 'เลือกหมวดเพื่อกรอง' : 'หมวด ' + activeCat;
+    renderCats();
+    toolList.innerHTML = '';
+    empty.style.display = filtered.length ? 'none' : 'block';
+    filtered.forEach(t => {
+      const a = document.createElement('a');
+      a.className = 'sheet-item';
+      a.href = t.href;
+      a.innerHTML = sheetIcon(t.icon) + '<div class="sheet-copy"><b>' + t.name + '</b><em>' + t.desc + '</em></div><span class="sheet-arrow">→</span>';
+      a.addEventListener('click', closeSheet);
+      toolList.appendChild(a);
+    });
+  }
+
+  document.querySelectorAll('.js-open-tools').forEach(btn => btn.addEventListener('click', openSheet));
+  backdrop.addEventListener('click', closeSheet);
+  closeBtn.addEventListener('click', closeSheet);
+  search.addEventListener('input', render);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && sheet.classList.contains('open')) closeSheet();
+    if ((e.key === 't' || e.key === 'T') && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) {
+      e.preventDefault();
+      if (sheet.classList.contains('open')) closeSheet(); else openSheet();
     }
-
-    menuBtn.addEventListener('click', toggleMenu);
-    overlay.addEventListener('click', toggleMenu);
-
-    // Close drawer when clicking a link
-    const drawerLinks = document.querySelectorAll('.drawer-link');
-    drawerLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            if (drawer.classList.contains('open')) toggleMenu();
-        });
-    });
-
-    // Staggered animation for cards on scroll
-    const cards = document.querySelectorAll('.card');
-    const observerOptions = {
-        threshold: 0.1
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry, index) => {
-            if (entry.isIntersecting) {
-                setTimeout(() => {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }, index * 100);
-            }
-        });
-    }, observerOptions);
-
-    cards.forEach(card => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(20px)';
-        card.style.transition = 'all 0.6s cubic-bezier(0.23, 1, 0.32, 1)';
-        observer.observe(card);
-    });
+  });
+  window.addEventListener('resize', () => { if (window.innerWidth > 960 && !sheet.classList.contains('open')) return; });
+  renderCats();
+  render();
+})();
 </script>
 {% endblock %}
