@@ -8,13 +8,12 @@ import os
 from flask import Blueprint, abort, send_from_directory, render_template
 from werkzeug.utils import secure_filename
 
-from app import app, _file_sha256
-
 bp = Blueprint('downloads', __name__)
 
 
 @bp.route('/downloads/<fc>/<filename>')
 def download_diff(fc, filename):
+    from app import app
     safe_fc = secure_filename(fc)
     safe_fn = secure_filename(filename)
     base_root = os.path.realpath(os.path.join(app.root_path, 'static', 'downloads', 'diff_all'))
@@ -33,6 +32,7 @@ def download_diff(fc, filename):
 
 @bp.route('/downloads')
 def downloads_index():
+    from app import app, _file_sha256
     base = os.path.realpath(os.path.join(app.root_path, 'static', 'downloads', 'diff_all'))
     items = []
     if os.path.isdir(base):
