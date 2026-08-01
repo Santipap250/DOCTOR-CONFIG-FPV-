@@ -218,7 +218,7 @@ feature ANTI_GRAVITY
 
 # serial
 serial 20 1 115200 57600 0 115200
-serial 0 8192 115200 57600 0 115200
+serial 0 131073 115200 57600 0 115200
 serial 1 0 115200 57600 0 115200
 serial 2 64 115200 57600 0 115200
 serial 3 0 115200 57600 0 115200
@@ -493,7 +493,7 @@ set acc_hardware = AUTO
 set acc_lpf_hz = 10
 set acc_trim_pitch = 0
 set acc_trim_roll = 0
-set acc_calibration = -42,14,8,1
+set acc_calibration = 6,-68,-18,1
 set baro_bustype = I2C
 set baro_spi_device = 0
 set baro_i2c_device = 1
@@ -728,7 +728,7 @@ set osd_logo_on_arming_duration = 5
 set osd_tim1 = 2560
 set osd_tim2 = 2561
 set osd_vbat_pos = 234
-set osd_rssi_pos = 2112
+set osd_rssi_pos = 2144
 set osd_link_quality_pos = 234
 set osd_link_tx_power_pos = 234
 set osd_rssi_dbm_pos = 96
@@ -810,7 +810,7 @@ set osd_profile_1_name = -
 set osd_profile_2_name = -
 set osd_profile_3_name = -
 set osd_gps_sats_show_hdop = OFF
-set osd_displayport_device = MAX7456
+set osd_displayport_device = MSP
 set osd_rcchannels = -1,-1,-1,-1
 set osd_camera_frame_width = 24
 set osd_camera_frame_height = 11
