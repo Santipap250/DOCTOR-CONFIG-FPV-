@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+{% set og_robots %}{% block page_robots %}index, follow{% endblock %}{% endset %}
+{% set og_title = self.page_og_title() | forceescape %}
+{% set og_description = self.page_og_description() | forceescape %}
+{% set og_url = BASE_URL ~ (self.page_og_path() | forceescape) %}
+{% include "partials/og_tags.html" %}
+<meta name="viewport" content="{% block page_viewport %}width=device-width,initial-scale=1.0{% endblock %}">
+<title>{% block title %}{{ self.page_og_title() | forceescape }}{% endblock %}</title>
+<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+{% set _page_css = self.page_css() %}
+{% if _page_css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/' ~ _page_css) }}">{% endif %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/components.css') }}">
+{% block extra_css_links %}{% endblock %}
+{% block extra_head %}{% endblock %}
+{% set nav_page = self.page_nav_page() %}
+</head>
+<body{% block body_attrs %}{% endblock %}>
+{% set _chrome %}{% block show_shared_chrome %}true{% endblock %}{% endset %}
+{% block before_nav %}{% endblock %}
+{% if _chrome | trim == "true" %}{% include "partials/nav.html" %}{% endif %}
+{% if _chrome | trim == "true" %}{% include "partials/page_actions.html" %}{% endif %}
+{% block content %}{% endblock %}
+{% if _chrome | trim == "true" %}{% include "partials/footer_nav.html" %}{% endif %}
+{% block extra_scripts %}{% endblock %}
+</body>
+</html>

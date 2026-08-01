@@ -1,0 +1,1336 @@
+{% extends "base.html" %}
+{% block title %}ConfigDoctor — FPV Drone Diagnostic Platform{% endblock %}
+{% block page_og_title %}ConfigDoctor — FPV Drone Diagnostic Platform{% endblock %}
+{% block page_og_description %}All-in-one FPV diagnostics platform for blackbox analysis, PID tuning, filter optimization, rate calculations, component checks, and flight readiness.{% endblock %}
+{% block page_og_path %}/landing{% endblock %}
+{% block page_nav_page %}landing{% endblock %}
+{% block page_css %}{% endblock %}
+{% block show_shared_chrome %}false{% endblock %}
+{% block page_viewport %}width=device-width, initial-scale=1.0, viewport-fit=cover{% endblock %}
+
+{% block extra_head %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Sarabun:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#040807;
+    --bg2:#07100f;
+    --surface:rgba(8,16,14,.72);
+    --surface-strong:rgba(7,13,12,.88);
+    --surface-soft:rgba(11,20,18,.52);
+    --line:rgba(84,255,160,.16);
+    --line-strong:rgba(84,255,160,.26);
+    --text:#ecf7ef;
+    --muted:#a5baad;
+    --muted-2:#7f9588;
+    --green:#17f36b;
+    --green-2:#0fd55c;
+    --green-3:rgba(23,243,107,.14);
+    --cyan:#36d6ff;
+    --shadow:0 24px 90px rgba(0,0,0,.46);
+    --shadow-soft:0 12px 34px rgba(0,0,0,.28);
+    --radius-xl:30px;
+    --radius-lg:24px;
+    --radius-md:18px;
+    --radius-sm:14px;
+    --font-title:'Orbitron',system-ui,sans-serif;
+    --font-body:'Sarabun',system-ui,sans-serif;
+  }
+
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at 20% 0%, rgba(23,243,107,.08), transparent 24%),
+      radial-gradient(circle at 90% 16%, rgba(54,214,255,.07), transparent 18%),
+      linear-gradient(180deg, #030605 0%, #040807 48%, #030506 100%);
+    color:var(--text);
+    overflow-x:hidden;
+    font-family:var(--font-body);
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+
+  body::before{
+    content:'';
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:0;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.02), transparent 8%),
+      repeating-linear-gradient(180deg, rgba(255,255,255,.024) 0 1px, transparent 1px 4px);
+    opacity:.12;
+    mix-blend-mode:screen;
+  }
+
+  .landing-shell{
+    position:relative;
+    z-index:1;
+    width:min(100%, 1280px);
+    margin:0 auto;
+    padding:
+      calc(env(safe-area-inset-top, 0px) + 18px)
+      clamp(14px, 2.6vw, 28px)
+      22px;
+  }
+
+  .topbar{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    z-index:30;
+    padding:
+      calc(env(safe-area-inset-top, 0px) + 12px)
+      clamp(14px, 2.6vw, 28px)
+      12px;
+    transition:background .25s ease, border-color .25s ease, box-shadow .25s ease, backdrop-filter .25s ease;
+    pointer-events:none;
+  }
+  .topbar.is-scrolled{
+    background:rgba(3,7,6,.82);
+    backdrop-filter:blur(18px) saturate(1.2);
+    border-bottom:1px solid rgba(255,255,255,.04);
+    box-shadow:0 10px 34px rgba(0,0,0,.28);
+  }
+
+  .topbar-inner{
+    width:min(100%, 1280px);
+    margin:0 auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    pointer-events:auto;
+  }
+
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    min-width:0;
+    text-decoration:none;
+    color:inherit;
+  }
+  .brand-mark{
+    width:48px;
+    height:48px;
+    flex:none;
+    display:block;
+    object-fit:contain;
+    filter:drop-shadow(0 0 14px rgba(23,243,107,.12));
+  }
+  .brand-copy{
+    min-width:0;
+    line-height:1;
+  }
+  .brand-title{
+    display:block;
+    font:900 clamp(18px, 2.1vw, 30px)/1 var(--font-title);
+    letter-spacing:.02em;
+    color:#fff;
+    white-space:nowrap;
+  }
+  .brand-title span{color:var(--green)}
+  .brand-sub{
+    display:block;
+    margin-top:4px;
+    font:700 10px/1.1 var(--font-title);
+    letter-spacing:.24em;
+    text-transform:uppercase;
+    color:rgba(146,255,193,.78);
+    white-space:nowrap;
+  }
+
+  .nav-actions{
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+
+  .desktop-nav{
+    display:none;
+    gap:8px;
+    align-items:center;
+  }
+  .desktop-nav a{
+    color:rgba(255,255,255,.72);
+    text-decoration:none;
+    font-size:12px;
+    padding:10px 12px;
+    border-radius:999px;
+    border:1px solid transparent;
+    transition:background .2s ease, border-color .2s ease, color .2s ease, transform .2s ease;
+    white-space:nowrap;
+  }
+  .desktop-nav a:hover{
+    color:#fff;
+    background:rgba(255,255,255,.04);
+    border-color:rgba(255,255,255,.07);
+    transform:translateY(-1px);
+  }
+
+  .menu-toggle{
+    width:46px;
+    height:46px;
+    border-radius:15px;
+    border:1px solid rgba(23,243,107,.22);
+    background:
+      linear-gradient(180deg, rgba(12,18,16,.96), rgba(6,10,10,.92));
+    box-shadow:
+      0 14px 34px rgba(0,0,0,.26),
+      inset 0 1px 0 rgba(255,255,255,.04);
+    color:#fff;
+    display:grid;
+    place-items:center;
+    cursor:pointer;
+    transition:transform .2s ease, border-color .2s ease, box-shadow .2s ease, background .2s ease;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .menu-toggle:hover{
+    transform:translateY(-1px);
+    border-color:rgba(23,243,107,.36);
+    box-shadow:
+      0 18px 38px rgba(0,0,0,.32),
+      0 0 0 1px rgba(23,243,107,.06) inset;
+  }
+  .menu-toggle svg{width:18px;height:18px;stroke:currentColor}
+
+  .mobile-drawer{
+    position:fixed;
+    inset:0;
+    z-index:40;
+    display:grid;
+    place-items:center;
+    padding:20px;
+    background:
+      radial-gradient(circle at 18% 18%, rgba(23,243,107,.12), transparent 20%),
+      radial-gradient(circle at 82% 12%, rgba(54,214,255,.10), transparent 16%),
+      rgba(1,4,4,.84);
+    backdrop-filter:blur(20px) saturate(1.25);
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+    transition:opacity .22s ease, visibility .22s ease;
+  }
+  .mobile-drawer.open{
+    opacity:1;
+    visibility:visible;
+    pointer-events:auto;
+  }
+  .drawer-panel{
+    width:min(100%, 540px);
+    border-radius:28px;
+    border:1px solid rgba(23,243,107,.18);
+    background:
+      linear-gradient(180deg, rgba(9,14,13,.96), rgba(4,7,7,.92));
+    box-shadow:var(--shadow);
+    padding:18px;
+    transform:translateY(10px) scale(.985);
+    transition:transform .22s ease;
+  }
+  .mobile-drawer.open .drawer-panel{transform:translateY(0) scale(1)}
+  .drawer-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:14px;
+  }
+  .drawer-head strong{
+    font:800 13px/1 var(--font-title);
+    letter-spacing:.16em;
+    color:rgba(233,255,240,.92);
+    text-transform:uppercase;
+  }
+  .drawer-close{
+    width:40px;
+    height:40px;
+    border:none;
+    border-radius:12px;
+    background:rgba(255,255,255,.04);
+    color:#fff;
+    cursor:pointer;
+    display:grid;
+    place-items:center;
+  }
+  .drawer-links{
+    display:grid;
+    gap:10px;
+  }
+  .drawer-links a{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    text-decoration:none;
+    color:#fff;
+    padding:14px 14px;
+    border-radius:18px;
+    background:rgba(255,255,255,.03);
+    border:1px solid rgba(255,255,255,.05);
+    transition:transform .2s ease, border-color .2s ease, background .2s ease;
+  }
+  .drawer-links a:hover{
+    transform:translateY(-1px);
+    border-color:rgba(23,243,107,.22);
+    background:rgba(23,243,107,.05);
+  }
+  .drawer-links a span{
+    display:block;
+  }
+  .drawer-links .label{
+    font-weight:800;
+  }
+  .drawer-links .meta{
+    color:var(--muted);
+    font-size:12px;
+  }
+
+  .hero{
+    position:relative;
+    min-height:calc(100svh - 28px);
+    border-radius:36px;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,.05);
+    background:
+      linear-gradient(180deg, rgba(4,8,7,.58), rgba(4,8,7,.76));
+    box-shadow:var(--shadow);
+    isolation:isolate;
+  }
+
+  .hero-bg{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center;
+    z-index:-3;
+    filter:saturate(1.05) contrast(1.06) brightness(.72);
+    transform:scale(1.01);
+  }
+  .hero-overlay{
+    position:absolute;
+    inset:0;
+    z-index:-2;
+    background:
+      radial-gradient(circle at 19% 14%, rgba(23,243,107,.24), transparent 20%),
+      radial-gradient(circle at 82% 22%, rgba(54,214,255,.17), transparent 16%),
+      linear-gradient(90deg, rgba(2,5,5,.92) 0%, rgba(2,5,5,.74) 32%, rgba(2,5,5,.28) 68%, rgba(2,5,5,.56) 100%),
+      linear-gradient(180deg, rgba(0,0,0,.16) 0%, rgba(0,0,0,.34) 46%, rgba(0,0,0,.58) 100%);
+  }
+  .hero::before{
+    content:'';
+    position:absolute;
+    inset:-20% -10% auto -10%;
+    height:35%;
+    background:radial-gradient(circle, rgba(23,243,107,.14), transparent 68%);
+    filter:blur(34px);
+    pointer-events:none;
+    z-index:-1;
+  }
+  .hero::after{
+    content:'';
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    z-index:-1;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.02), transparent 8%),
+      repeating-linear-gradient(180deg, rgba(255,255,255,.03) 0 1px, transparent 1px 5px);
+    opacity:.10;
+    mix-blend-mode:screen;
+  }
+
+  .hero-inner{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:28px;
+    padding:92px 22px 18px;
+  }
+
+  .hero-copy{
+    max-width:720px;
+  }
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:7px 12px;
+    border-radius:999px;
+    border:1px solid rgba(23,243,107,.28);
+    background:rgba(8,17,14,.52);
+    color:rgba(181,255,207,.92);
+    font:800 11px/1 var(--font-title);
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    box-shadow:0 0 0 1px rgba(255,255,255,.02) inset;
+  }
+  .eyebrow i{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:var(--green);
+    box-shadow:0 0 16px rgba(23,243,107,.75);
+    display:inline-block;
+  }
+
+  .hero-title{
+    margin:18px 0 0;
+    font:900 clamp(46px, 8vw, 84px)/.93 var(--font-title);
+    letter-spacing:-.04em;
+    text-transform:uppercase;
+    color:#fff;
+    text-wrap:balance;
+    max-width:12ch;
+  }
+  .hero-title .accent{
+    display:block;
+    color:var(--green);
+    text-shadow:0 0 20px rgba(23,243,107,.22);
+  }
+  .hero-desc{
+    margin:18px 0 0;
+    max-width:34ch;
+    color:rgba(231,242,235,.84);
+    font-size:clamp(16px, 2.25vw, 20px);
+    line-height:1.55;
+    text-wrap:pretty;
+  }
+
+  .hero-actions{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-top:22px;
+  }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    min-height:48px;
+    padding:0 18px;
+    border-radius:14px;
+    text-decoration:none;
+    font-weight:800;
+    letter-spacing:.05em;
+    text-transform:uppercase;
+    transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease, color .18s ease;
+    will-change:transform;
+  }
+  .btn svg{width:18px;height:18px;stroke:currentColor}
+  .btn-primary{
+    color:#04130a;
+    background:linear-gradient(180deg, #2cff78 0%, #16e766 100%);
+    border:1px solid rgba(255,255,255,.06);
+    box-shadow:
+      0 20px 40px rgba(23,243,107,.18),
+      0 0 0 1px rgba(23,243,107,.14) inset;
+  }
+  .btn-primary:hover{
+    transform:translateY(-1px);
+    box-shadow:
+      0 24px 46px rgba(23,243,107,.22),
+      0 0 24px rgba(23,243,107,.14);
+  }
+  .btn-secondary{
+    color:#fff;
+    background:rgba(255,255,255,.03);
+    border:1px solid rgba(255,255,255,.14);
+  }
+  .btn-secondary:hover{
+    transform:translateY(-1px);
+    border-color:rgba(23,243,107,.28);
+    background:rgba(23,243,107,.04);
+  }
+
+  .hero-proof{
+    display:grid;
+    grid-template-columns:repeat(4, minmax(0,1fr));
+    gap:0;
+    border-radius:22px;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,.08);
+    background:rgba(3,8,7,.36);
+    backdrop-filter:blur(14px);
+    box-shadow:var(--shadow-soft);
+    margin-top:22px;
+  }
+  .stat{
+    padding:16px 10px 15px;
+    text-align:center;
+    border-right:1px solid rgba(255,255,255,.08);
+  }
+  .stat:last-child{border-right:none}
+  .stat-icon{
+    width:22px;
+    height:22px;
+    margin:0 auto 8px;
+    color:var(--green);
+    display:block;
+  }
+  .stat-value{
+    font:900 clamp(18px, 3vw, 34px)/1 var(--font-title);
+    color:var(--green);
+    letter-spacing:-.03em;
+  }
+  .stat-label{
+    margin-top:6px;
+    color:rgba(232,242,236,.82);
+    font-size:13px;
+    line-height:1.2;
+  }
+
+  .hero-visual{
+    position:relative;
+    min-height:360px;
+  }
+  .orb{
+    position:absolute;
+    inset:auto auto 6% 10%;
+    width:54%;
+    height:54%;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(23,243,107,.18), transparent 62%);
+    filter:blur(4px);
+    opacity:.9;
+    pointer-events:none;
+  }
+  .hud-card{
+    position:absolute;
+    border-radius:18px;
+    border:1px solid rgba(97,255,168,.20);
+    background:
+      linear-gradient(180deg, rgba(6,12,11,.62), rgba(6,12,11,.30));
+    backdrop-filter:blur(14px) saturate(1.05);
+    box-shadow:0 18px 42px rgba(0,0,0,.24);
+    padding:13px 14px;
+    color:#dfffe7;
+    overflow:hidden;
+  }
+  .hud-card::after{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:linear-gradient(110deg, transparent 26%, rgba(255,255,255,.10) 50%, transparent 74%);
+    opacity:.18;
+  }
+  .hud-card strong{
+    position:relative;
+    z-index:1;
+    display:block;
+    font:800 15px/1 var(--font-title);
+    letter-spacing:.04em;
+    color:var(--green);
+  }
+  .hud-card span{
+    position:relative;
+    z-index:1;
+    display:block;
+    margin-top:5px;
+    font-size:12px;
+    color:rgba(222,240,230,.76);
+  }
+
+  .hud-live{
+    top:18%;
+    right:10%;
+    min-width:138px;
+    transform:rotate(-1.4deg);
+  }
+  .hud-signal{
+    right:6%;
+    bottom:18%;
+    min-width:120px;
+    text-align:center;
+    transform:rotate(1deg);
+  }
+  .hud-signal strong{
+    font-size:24px;
+    line-height:1;
+  }
+  .hud-signal span{font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+  .hud-board{
+    left:8%;
+    bottom:14%;
+    min-width:170px;
+  }
+  .hud-board .line{
+    display:block;
+    width:100%;
+    height:2px;
+    margin:10px 0 8px;
+    background:linear-gradient(90deg, transparent, rgba(23,243,107,.92), transparent);
+  }
+
+  .content-section{
+    padding:22px 0 0;
+  }
+  .section-label{
+    margin:0 auto 10px;
+    width:max-content;
+    padding:6px 12px;
+    border-radius:999px;
+    border:1px solid rgba(23,243,107,.20);
+    background:rgba(8,16,14,.44);
+    color:rgba(174,255,201,.88);
+    font:800 11px/1 var(--font-title);
+    letter-spacing:.12em;
+    text-transform:uppercase;
+  }
+  .section-title{
+    margin:0;
+    text-align:center;
+    font:900 clamp(26px, 4.4vw, 50px)/1.06 var(--font-title);
+    letter-spacing:-.03em;
+    color:#fff;
+  }
+  .section-title .accent{
+    color:var(--green);
+    text-shadow:0 0 18px rgba(23,243,107,.14);
+  }
+  .section-subtitle{
+    margin:14px auto 0;
+    text-align:center;
+    max-width:62ch;
+    color:rgba(233,242,236,.82);
+    font-size:16px;
+    line-height:1.65;
+  }
+
+  .tools-grid{
+    display:grid;
+    grid-template-columns:repeat(3, minmax(0,1fr));
+    gap:12px;
+    margin-top:22px;
+  }
+  .tool-card{
+    position:relative;
+    min-height:156px;
+    border-radius:20px;
+    border:1px solid rgba(255,255,255,.08);
+    background:
+      linear-gradient(180deg, rgba(8,17,15,.72), rgba(4,8,7,.86));
+    box-shadow:0 14px 32px rgba(0,0,0,.22);
+    padding:16px 14px 14px;
+    overflow:hidden;
+    text-decoration:none;
+    color:inherit;
+    transition:transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease;
+  }
+  .tool-card::before{
+    content:'';
+    position:absolute;
+    inset:-28% -8% auto -8%;
+    height:42%;
+    background:radial-gradient(circle, rgba(23,243,107,.16), transparent 70%);
+    pointer-events:none;
+    opacity:.95;
+  }
+  .tool-card:hover{
+    transform:translateY(-2px);
+    border-color:rgba(23,243,107,.22);
+    box-shadow:0 20px 38px rgba(0,0,0,.28);
+  }
+  .tool-card .tool-icon{
+    position:relative;
+    z-index:1;
+    width:22px;
+    height:22px;
+    color:var(--green);
+    margin-bottom:14px;
+  }
+  .tool-card h3{
+    position:relative;
+    z-index:1;
+    margin:0;
+    font:800 17px/1.15 var(--font-body);
+    color:#fff;
+  }
+  .tool-card p{
+    position:relative;
+    z-index:1;
+    margin:8px 0 0;
+    color:rgba(230,240,234,.76);
+    font-size:13px;
+    line-height:1.45;
+  }
+  .tool-arrow{
+    position:absolute;
+    right:12px;
+    bottom:12px;
+    z-index:1;
+    width:28px;
+    height:28px;
+    border-radius:50%;
+    border:1px solid rgba(23,243,107,.24);
+    display:grid;
+    place-items:center;
+    color:var(--green);
+    background:rgba(23,243,107,.05);
+  }
+  .tool-arrow svg{width:14px;height:14px;stroke:currentColor}
+
+  .tools-footer-link{
+    display:flex;
+    justify-content:center;
+    margin:16px 0 0;
+  }
+  .tools-footer-link a{
+    color:rgba(23,243,107,.96);
+    text-decoration:none;
+    font-weight:800;
+    letter-spacing:.03em;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+  }
+  .tools-footer-link svg{width:16px;height:16px;stroke:currentColor}
+
+  .community-card{
+    margin-top:24px;
+    border-radius:24px;
+    border:1px solid rgba(23,243,107,.16);
+    background:
+      linear-gradient(180deg, rgba(10,17,15,.70), rgba(5,8,8,.86));
+    box-shadow:var(--shadow-soft);
+    padding:20px 18px;
+    text-align:center;
+  }
+  .community-card .mini-label{
+    color:rgba(23,243,107,.94);
+    font:800 11px/1 var(--font-title);
+    letter-spacing:.16em;
+    text-transform:uppercase;
+  }
+  .community-card h3{
+    margin:10px 0 0;
+    font:900 clamp(24px, 3.4vw, 34px)/1.1 var(--font-title);
+    letter-spacing:-.03em;
+  }
+  .avatars{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+    margin-top:14px;
+    flex-wrap:wrap;
+  }
+  .avatar{
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    border:2px solid rgba(255,255,255,.14);
+    display:grid;
+    place-items:center;
+    overflow:hidden;
+    background:
+      radial-gradient(circle at 35% 30%, rgba(255,255,255,.18), transparent 35%),
+      linear-gradient(180deg, rgba(23,243,107,.16), rgba(4,8,7,.72));
+    color:#fff;
+    font:800 12px/1 var(--font-title);
+    text-transform:uppercase;
+  }
+  .avatar img{width:100%;height:100%;object-fit:cover}
+  .avatar.more{
+    background:transparent;
+    border-color:rgba(23,243,107,.46);
+    color:var(--green);
+    box-shadow:0 0 0 1px rgba(23,243,107,.12) inset;
+  }
+  .community-desc{
+    margin:14px auto 0;
+    max-width:52ch;
+    color:rgba(231,240,235,.82);
+    line-height:1.6;
+  }
+  .community-actions{
+    margin-top:16px;
+    display:flex;
+    justify-content:center;
+  }
+
+  .trust-grid{
+    margin-top:18px;
+    border-radius:22px;
+    border:1px solid rgba(255,255,255,.08);
+    background:rgba(4,8,7,.40);
+    display:grid;
+    grid-template-columns:repeat(4, minmax(0,1fr));
+    overflow:hidden;
+  }
+  .trust-item{
+    padding:16px 10px 15px;
+    text-align:left;
+    border-right:1px solid rgba(255,255,255,.08);
+  }
+  .trust-item:last-child{border-right:none}
+  .trust-top{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    color:#fff;
+    font-weight:800;
+    font-size:13px;
+  }
+  .trust-top svg{
+    width:18px;
+    height:18px;
+    color:var(--green);
+    flex:none;
+  }
+  .trust-item p{
+    margin:6px 0 0;
+    color:rgba(226,237,231,.72);
+    font-size:12px;
+    line-height:1.35;
+  }
+
+  .section-stack{
+    padding:22px 0 0;
+  }
+
+  .footer-space{
+    height:18px;
+  }
+
+  .sr-only{
+    position:absolute;
+    width:1px;
+    height:1px;
+    padding:0;
+    margin:-1px;
+    overflow:hidden;
+    clip:rect(0,0,0,0);
+    white-space:nowrap;
+    border:0;
+  }
+
+  .motion-line{
+    position:absolute;
+    inset:0 auto 0 0;
+    width:2px;
+    background:linear-gradient(180deg, transparent, rgba(23,243,107,.65), transparent);
+    filter:blur(1px);
+    opacity:.35;
+    pointer-events:none;
+  }
+
+  @media (min-width: 860px){
+    .desktop-nav{display:flex}
+    .hero-inner{
+      grid-template-columns:minmax(0, 1.02fr) minmax(320px, .98fr);
+      align-items:center;
+      gap:16px;
+      padding:118px 40px 34px;
+      min-height:inherit;
+    }
+    .hero-copy{max-width:680px}
+    .hero-title{max-width:13ch}
+    .hero-desc{max-width:38ch}
+    .hero-visual{min-height:520px}
+    .hud-live{top:14%; right:6%}
+    .hud-signal{right:6%; bottom:16%}
+    .hud-board{left:11%; bottom:12%}
+    .tools-grid{gap:14px}
+    .tool-card{min-height:178px; padding:18px 16px 16px}
+    .tool-card h3{font-size:18px}
+    .community-card{padding:24px 22px}
+    .section-stack{padding-top:28px}
+  }
+
+  @media (max-width: 859.98px){
+    .hero{border-radius:30px}
+    .hero-inner{padding:94px 16px 16px}
+    .hero-proof, .trust-grid{
+      grid-template-columns:repeat(4, minmax(0,1fr));
+    }
+    .tools-grid{
+      grid-template-columns:repeat(3, minmax(0,1fr));
+      gap:10px;
+    }
+    .tool-card{
+      min-height:152px;
+      padding:14px 12px 12px;
+      border-radius:18px;
+    }
+    .tool-card h3{font-size:15px}
+    .tool-card p{font-size:12px}
+    .community-card{padding:18px 16px}
+    .community-card h3{font-size:26px}
+  }
+
+  @media (max-width: 540px){
+    .landing-shell{padding-left:14px;padding-right:14px}
+    .topbar{padding-left:14px;padding-right:14px}
+    .brand-mark{width:44px;height:44px}
+    .brand-title{font-size:18px}
+    .brand-sub{font-size:9px;letter-spacing:.18em}
+    .hero{border-radius:28px}
+    .hero-inner{padding:86px 14px 14px}
+    .hero-title{
+      font-size:clamp(42px, 13.4vw, 56px);
+      max-width:11ch;
+    }
+    .hero-desc{font-size:15px;max-width:28ch}
+    .hero-actions{gap:10px}
+    .btn{
+      min-height:46px;
+      padding:0 15px;
+      font-size:12px;
+      border-radius:13px;
+    }
+    .hero-proof{
+      border-radius:20px;
+      margin-top:18px;
+    }
+    .stat{
+      padding:13px 6px 12px;
+    }
+    .stat-value{font-size:18px}
+    .stat-label{font-size:10px}
+    .hero-visual{min-height:330px}
+    .hud-card{
+      padding:11px 12px;
+      border-radius:16px;
+    }
+    .hud-live{top:16%; right:6%; min-width:124px}
+    .hud-board{left:6%; bottom:15%; min-width:154px}
+    .hud-signal{right:5%; bottom:18%; min-width:106px}
+    .section-label{font-size:10px}
+    .section-title{font-size:clamp(24px, 7vw, 34px)}
+    .section-subtitle{font-size:14px; margin-top:10px}
+    .content-section{padding-top:18px}
+    .tools-grid{
+      grid-template-columns:repeat(3, minmax(0,1fr));
+      gap:8px;
+      margin-top:18px;
+    }
+    .tool-card{
+      min-height:130px;
+      padding:12px 10px 10px;
+      border-radius:16px;
+    }
+    .tool-card .tool-icon{width:20px;height:20px;margin-bottom:10px}
+    .tool-card h3{font-size:13px;line-height:1.1}
+    .tool-card p{font-size:10px;line-height:1.35;margin-top:6px}
+    .tool-arrow{
+      width:24px;height:24px;right:9px;bottom:9px;
+    }
+    .tools-footer-link{margin-top:12px}
+    .tools-footer-link a{font-size:13px}
+    .community-card{border-radius:22px}
+    .community-card .mini-label{font-size:10px}
+    .community-card h3{font-size:22px}
+    .avatars{gap:7px}
+    .avatar{width:34px;height:34px;font-size:11px}
+    .community-desc{font-size:13px}
+    .trust-grid{
+      margin-top:14px;
+      border-radius:20px;
+    }
+    .trust-item{
+      padding:13px 8px 12px;
+    }
+    .trust-top{font-size:11px;gap:7px}
+    .trust-item p{font-size:10px}
+  }
+
+  @media (max-width: 380px){
+    .hero-title{font-size:38px;max-width:10ch}
+    .hero-desc{max-width:26ch}
+    .tools-grid{gap:7px}
+    .tool-card{min-height:124px;padding:11px 9px 9px}
+    .tool-card h3{font-size:12px}
+    .tool-card p{font-size:9px}
+    .trust-item{padding:11px 7px 10px}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    *, *::before, *::after{
+      animation-duration:.01ms !important;
+      animation-iteration-count:1 !important;
+      transition-duration:.01ms !important;
+      scroll-behavior:auto !important;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block body_attrs %} class="landing-page"{% endblock %}
+
+{% block content %}
+<div class="topbar" id="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="/landing" aria-label="ConfigDoctor home">
+      <img
+        class="brand-mark"
+        src="{{ url_for('static', filename='img/configdoctor-landing-logo.png') }}"
+        alt="ConfigDoctor"
+        width="749"
+        height="160"
+      >
+      <span class="brand-copy">
+        <span class="brand-title">Config<span>Doctor</span></span>
+        <span class="brand-sub">FPV Drone Diagnostic Platform</span>
+      </span>
+    </a>
+
+    <div class="nav-actions">
+      <nav class="desktop-nav" aria-label="Primary">
+        <a href="#tools">Tools</a>
+        <a href="/fpv">FPV Hub</a>
+        <a href="/about">About</a>
+        <a href="/team">Community</a>
+      </nav>
+      <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mobileDrawer" aria-label="Open menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round">
+          <path d="M4 7h16M4 12h16M4 17h16"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
+  <div class="drawer-panel" role="dialog" aria-modal="true" aria-label="Site menu">
+    <div class="drawer-head">
+      <strong>Quick access</strong>
+      <button class="drawer-close" id="drawerClose" aria-label="Close menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round">
+          <path d="M6 6l12 12M18 6L6 18"></path>
+        </svg>
+      </button>
+    </div>
+    <div class="drawer-links">
+      <a href="/app"><span><span class="label">Launch App</span><span class="meta">Open the analysis workspace</span></span><span>↗</span></a>
+      <a href="#tools"><span><span class="label">Explore Tools</span><span class="meta">Browse the full toolkit</span></span><span>↗</span></a>
+      <a href="/fpv"><span><span class="label">FPV Hub</span><span class="meta">Guides, builds, and workflows</span></span><span>↗</span></a>
+      <a href="/team"><span><span class="label">Community</span><span class="meta">Share setups and learn together</span></span><span>↗</span></a>
+    </div>
+  </div>
+</div>
+
+<main class="landing-shell">
+  <section class="hero" aria-labelledby="hero-title">
+    <img
+      class="hero-bg"
+      src="{{ url_for('static', filename='img/landing-bg-mobile.jpg') }}"
+      srcset="
+        {{ url_for('static', filename='img/landing-bg-mobile.jpg') }} 720w,
+        {{ url_for('static', filename='img/landing-bg-desktop.jpg') }} 1600w
+      "
+      sizes="(max-width: 859px) 100vw, 1280px"
+      alt=""
+      aria-hidden="true"
+      fetchpriority="high"
+    >
+    <div class="hero-overlay"></div>
+    <div class="motion-line" aria-hidden="true"></div>
+
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <span class="eyebrow"><i></i> All-in-One FPV Tuning &amp; Analysis Suite</span>
+        <h1 class="hero-title" id="hero-title">
+          Tune Smarter.
+          <span class="accent">Fly Faster.</span>
+        </h1>
+        <p class="hero-desc">
+          The all-in-one platform for FPV pilots. Analyze Blackbox logs, tune PID &amp; filters, calculate rates, check components, and improve every flight.
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="/app">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 19l14-14"></path>
+              <path d="M9 5h10v10"></path>
+            </svg>
+            Launch App
+          </a>
+          <a class="btn btn-secondary" href="#tools">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 4v16"></path>
+              <path d="M4 12h16"></path>
+            </svg>
+            Explore Tools
+          </a>
+        </div>
+
+        <div class="hero-proof" aria-label="Platform stats">
+          <div class="stat">
+            <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+            <div class="stat-value">22+</div>
+            <div class="stat-label">Analysis Tools</div>
+          </div>
+          <div class="stat">
+            <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 3v18h18"></path>
+              <path d="M7 14l3-3 4 4 7-8"></path>
+            </svg>
+            <div class="stat-value">0</div>
+            <div class="stat-label">Registration Required</div>
+          </div>
+          <div class="stat">
+            <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M10 13a5 5 0 1 0 0-5"></path>
+              <path d="M21 12h-6"></path>
+              <path d="M3 12h2"></path>
+              <path d="M11 21v-2"></path>
+              <path d="M11 5V3"></path>
+            </svg>
+            <div class="stat-value">TH</div>
+            <div class="stat-label">Built for the Community</div>
+          </div>
+          <div class="stat">
+            <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20 6 9 17l-5-5"></path>
+              <path d="M12 12h8"></path>
+            </svg>
+            <div class="stat-value">100%</div>
+            <div class="stat-label">Free to Use</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <div class="orb"></div>
+        <div class="hud-card hud-live">
+          <strong>LIVE ANALYSIS</strong>
+          <span>Blackbox • PID • Filter</span>
+        </div>
+        <div class="hud-card hud-board">
+          <strong>142 ms</strong>
+          <span>Response drift / latency snapshot</span>
+          <span class="line"></span>
+          <span>Confidence scoring enabled</span>
+        </div>
+        <div class="hud-card hud-signal">
+          <strong>98%</strong>
+          <span>Signal</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-stack" id="tools">
+    <div class="content-section">
+      <div class="section-label">All-in-one toolkit</div>
+      <h2 class="section-title">Everything You Need<br><span class="accent">in One Place</span></h2>
+      <p class="section-subtitle">
+        A clean, focused workspace for FPV pilots who want fast diagnostics, reliable recommendations, and a smoother path from setup to flight.
+      </p>
+
+      <div class="tools-grid">
+        <a class="tool-card" href="/blackbox">
+          <svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M2 12h4l3-8 4 16 3-8h6"></path>
+          </svg>
+          <h3>Blackbox Analyzer</h3>
+          <p>Deep log analysis with advanced visualization.</p>
+          <span class="tool-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg></span>
+        </a>
+
+        <a class="tool-card" href="/pid-advisor">
+          <svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 6h16"></path>
+            <path d="M4 12h10"></path>
+            <path d="M4 18h13"></path>
+            <circle cx="17" cy="12" r="2"></circle>
+          </svg>
+          <h3>PID Tuning</h3>
+          <p>Smart tuning guidance based on your setup.</p>
+          <span class="tool-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg></span>
+        </a>
+
+        <a class="tool-card" href="/rates-visualizer">
+          <svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 19V5"></path>
+            <path d="M4 19h16"></path>
+            <path d="M8 15l3-4 3 2 4-7"></path>
+          </svg>
+          <h3>Rates Calculator</h3>
+          <p>Calculate and preview the feel of your rates.</p>
+          <span class="tool-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg></span>
+        </a>
+
+        <a class="tool-card" href="/bf-wizard">
+          <svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 7h16"></path>
+            <path d="M7 12h10"></path>
+            <path d="M10 17h4"></path>
+            <path d="M12 3v18"></path>
+          </svg>
+          <h3>Filter Optimizer</h3>
+          <p>Find optimal filter settings for your build.</p>
+          <span class="tool-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg></span>
+        </a>
+
+        <a class="tool-card" href="/vtx">
+          <svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12a7 7 0 0 1 14 0"></path>
+            <path d="M8.5 12a3.5 3.5 0 0 1 7 0"></path>
+            <circle cx="12" cy="12" r="1"></circle>
+          </svg>
+          <h3>VTX Calculator</h3>
+          <p>Find the best VTX settings for your needs.</p>
+          <span class="tool-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg></span>
+        </a>
+
+        <a class="tool-card" href="/motor-prop">
+          <svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3v18"></path>
+            <path d="M3 12h18"></path>
+            <path d="M7 7l10 10"></path>
+            <path d="M17 7 7 17"></path>
+          </svg>
+          <h3>Component Check</h3>
+          <p>Check compatibility and match the best parts.</p>
+          <span class="tool-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg></span>
+        </a>
+      </div>
+
+      <div class="tools-footer-link">
+        <a href="/app">
+          View All Tools
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="community-card">
+      <div class="mini-label">Built by pilots, for pilots</div>
+      <h3>Join Our Growing Community</h3>
+      <div class="avatars" aria-hidden="true">
+        <div class="avatar"><img src="{{ url_for('static', filename='img/santipap-profile.webp') }}" alt=""></div>
+        <div class="avatar">fpv</div>
+        <div class="avatar">pid</div>
+        <div class="avatar">log</div>
+        <div class="avatar">vtx</div>
+        <div class="avatar more">+999</div>
+      </div>
+      <p class="community-desc">
+        Share setups, ask questions, and learn from other FPV pilots to build a better flight experience together.
+      </p>
+      <div class="community-actions">
+        <a class="btn btn-secondary" href="/team">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+          Join Community
+        </a>
+      </div>
+    </div>
+
+    <div class="trust-grid" aria-label="Trust and privacy highlights">
+      <div class="trust-item">
+        <div class="trust-top">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 2 3 7v5c0 5 3.8 9.7 9 10 5.2-.3 9-5 9-10V7l-9-5z"></path>
+          </svg>
+          Always Free
+        </div>
+        <p>100% free forever</p>
+      </div>
+      <div class="trust-item">
+        <div class="trust-top">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            <path d="M9.5 12.5 11 14l3.5-4"></path>
+          </svg>
+          Privacy First
+        </div>
+        <p>Your data stays on your device</p>
+      </div>
+      <div class="trust-item">
+        <div class="trust-top">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M7 7h10v10H7z"></path>
+            <path d="M4 12h3"></path>
+            <path d="M17 12h3"></path>
+            <path d="M12 4v3"></path>
+            <path d="M12 17v3"></path>
+          </svg>
+          Open Source
+        </div>
+        <p>Transparent and community driven</p>
+      </div>
+      <div class="trust-item">
+        <div class="trust-top">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 20h16"></path>
+            <path d="M7 17v-3"></path>
+            <path d="M12 17v-6"></path>
+            <path d="M17 17V8"></path>
+          </svg>
+          No Registration
+        </div>
+        <p>Start using immediately</p>
+      </div>
+    </div>
+
+    <div class="footer-space"></div>
+  </section>
+</main>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+(() => {
+  const topbar = document.getElementById('topbar');
+  const drawer = document.getElementById('mobileDrawer');
+  const toggle = document.getElementById('menuToggle');
+  const closeBtn = document.getElementById('drawerClose');
+
+  const setOpen = (open) => {
+    drawer.classList.toggle('open', open);
+    drawer.setAttribute('aria-hidden', String(!open));
+    toggle.setAttribute('aria-expanded', String(open));
+    document.body.style.overflow = open ? 'hidden' : '';
+  };
+
+  const onScroll = () => {
+    topbar.classList.toggle('is-scrolled', window.scrollY > 12);
+  };
+
+  toggle?.addEventListener('click', () => {
+    setOpen(!drawer.classList.contains('open'));
+  });
+
+  closeBtn?.addEventListener('click', () => setOpen(false));
+
+  drawer?.addEventListener('click', (ev) => {
+    if (ev.target === drawer) setOpen(false);
+  });
+
+  drawer?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => setOpen(false));
+  });
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 860) setOpen(false);
+  });
+
+  document.addEventListener('keydown', (ev) => {
+    if (ev.key === 'Escape') setOpen(false);
+  });
+
+  onScroll();
+})();
+</script>
+{% endblock %}

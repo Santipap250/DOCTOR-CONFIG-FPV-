@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>500 — System Error · OBIXConfig Doctor</title>
+  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Sarabun:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:    #060c14;
+      --panel: rgba(255,255,255,0.03);
+      --red:   #ff4455;
+      --muted: rgba(200,215,255,0.45);
+      --muted2:rgba(200,215,255,0.28);
+      --font-d:'JetBrains Mono', monospace;
+      --font-s:'Sarabun', sans-serif;
+    }
+body {
+      background: var(--bg);
+      color: rgba(200,215,255,0.85);
+      font-family: var(--font-s);
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid rgba(255,68,85,0.18);
+      border-radius: 16px;
+      padding: 40px 36px;
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 0 60px rgba(255,68,85,0.05);
+    }
+    .icon { font-size: 52px; line-height: 1; margin-bottom: 18px; }
+    .code {
+      font-family: var(--font-d);
+      font-size: 11px;
+      letter-spacing: .14em;
+      color: var(--red);
+      margin-bottom: 10px;
+      opacity: .7;
+    }
+    h1 {
+      font-family: var(--font-d);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--red);
+      margin-bottom: 10px;
+      letter-spacing: -.01em;
+    }
+    .sub {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+    .checklist {
+      background: rgba(255,68,85,0.05);
+      border: 1px solid rgba(255,68,85,0.12);
+      border-radius: 8px;
+      padding: 14px 18px;
+      text-align: left;
+      margin-bottom: 28px;
+    }
+    .checklist-title {
+      font-family: var(--font-d);
+      font-size: 9px;
+      letter-spacing: .12em;
+      color: var(--red);
+      opacity: .7;
+      margin-bottom: 10px;
+    }
+    .chk-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+      margin-bottom: 6px;
+    }
+    .chk-item:last-child { margin-bottom: 0; }
+    .chk-item .ico { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+    .btn-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      font-family: var(--font-d);
+      font-size: 11px;
+      letter-spacing: .1em;
+      padding: 10px 22px;
+      border-radius: 8px;
+      border: 1px solid;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all .2s;
+      display: inline-block;
+    }
+    .btn-primary {
+      background: rgba(255,68,85,0.10);
+      border-color: rgba(255,68,85,0.35);
+      color: var(--red);
+    }
+    .btn-primary:hover { background: rgba(255,68,85,0.18); }
+    .btn-ghost {
+      background: transparent;
+      border-color: rgba(255,255,255,0.1);
+      color: var(--muted);
+    }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.2); color: rgba(200,215,255,0.7); }
+    footer {
+      margin-top: 32px;
+      font-size: 11px;
+      color: var(--muted2);
+      font-family: var(--font-d);
+      letter-spacing: .06em;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon">🛑</div>
+    <div class="code">HTTP 500 — INTERNAL SERVER ERROR</div>
+    <h1>Analysis system hiccup</h1>
+    <p class="sub">
+      ระบบวิเคราะห์พบข้อผิดพลาดชั่วคราว<br>
+      ไม่มีข้อมูลของคุณรั่วไหล — กรุณาลองใหม่อีกครั้ง
+    </p>
+
+    <div class="checklist">
+      <div class="checklist-title">🔧 สิ่งที่คุณทำได้</div>
+      <div class="chk-item">
+        <span class="ico">🔄</span>
+        <span>กด <strong>ลองใหม่</strong> ด้านล่าง — ส่วนใหญ่แก้ได้ใน 1 ครั้ง</span>
+      </div>
+      <div class="chk-item">
+        <span class="ico">⚙️</span>
+        <span>ถ้ายังไม่ได้ ลองเปลี่ยน Preset หรือตรวจสอบค่าที่กรอก เช่น KV หรือน้ำหนักโดรน</span>
+      </div>
+      <div class="chk-item">
+        <span class="ico">💬</span>
+        <span>ถ้าเกิดซ้ำหลายครั้ง แจ้งทีมงานได้ที่ GitHub Issues</span>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="retryAnalysis()">
+        ⟳ &nbsp;ลองใหม่
+      </button>
+      <a href="/app" class="btn btn-ghost">← กลับหน้าหลัก</a>
+    </div>
+  </div>
+
+  <footer>OBIXConfig Doctor · configdoctor.onrender.com</footer>
+
+  <script>
+    function retryAnalysis() {
+      // Go back to previous page (the form); if no history just go to /app
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        window.location.href = '/app';
+      }
+    }
+  </script>
+</body>
+</html>
