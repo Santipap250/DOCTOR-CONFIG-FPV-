@@ -1237,6 +1237,15 @@ window.closeTP=function closeTP(){
   curSel=-1;
   if(tpBtn)tpBtn.focus();
 }
+window.openToolsPanel = window.openTP;
+window.closeToolsPanel = window.closeTP;
+window.toggleToolsPanel = function(){
+  if(tpPn && tpPn.classList.contains('tp-open')){
+    window.closeTP();
+  } else {
+    window.openTP();
+  }
+};
 function tpKey(e){
   if(e.key==='Escape'){closeTP();return;}
   if(e.key==='ArrowDown'){e.preventDefault();moveSel(1);}
