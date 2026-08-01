@@ -712,6 +712,41 @@ body.no-hero-video .hero-bg-video{display:none;}
 
 /* Floating metric cards */
 .hero-cards{position:absolute;right:clamp(20px,6vw,80px);top:50%;transform:translateY(-50%);z-index:2;display:flex;flex-direction:column;gap:10px;pointer-events:none}
+
+/* ── Hero centerpiece drone photo ──────────────────────────────
+   Uploaded product shot + abstract streak texture, blended with
+   mix-blend-mode:screen (image has a near-black backdrop, so black
+   pixels disappear into the page bg) and mask-image to fade the
+   rectangular edges out — avoids a visible photo-card look. ──── */
+.hero-drone{
+  position:absolute;z-index:1;pointer-events:none;
+  right:clamp(-20px,1vw,30px);top:50%;transform:translateY(-52%);
+  width:clamp(200px,30vw,400px);
+}
+.hero-drone-fx{
+  position:absolute;inset:-30% -20%;z-index:0;
+  background-image:url("{{ url_for('static', filename='img/hero-texture.webp') }}");
+  background-size:cover;background-position:center;
+  mix-blend-mode:screen;opacity:.32;filter:blur(1px) saturate(1.3);
+  -webkit-mask-image:radial-gradient(ellipse 60% 60% at 55% 50%,#000 35%,transparent 82%);
+  mask-image:radial-gradient(ellipse 60% 60% at 55% 50%,#000 35%,transparent 82%);
+}
+.hero-drone-img{
+  position:relative;z-index:1;width:100%;height:auto;display:block;
+  mix-blend-mode:screen;
+  -webkit-mask-image:radial-gradient(ellipse 78% 84% at 58% 48%,#000 52%,transparent 94%);
+  mask-image:radial-gradient(ellipse 78% 84% at 58% 48%,#000 52%,transparent 94%);
+  filter:drop-shadow(0 0 34px rgba(16,196,122,.4)) drop-shadow(0 0 68px rgba(0,229,255,.16)) contrast(1.08) saturate(1.12);
+  animation:heroDroneFloat 6s ease-in-out infinite;
+}
+@keyframes heroDroneFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+@media(prefers-reduced-motion:reduce){.hero-drone-img{animation:none}}
+@media(max-width:900px){
+  .hero-drone{right:-8%;top:58px;top:clamp(40px,10vh,64px);width:min(58vw,300px);transform:none;opacity:.92}
+}
+@media(max-width:480px){
+  .hero-drone{width:min(66vw,230px);top:44px}
+}
 .hcard{
   background:rgba(10,20,15,.85);backdrop-filter:blur(16px);
   border:1px solid rgba(0,255,68,.18);border-radius:12px;
@@ -768,6 +803,8 @@ body.no-hero-video .hero-bg-video{display:none;}
   50%{filter:drop-shadow(0 0 12px rgba(0,255,68,.34))}
 }
 .hero-desc{font-size:clamp(14px,2vw,17px);color:rgba(255,255,255,.72);line-height:1.7;margin-bottom:32px;max-width:420px;opacity:0;animation:fadeSlideUp .5s .9s forwards}
+.hero-tagline{font-family:'Sarabun',sans-serif;font-weight:600;font-size:clamp(13px,1.8vw,15.5px);color:#5fc8ff;letter-spacing:.02em;max-width:none}
+.hero-tagline .ht-dot{color:rgba(95,200,255,.4);margin:0 2px}
 
 
 /* ── HERO BUTTONS ── */
@@ -2061,6 +2098,12 @@ footer{
   <div class="hero-corner bl"></div>
   <div class="hero-corner br"></div>
 
+  <!-- Centerpiece drone photo -->
+  <div class="hero-drone" aria-hidden="true">
+    <div class="hero-drone-fx"></div>
+    <img class="hero-drone-img" src="{{ url_for('static', filename='img/hero-drone.webp') }}" alt="" loading="eager" fetchpriority="high" width="864" height="1821">
+  </div>
+
   <!-- Floating metric cards -->
   <div class="hero-cards">
     <div class="hcard green">
@@ -2108,20 +2151,19 @@ footer{
     <h1 class="hero-title hero-title-premium hero-tilt" id="heroTitleTilt" style="position:relative">
   <span class="hero-glow-orb o1" aria-hidden="true"></span>
   <span class="hero-glow-orb o2" aria-hidden="true"></span>
-  <span class="line">ปรับจูน</span>
-  <span class="line">อย่างแม่นยำ</span>
+  <span class="line">วิเคราะห์โดรน</span>
   <span class="line">
-    บิน<span class="hero-gradient" data-text="ดีกว่าเดิม">ดีกว่าเดิม</span>
+    <span class="hero-gradient" data-text="FPV">FPV</span> ของคุณ
   </span>
 </h1>
     <div class="hero-rule"></div>
-    <p class="hero-desc">แพลตฟอร์มสำหรับชุมชน FPV Thailand รวมเครื่องมือ ข้อมูล และการเรียนรู้ไว้ในที่เดียว</p>
+    <p class="hero-desc hero-tagline">PID <span class="ht-dot">·</span> Filter <span class="ht-dot">·</span> Blackbox <span class="ht-dot">·</span> CLI <span class="ht-dot">·</span> Battery</p>
 
     <!-- Primary action buttons -->
     <div class="hero-btns">
       <a class="btn-primary" href="/app">
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M6.2 4.6a1 1 0 0 1 1.55-.83l6.1 3.9a1 1 0 0 1 0 1.66l-6.1 3.9A1 1 0 0 1 6.2 12.4V4.6Z" fill="#04130c"/></svg>
-        เริ่มการวิเคราะห์
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true" stroke="#04130c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 9.5h3l1.5-4 2.5 8 1.8-6 1.2 2h4.5"/></svg>
+        เริ่มวิเคราะห์
       </a>
       <a class="btn-outline" href="#tools">
         ดูเครื่องมือทั้งหมด &nbsp;›
