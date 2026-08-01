@@ -2429,7 +2429,10 @@ footer{
     <a class="footer-link" href="{{ url_for('downloads.downloads_index') }}">Downloads</a>
     <a class="footer-link" href="https://www.facebook.com/OBIXConfigLab" target="_blank" rel="noopener noreferrer" style="color:#60a5fa">OBIXConfigLab ↗</a></div> 
   <div class="footer-left">Copyright © 2026 Santipap. All Rights Reserved.</div>
-</footer>   
+</footer>
+
+{% include "partials/bottom_nav.html" %}
+
    
 <script>
 /* ── Hero background video: lazy-load only when the device/network can handle it ── */
