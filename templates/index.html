@@ -362,12 +362,86 @@ pre::-webkit-scrollbar-thumb{background:rgba(0,255,68,.2);border-radius:2px}
 }
 @media(max-width:560px){
   .nav-back-btn{min-width:84px;height:42px;padding:0 14px;border-radius:14px;font-size:10px;letter-spacing:.18em}
+  .shell{gap:0}
+  .panel{padding:18px 14px 28px}
+  .out{padding:16px 12px 56px}
   .pid3{grid-template-columns:1fr}
-  .qf-grid{grid-template-columns:1fr 1fr}
-  .res-head{flex-wrap:wrap}
+  .qf-grid{grid-template-columns:1fr}
+  .mtr-grid{grid-template-columns:1fr}
+  .res-head{flex-wrap:wrap;padding:14px 14px}
   .rh-vitals{flex-direction:row;width:100%;justify-content:space-between;margin-top:8px}
   .rv{text-align:left}
+  .cli-head{padding:12px 13px}
+  .cli-copy{width:100%;justify-content:center}
 }
+/* ── Mobile-first tools launcher / modal ───────────────────── */
+.tools-launch{
+  position:fixed;right:14px;bottom:86px;z-index:1200;
+  display:inline-flex;align-items:center;gap:8px;
+  min-height:46px;padding:0 15px;border-radius:999px;
+  border:1px solid rgba(0,255,68,.22);background:rgba(0,12,8,.84);
+  color:var(--g);font-family:var(--fd);font-size:10px;font-weight:800;letter-spacing:.12em;
+  box-shadow:0 12px 30px rgba(0,0,0,.32),0 0 0 1px rgba(255,255,255,.02) inset;
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);cursor:pointer;
+}
+.tools-launch:hover{border-color:rgba(0,255,68,.45);transform:translateY(-1px);box-shadow:0 14px 36px rgba(0,0,0,.38),0 0 22px rgba(0,255,68,.12)}
+.tools-launch-ic{font-size:15px;line-height:1}
+.tools-launch-pill{display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 7px;border-radius:999px;background:rgba(0,255,68,.1);border:1px solid rgba(0,255,68,.18);font-size:9px;color:var(--g)}
+@media(min-width:921px){.tools-launch{right:18px;bottom:18px}}
+@media(max-width:560px){.tools-launch{left:12px;right:12px;bottom:78px;justify-content:center;width:calc(100% - 24px)}}
+
+.tools-modal{position:fixed;inset:0;z-index:1300;display:none}
+.tools-modal.open{display:block}
+.tools-modal-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.62);backdrop-filter:blur(6px)}
+.tools-modal-panel{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:min(920px,calc(100vw - 24px));max-height:min(82vh,780px);overflow:hidden;
+  border-radius:24px;border:1px solid rgba(255,255,255,.08);
+  background:linear-gradient(180deg,rgba(4,10,10,.98),rgba(3,8,10,.96));
+  box-shadow:0 30px 80px rgba(0,0,0,.58),0 0 0 1px rgba(255,255,255,.02) inset;
+}
+.tools-modal-head{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  padding:18px 18px 14px;border-bottom:1px solid rgba(255,255,255,.06);
+}
+.tools-modal-title{display:flex;flex-direction:column;gap:4px}
+.tools-modal-kicker{font-family:var(--fd);font-size:10px;letter-spacing:.18em;color:var(--g)}
+.tools-modal-h{font-family:var(--fd);font-size:15px;font-weight:800;color:#fff}
+.tools-modal-s{font-size:12px;color:var(--t2)}
+.tools-modal-close{
+  width:42px;height:42px;border-radius:12px;border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.04);color:#fff;font-size:18px;cursor:pointer
+}
+.tools-modal-body{padding:16px 18px 18px;overflow:auto;max-height:calc(82vh - 80px)}
+.tools-search{
+  width:100%;height:46px;border-radius:14px;padding:0 14px;margin-bottom:14px;
+  border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.04);color:#fff;font-family:var(--ft)
+}
+.tools-search:focus{outline:none;border-color:rgba(0,255,68,.28);box-shadow:0 0 0 3px rgba(0,255,68,.08)}
+.tools-section{margin-top:14px}
+.tools-sec-h{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.tools-sec-title{font-family:var(--fd);font-size:10px;letter-spacing:.16em;color:var(--t2)}
+.tools-sec-count{font-size:11px;color:var(--t3)}
+.tools-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.tools-card{
+  display:flex;align-items:flex-start;gap:12px;padding:14px;border-radius:16px;text-decoration:none;
+  border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);transition:.16s;min-width:0
+}
+.tools-card:hover{transform:translateY(-1px);border-color:rgba(0,255,68,.22);background:rgba(0,255,68,.05)}
+.tools-ic{width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  background:rgba(0,255,68,.1);border:1px solid rgba(0,255,68,.16);font-size:18px}
+.tools-copy{min-width:0;flex:1}
+.tools-name{font-family:var(--fd);font-size:11px;font-weight:800;color:#fff;letter-spacing:.06em}
+.tools-desc{font-size:11.5px;color:var(--t2);line-height:1.55;margin-top:4px}
+.tools-tag{display:inline-flex;margin-top:8px;font-size:9px;letter-spacing:.08em;color:var(--g);text-transform:uppercase}
+.tools-empty{padding:16px;border:1px dashed rgba(255,255,255,.12);border-radius:16px;color:var(--t2);text-align:center}
+@media(max-width:680px){
+  .tools-modal-panel{width:calc(100vw - 14px);max-height:86vh;border-radius:20px}
+  .tools-grid{grid-template-columns:1fr}
+  .tools-modal-head{padding:16px}
+  .tools-modal-body{padding:14px 16px 16px}
+}
+
 </style>
 
 <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
@@ -990,6 +1064,31 @@ save</pre>
 </div><!-- /out -->
 </div><!-- /shell -->
 
+
+<button type="button" class="tools-launch" id="toolsLaunch" onclick="openToolsModal()" aria-haspopup="dialog" aria-controls="toolsModal">
+  <span class="tools-launch-ic">🧰</span>
+  <span>TOOLS</span>
+  <span class="tools-launch-pill" id="toolsCount">0</span>
+</button>
+
+<div class="tools-modal" id="toolsModal" role="dialog" aria-modal="true" aria-labelledby="toolsModalTitle" aria-hidden="true">
+  <div class="tools-modal-backdrop" onclick="closeToolsModal()"></div>
+  <div class="tools-modal-panel" role="document">
+    <div class="tools-modal-head">
+      <div class="tools-modal-title">
+        <div class="tools-modal-kicker">CONFIGDOCTOR TOOLBOX</div>
+        <div class="tools-modal-h" id="toolsModalTitle">เลือกเครื่องมือที่ต้องการใช้งาน</div>
+        <div class="tools-modal-s">รวมเครื่องมือหลักทั้งหมดไว้ในที่เดียว กดเลือกแล้วไปใช้งานต่อได้ทันที</div>
+      </div>
+      <button type="button" class="tools-modal-close" onclick="closeToolsModal()" aria-label="ปิด">✕</button>
+    </div>
+    <div class="tools-modal-body">
+      <input type="search" class="tools-search" id="toolsSearch" placeholder="ค้นหาเครื่องมือ เช่น PID, blackbox, VTX, battery..." oninput="filterTools()">
+      <div id="toolsGroups"></div>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toastEl"></div>
 
 <script>
@@ -1148,6 +1247,105 @@ window.showToast = function(msg, type, dur) {
     entries.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add('ui-visible'); obs.unobserve(e.target); } });
   }, { threshold: 0.08 });
   document.querySelectorAll('.ui-fade-up').forEach(function(el) { obs.observe(el); });
+
+
+var TOOLS = [
+  {group:'Analyzer', icon:'📊', name:'Drone Analyzer', desc:'วิเคราะห์ PID / Filter / CLI จากสเปคโดรน', href:'/app', tag:'Core'},
+  {group:'Analyzer', icon:'🧠', name:'PID Advisor', desc:'ช่วยเลือก PID ตามสไตล์การบิน', href:'/pid-advisor', tag:'Tune'},
+  {group:'Analyzer', icon:'⚡', name:'Quick Tune', desc:'ปรับจูนแบบเร็วสำหรับงานทั่วไป', href:'/quick-tune', tag:'Fast'},
+  {group:'Analysis', icon:'🛰️', name:'Blackbox', desc:'ดูอาการบินและหาสาเหตุอาการสั่น', href:'/blackbox', tag:'Debug'},
+  {group:'Analysis', icon:'🎥', name:'CLI Surgeon', desc:'ช่วยจัดการ/แก้คำสั่ง CLI', href:'/cli_surgeon', tag:'CLI'},
+  {group:'Analysis', icon:'🔁', name:'CLI Comparator', desc:'เปรียบเทียบคำสั่ง CLI หลายชุด', href:'/cli-comparator', tag:'Compare'},
+  {group:'Performance', icon:'🔧', name:'RPM Filter', desc:'คำนวณช่วงกรอง RPM ให้เหมาะกับมอเตอร์', href:'/rpm-filter', tag:'Filter'},
+  {group:'Performance', icon:'🧭', name:'Rates Visualizer', desc:'ดูอัตราการหมุนและความรู้สึกการบังคับ', href:'/rates-visualizer', tag:'Rates'},
+  {group:'Performance', icon:'🧰', name:'BF Wizard', desc:'ตัวช่วยตั้งค่า Betaflight แบบเป็นขั้นตอน', href:'/bf-wizard', tag:'Wizard'},
+  {group:'Hardware', icon:'🔋', name:'Battery Health', desc:'ตรวจสุขภาพแบตและประเมินการใช้งาน', href:'/battery-health', tag:'Power'},
+  {group:'Hardware', icon:'🌡️', name:'Motor Thermal', desc:'ประเมินความร้อนของมอเตอร์ระหว่างบิน', href:'/motor-thermal', tag:'Thermal'},
+  {group:'Hardware', icon:'🪛', name:'ESC Checker', desc:'เช็ก ESC และความเข้ากันกับระบบ', href:'/esc-checker', tag:'ESC'},
+  {group:'Hardware', icon:'⚙️', name:'Motor×Prop', desc:'ดูคู่มอเตอร์กับใบพัดที่เข้ากัน', href:'/motor-prop', tag:'Match'},
+  {group:'Hardware', icon:'📡', name:'VTX', desc:'ตั้งค่าช่องและช่วงสัญญาณ VTX', href:'/vtx', tag:'Video'},
+  {group:'Hardware', icon:'🎛️', name:'VTX Range', desc:'คำนวณย่านกำลังส่งและช่องใช้งาน', href:'/vtx-range', tag:'Range'},
+  {group:'Hardware', icon:'📶', name:'SmartAudio', desc:'คู่มือการตั้งค่า SmartAudio', href:'/vtx-smartaudio', tag:'Audio'},
+  {group:'Training', icon:'🎮', name:'FPV Trainer', desc:'ฝึกบินและพัฒนาทักษะพื้นฐาน', href:'/fpv-trainer', tag:'Train'},
+  {group:'Training', icon:'❓', name:'Flight Quiz', desc:'ทดสอบความรู้การบิน FPV', href:'/flight-quiz', tag:'Quiz'},
+  {group:'Training', icon:'🏆', name:'Leaderboard', desc:'ดูอันดับและผลงานในระบบ', href:'/leaderboard', tag:'Rank'},
+  {group:'Explore', icon:'📦', name:'Build Card', desc:'สรุปสเปคโดรนเป็นการ์ดสวย ๆ', href:'/build-card', tag:'Share'},
+  {group:'Explore', icon:'📝', name:'Tuning Log', desc:'บันทึกประวัติการจูนและการปรับแต่ง', href:'/tuning-log', tag:'Log'},
+  {group:'Explore', icon:'🧾', name:'Downloads', desc:'ดาวน์โหลดไฟล์และเครื่องมือเสริม', href:'/downloads', tag:'Files'},
+  {group:'Explore', icon:'🖥️', name:'OSD', desc:'ออกแบบข้อมูล OSD สำหรับจอ FPV', href:'/osd', tag:'Display'},
+  {group:'Explore', icon:'ℹ️', name:'About', desc:'ข้อมูลโปรเจกต์และแนวคิดของระบบ', href:'/about', tag:'Info'},
+  {group:'Explore', icon:'👥', name:'Team', desc:'ดูทีมและผู้พัฒนา', href:'/team', tag:'People'},
+  {group:'Explore', icon:'🧬', name:'Changelog', desc:'ดูบันทึกการอัปเดตล่าสุด', href:'/changelog', tag:'Updates'},
+  {group:'Explore', icon:'🛰️', name:'FPV Hub', desc:'ศูนย์รวมความรู้ FPV สำหรับผู้ใช้', href:'/fpv', tag:'Hub'},
+  {group:'Explore', icon:'🧢', name:'FPV Gear', desc:'แนะนำอุปกรณ์ FPV ตามงบและคลาส', href:'/fpv-gear', tag:'Gear'},
+  {group:'Explore', icon:'🪖', name:'Military UAS', desc:'ข้อมูล/หน้าเฉพาะด้าน military UAS', href:'/military-uas', tag:'Special'}
+];
+
+function groupTools(list){
+  return list.reduce(function(acc, item){
+    (acc[item.group] = acc[item.group] || []).push(item);
+    return acc;
+  }, {});
+}
+
+function renderTools(filter){
+  var container = document.getElementById('toolsGroups');
+  if(!container) return;
+  var q = (filter || '').trim().toLowerCase();
+  var items = !q ? TOOLS.slice() : TOOLS.filter(function(t){
+    return [t.group,t.name,t.desc,t.tag,t.href].join(' ').toLowerCase().indexOf(q) !== -1;
+  });
+  var groups = groupTools(items);
+  var keys = ['Analyzer','Analysis','Performance','Hardware','Training','Explore'];
+  var total = 0;
+  var html = '';
+  keys.forEach(function(key){
+    var arr = groups[key] || [];
+    if (!arr.length) return;
+    total += arr.length;
+    html += '<section class="tools-section"><div class="tools-sec-h"><div class="tools-sec-title">'+key+'</div><div class="tools-sec-count">'+arr.length+' tools</div></div><div class="tools-grid">';
+    arr.forEach(function(t){
+      html += '<a class="tools-card" href="'+t.href+'"><div class="tools-ic">'+t.icon+'</div><div class="tools-copy"><div class="tools-name">'+t.name+'</div><div class="tools-desc">'+t.desc+'</div><span class="tools-tag">'+t.tag+'</span></div></a>';
+    });
+    html += '</div></section>';
+  });
+  if(!total){
+    html = '<div class="tools-empty">ไม่พบเครื่องมือที่ตรงกับคำค้น ลองพิมพ์คำอื่น เช่น PID, VTX, Blackbox, Battery</div>';
+  }
+  container.innerHTML = html;
+  var c = document.getElementById('toolsCount'); if(c) c.textContent = String(items.length);
+}
+
+window.openToolsModal = function(){
+  var m = document.getElementById('toolsModal');
+  if(!m) return;
+  m.classList.add('open');
+  m.setAttribute('aria-hidden','false');
+  document.body.style.overflow = 'hidden';
+  renderTools(document.getElementById('toolsSearch') ? document.getElementById('toolsSearch').value : '');
+  setTimeout(function(){ var s=document.getElementById('toolsSearch'); if(s) s.focus(); }, 50);
+};
+window.closeToolsModal = function(){
+  var m = document.getElementById('toolsModal');
+  if(!m) return;
+  m.classList.remove('open');
+  m.setAttribute('aria-hidden','true');
+  document.body.style.overflow = '';
+};
+window.filterTools = function(){ renderTools(document.getElementById('toolsSearch') ? document.getElementById('toolsSearch').value : ''); };
+
+document.addEventListener('keydown', function(ev){
+  var m = document.getElementById('toolsModal');
+  if (ev.key === 'Escape' && m && m.classList.contains('open')) closeToolsModal();
+});
+
+document.addEventListener('click', function(ev){
+  if(ev.target && ev.target.closest && ev.target.closest('.tools-modal-panel')) return;
+  if(ev.target && ev.target.classList && ev.target.classList.contains('tools-modal-backdrop')) closeToolsModal();
+});
+
+renderTools('');
+
 })();
 </script>
 {% endblock %}
