@@ -44,7 +44,9 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .page{position:relative;z-index:1;max-width:1900px;margin:0 auto;padding:72px 10px 40px}
 .studio-wrap{display:grid;grid-template-columns:210px 1fr 268px;gap:8px;align-items:start}
 @media(max-width:1180px){.studio-wrap{grid-template-columns:190px 1fr 250px}}
-@media(max-width:900px){.studio-wrap{grid-template-columns:1fr}}
+@media(max-width:900px){.studio-wrap{grid-template-columns:1fr}
+  .palette-col{max-height:calc(100dvh - 80px - 78px);}
+}
 
 /* ══ PANEL BASE ══ */
 .pcard{background:var(--panel);border:1px solid var(--border);border-radius:11px;overflow:hidden}
