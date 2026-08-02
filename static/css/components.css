@@ -218,7 +218,7 @@ button.bnav-item{
 }
 @media(max-width:900px){
   .bnav{ display:flex; }
-  body{ padding-bottom:calc(64px + env(safe-area-inset-bottom,0px)); }
+  body:not(.no-bnav){ padding-bottom:calc(64px + env(safe-area-inset-bottom,0px)); }
 }
 
 /* ── Bottom nav — light theme ── */
