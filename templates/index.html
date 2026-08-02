@@ -442,6 +442,211 @@ pre::-webkit-scrollbar-thumb{background:rgba(0,255,68,.2);border-radius:2px}
   .tools-modal-body{padding:14px 16px 16px}
 }
 
+/* ═══════════════════════════════════════════
+   TOOL LAUNCHER — NEW CONTROL CENTER
+════════════════════════════════════════════ */
+.tools-launch{
+  position:fixed;right:14px;bottom:86px;z-index:1200;
+  display:inline-flex;align-items:center;gap:10px;
+  min-height:54px;padding:0 16px 0 14px;border-radius:999px;
+  border:1px solid rgba(0,255,102,.26);
+  background:linear-gradient(180deg,rgba(0,18,10,.94),rgba(0,8,6,.96));
+  color:#eafff1;font-family:var(--fd);font-size:10px;font-weight:900;letter-spacing:.14em;
+  box-shadow:0 16px 36px rgba(0,0,0,.34),0 0 0 1px rgba(255,255,255,.02) inset;
+  backdrop-filter:blur(18px) saturate(1.15);-webkit-backdrop-filter:blur(18px) saturate(1.15);
+  cursor:pointer;overflow:hidden;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease;
+}
+.tools-launch::before{
+  content:'';position:absolute;inset:-1px;border-radius:999px;
+  background:linear-gradient(90deg,transparent,rgba(0,255,102,.18),rgba(20,213,255,.12),transparent);
+  transform:translateX(-120%);animation:tlSweep 6.8s linear infinite;
+}
+.tools-launch::after{
+  content:'';position:absolute;inset:0;border-radius:999px;
+  box-shadow:0 0 0 1px rgba(0,255,102,.04) inset,0 0 24px rgba(0,255,102,.08);
+  pointer-events:none;
+}
+.tools-launch:hover{transform:translateY(-1px);border-color:rgba(0,255,102,.44);box-shadow:0 18px 42px rgba(0,0,0,.40),0 0 24px rgba(0,255,102,.10)}
+.tools-launch:active{transform:translateY(0) scale(.99)}
+.tools-launch-ic{
+  width:28px;height:28px;border-radius:10px;display:grid;place-items:center;flex:0 0 auto;
+  background:rgba(0,255,102,.10);border:1px solid rgba(0,255,102,.18);font-size:15px;position:relative;z-index:1
+}
+.tools-launch-copy{display:flex;flex-direction:column;line-height:1;min-width:0;position:relative;z-index:1}
+.tools-launch-kicker{font-size:8px;letter-spacing:.18em;color:rgba(170,248,198,.72);margin-bottom:3px}
+.tools-launch-title{font-size:12px;letter-spacing:.04em;color:#fff;white-space:nowrap}
+.tools-launch-pill{
+  display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;padding:0 8px;border-radius:999px;
+  background:rgba(0,255,102,.12);border:1px solid rgba(0,255,102,.20);font-size:9px;color:var(--g);position:relative;z-index:1
+}
+@media(min-width:921px){.tools-launch{right:18px;bottom:18px}}
+@media(max-width:560px){.tools-launch{left:12px;right:12px;bottom:78px;justify-content:center;width:calc(100% - 24px)}}
+
+.tools-modal{position:fixed;inset:0;z-index:1300;display:none}
+.tools-modal.open{display:block}
+.tools-modal-backdrop{
+  position:absolute;inset:0;
+  background:radial-gradient(circle at 20% 10%,rgba(0,255,102,.06),transparent 28%),rgba(0,0,0,.68);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)
+}
+.tools-modal-panel{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:min(1120px,calc(100vw - 18px));height:min(88vh,860px);overflow:hidden;
+  border-radius:30px;border:1px solid rgba(255,255,255,.08);
+  background:linear-gradient(180deg,rgba(2,8,7,.98),rgba(3,10,9,.94));
+  box-shadow:0 28px 90px rgba(0,0,0,.62),0 0 0 1px rgba(255,255,255,.02) inset;
+}
+.tools-modal-shell{display:flex;flex-direction:column;height:100%;overflow:hidden;position:relative}
+.tools-modal-shell::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(circle at 14% 12%,rgba(0,255,102,.11),transparent 18%),
+    radial-gradient(circle at 88% 16%,rgba(20,213,255,.08),transparent 16%),
+    linear-gradient(180deg,rgba(255,255,255,.02),transparent 26%,transparent 78%,rgba(0,0,0,.18));
+}
+.tools-modal-head{
+  display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;
+  padding:20px 20px 16px;border-bottom:1px solid rgba(255,255,255,.06);position:relative;z-index:1
+}
+.tools-modal-brand{display:flex;align-items:flex-start;gap:14px;min-width:0}
+.tools-modal-ic{
+  width:48px;height:48px;border-radius:16px;display:grid;place-items:center;flex:0 0 auto;
+  background:rgba(0,255,102,.08);border:1px solid rgba(0,255,102,.18);box-shadow:0 0 24px rgba(0,255,102,.08);font-size:22px
+}
+.tools-modal-kicker{font-family:var(--fd);font-size:10px;letter-spacing:.22em;color:rgba(170,248,198,.86);margin-bottom:6px}
+.tools-modal-h{margin:0;font-family:var(--fd);font-size:20px;line-height:1.2;color:#fff;letter-spacing:.02em}
+.tools-modal-s{margin-top:7px;font-size:12px;line-height:1.6;color:#8fa69a;max-width:640px}
+.tools-modal-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-left:auto}
+.tools-stat{
+  min-width:78px;padding:10px 12px;border-radius:18px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);text-align:center
+}
+.tools-stat span{display:block;font-family:var(--fd);font-size:18px;line-height:1;color:var(--g)}
+.tools-stat small{display:block;margin-top:4px;font-size:9px;letter-spacing:.16em;color:#8fa69a;text-transform:uppercase}
+.tools-modal-close{
+  width:42px;height:42px;border-radius:14px;border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.04);color:#fff;font-size:18px;cursor:pointer;
+  transition:transform .16s ease,background .16s ease,border-color .16s ease
+}
+.tools-modal-close:hover{transform:translateY(-1px);background:rgba(255,255,255,.08);border-color:rgba(0,255,102,.22)}
+.tools-hero{display:grid;grid-template-columns:1.1fr .9fr;gap:14px;padding:16px 20px 0;position:relative;z-index:1}
+.tools-hero-copy{
+  border-radius:24px;padding:18px 18px 16px;
+  background:linear-gradient(180deg,rgba(0,255,102,.07),rgba(255,255,255,.02));
+  border:1px solid rgba(0,255,102,.12);box-shadow:0 12px 34px rgba(0,0,0,.18)
+}
+.tools-hero-badge{
+  display:inline-flex;align-items:center;gap:8px;padding:9px 13px;border-radius:999px;
+  background:rgba(0,255,102,.08);border:1px solid rgba(0,255,102,.16);
+  font-family:var(--fd);font-size:10px;letter-spacing:.18em;color:#abf8c9;text-transform:uppercase
+}
+.tools-hero-copy h4{margin:14px 0 8px;font-family:var(--fd);font-size:20px;line-height:1.2;color:#fff}
+.tools-hero-copy p{margin:0;font-size:12px;line-height:1.7;color:#8fa69a}
+.tools-spotlights{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;min-width:0}
+.tools-spotlight{
+  position:relative;display:flex;flex-direction:column;justify-content:space-between;min-height:118px;
+  padding:14px;border-radius:20px;text-decoration:none;color:#fff;
+  border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);overflow:hidden;
+  transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease
+}
+.tools-spotlight::before{
+  content:'';position:absolute;inset:auto -20% -35% 26%;height:110px;border-radius:50%;
+  background:radial-gradient(circle, rgba(0,255,102,.20), transparent 64%);opacity:.5;pointer-events:none
+}
+.tools-spotlight:hover{transform:translateY(-2px);border-color:rgba(0,255,102,.22);box-shadow:0 14px 32px rgba(0,0,0,.24)}
+.tools-spotlight span{font-size:11px;line-height:1.5;color:#8fa69a;position:relative;z-index:1}
+.tools-spotlight b{display:block;margin:14px 0 8px;font-family:var(--fd);font-size:13px;letter-spacing:.03em;position:relative;z-index:1}
+.tools-spotlight i{font-size:18px;position:relative;z-index:1;font-style:normal;color:var(--g)}
+.tools-toolbar{display:flex;align-items:center;gap:12px;padding:14px 20px 12px;position:relative;z-index:1}
+.tools-searchbox{flex:1;min-width:0}
+.tools-search-inner{
+  display:flex;align-items:center;gap:10px;height:52px;padding:0 14px;border-radius:16px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);box-shadow:0 8px 22px rgba(0,0,0,.12)
+}
+.tools-search-ic{font-size:14px;opacity:.8}
+.tools-search-input{flex:1;min-width:0;border:0;outline:0;background:transparent;color:#fff;font-size:14px}
+.tools-search-input::placeholder{color:rgba(170,248,198,.52)}
+.tools-search-count{font-family:var(--fd);font-size:10px;letter-spacing:.18em;color:var(--g);text-transform:uppercase}
+.tools-layout{display:grid;grid-template-columns:220px 1fr;gap:14px;flex:1;min-height:0;padding:0 20px 20px;position:relative;z-index:1}
+.tools-rail{
+  display:flex;flex-direction:column;gap:10px;overflow:auto;padding-right:2px;
+  scrollbar-width:thin;scrollbar-color:rgba(0,255,102,.24) transparent
+}
+.tools-rail::-webkit-scrollbar,.tools-results::-webkit-scrollbar{width:6px;height:6px}
+.tools-rail::-webkit-scrollbar-thumb,.tools-results::-webkit-scrollbar-thumb{background:rgba(0,255,102,.22);border-radius:999px}
+.tools-filter{
+  display:flex;align-items:center;gap:12px;width:100%;min-height:58px;padding:12px 14px;border-radius:18px;text-align:left;cursor:pointer;
+  border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);color:#fff;
+  transition:transform .16s ease,border-color .16s ease,background .16s ease,box-shadow .16s ease;position:relative;overflow:hidden
+}
+.tools-filter::before{
+  content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,255,255,.02),transparent 55%);opacity:.55;pointer-events:none
+}
+.tools-filter:hover{transform:translateY(-1px);border-color:rgba(0,255,102,.20);box-shadow:0 10px 22px rgba(0,0,0,.18)}
+.tools-filter.active{background:rgba(0,255,102,.08);border-color:rgba(0,255,102,.24);box-shadow:0 0 0 1px rgba(0,255,102,.08) inset,0 12px 26px rgba(0,0,0,.18)}
+.tools-filter-ic{
+  width:34px;height:34px;border-radius:12px;display:grid;place-items:center;flex:0 0 auto;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);font-size:16px
+}
+.tools-filter-copy{display:flex;flex-direction:column;min-width:0;flex:1;line-height:1.1}
+.tools-filter-name{
+  font-family:var(--fd);font-size:11px;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+}
+.tools-filter-count{margin-top:5px;font-size:10px;color:#8fa69a;white-space:nowrap}
+.tools-filter-dot{width:8px;height:8px;border-radius:50%;background:rgba(0,255,102,.55);box-shadow:0 0 10px rgba(0,255,102,.24);flex:0 0 auto}
+.tools-results{min-width:0;overflow:auto;padding-right:2px;scrollbar-width:thin;scrollbar-color:rgba(0,255,102,.24) transparent}
+.tools-section{margin-bottom:14px;padding:18px;border-radius:24px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06)}
+.tools-sec-h{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.tools-sec-title{font-family:var(--fd);font-size:11px;letter-spacing:.24em;color:#8fa69a;text-transform:uppercase}
+.tools-sec-count{font-size:11px;color:#8fa69a}
+.tools-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.tools-card{
+  position:relative;display:flex;align-items:flex-start;gap:14px;padding:16px;border-radius:20px;text-decoration:none;color:#fff;
+  border:1px solid rgba(255,255,255,.07);background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));
+  transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease,background .18s ease;overflow:hidden
+}
+.tools-card::before{
+  content:'';position:absolute;inset:auto -16% -36% 34%;height:120px;
+  background:radial-gradient(circle,rgba(0,255,102,.16),transparent 62%);opacity:.55;pointer-events:none
+}
+.tools-card:hover{transform:translateY(-2px);border-color:rgba(0,255,102,.22);box-shadow:0 16px 34px rgba(0,0,0,.26)}
+.tools-ic{
+  width:48px;height:48px;border-radius:16px;display:grid;place-items:center;flex:0 0 auto;
+  background:rgba(0,255,102,.08);border:1px solid rgba(0,255,102,.16);box-shadow:0 0 0 1px rgba(255,255,255,.02) inset;font-size:22px
+}
+.tools-copy{min-width:0;flex:1}
+.tools-name{font-family:var(--fd);font-size:14px;font-weight:800;letter-spacing:.02em}
+.tools-desc{margin-top:5px;font-size:12px;line-height:1.55;color:#8fa69a}
+.tools-tag-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.tools-tag{
+  display:inline-flex;align-items:center;padding:5px 8px;border-radius:999px;background:rgba(0,255,102,.08);
+  border:1px solid rgba(0,255,102,.14);color:var(--g);font-size:9px;letter-spacing:.12em;text-transform:uppercase
+}
+.tools-arrow{position:absolute;top:16px;right:16px;color:rgba(170,248,198,.9);font-size:16px;opacity:.85}
+.tools-empty{
+  padding:28px 18px;border-radius:18px;border:1px dashed rgba(255,255,255,.12);text-align:center;color:#8fa69a;background:rgba(255,255,255,.02)
+}
+@media(max-width:920px){
+  .tools-hero{grid-template-columns:1fr}
+  .tools-spotlights{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .tools-layout{grid-template-columns:1fr}
+  .tools-rail{flex-direction:row;overflow:auto;padding-bottom:2px}
+  .tools-filter{min-width:180px;flex:0 0 auto}
+}
+@media(max-width:680px){
+  .tools-modal-panel{width:calc(100vw - 12px);height:calc(100dvh - 12px);border-radius:24px}
+  .tools-modal-head{padding:16px}
+  .tools-hero{padding:14px 16px 0}
+  .tools-toolbar{padding:14px 16px 12px;flex-direction:column;align-items:stretch}
+  .tools-layout{padding:0 16px 16px}
+  .tools-grid{grid-template-columns:1fr}
+  .tools-spotlights{grid-template-columns:1fr}
+  .tools-filter{min-width:160px}
+}
+@media(prefers-reduced-motion:reduce){
+  .tools-launch,.tools-card,.tools-filter,.tools-spotlight,.tools-modal-close{transition:none}
+  .tools-launch::before{animation:none}
+}
+@keyframes tlSweep{0%{transform:translateX(-120%);opacity:0}20%{opacity:.65}55%{opacity:.5}100%{transform:translateX(140%);opacity:0}}
 </style>
 
 <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
@@ -1067,24 +1272,64 @@ save</pre>
 
 <button type="button" class="tools-launch" id="toolsLaunch" onclick="openToolsModal()" aria-haspopup="dialog" aria-controls="toolsModal">
   <span class="tools-launch-ic">🧰</span>
-  <span>TOOLS</span>
-  <span class="tools-launch-pill" id="toolsCount">0</span>
+  <span class="tools-launch-copy">
+    <span class="tools-launch-kicker">OPEN TOOLBOX</span>
+    <span class="tools-launch-title">Tool Launcher</span>
+  </span>
+  <span class="tools-launch-pill" id="toolsCount">30</span>
 </button>
 
 <div class="tools-modal" id="toolsModal" role="dialog" aria-modal="true" aria-labelledby="toolsModalTitle" aria-hidden="true">
   <div class="tools-modal-backdrop" onclick="closeToolsModal()"></div>
   <div class="tools-modal-panel" role="document">
-    <div class="tools-modal-head">
-      <div class="tools-modal-title">
-        <div class="tools-modal-kicker">CONFIGDOCTOR TOOLBOX</div>
-        <div class="tools-modal-h" id="toolsModalTitle">เลือกเครื่องมือที่ต้องการใช้งาน</div>
-        <div class="tools-modal-s">รวมเครื่องมือหลักทั้งหมดไว้ในที่เดียว กดเลือกแล้วไปใช้งานต่อได้ทันที</div>
+    <div class="tools-modal-shell">
+      <div class="tools-modal-head">
+        <div class="tools-modal-brand">
+          <div class="tools-modal-ic">🧰</div>
+          <div>
+            <div class="tools-modal-kicker">CONFIGDOCTOR CONTROL CENTER</div>
+            <div class="tools-modal-h" id="toolsModalTitle">Tool Launcher</div>
+            <div class="tools-modal-s">เลือกเครื่องมือ วิเคราะห์ จูน และดูแลโดรน FPV ได้จากศูนย์รวมเดียว</div>
+          </div>
+        </div>
+        <div class="tools-modal-meta">
+          <div class="tools-stat"><span id="toolsTotal">30</span><small>Total</small></div>
+          <div class="tools-stat"><span id="toolsVisible">30</span><small>Visible</small></div>
+          <div class="tools-stat"><span id="toolsGroupsCount">6</span><small>Groups</small></div>
+          <button type="button" class="tools-modal-close" onclick="closeToolsModal()" aria-label="ปิด">✕</button>
+        </div>
       </div>
-      <button type="button" class="tools-modal-close" onclick="closeToolsModal()" aria-label="ปิด">✕</button>
-    </div>
-    <div class="tools-modal-body">
-      <input type="search" class="tools-search" id="toolsSearch" placeholder="ค้นหาเครื่องมือ เช่น PID, blackbox, VTX, battery..." oninput="filterTools()">
-      <div id="toolsGroups"></div>
+
+      <div class="tools-hero">
+        <div class="tools-hero-copy">
+          <div class="tools-hero-badge">FAST ACCESS</div>
+          <h4>เครื่องมือยอดนิยมอยู่ด้านบน เพื่อเข้าใช้งานได้เร็วที่สุด</h4>
+          <p>ค้นหาชื่อเครื่องมือ หรือแตะหมวดที่ต้องการ ระบบจะกรองและจัดเรียงให้ทันที</p>
+        </div>
+        <div class="tools-spotlights">
+          <a class="tools-spotlight" href="/app"><span><i>01</i></span><b>Drone Analyzer</b><span>PID · Filter · CLI</span></a>
+          <a class="tools-spotlight" href="/pid-advisor"><span><i>02</i></span><b>PID Advisor</b><span>อ่านอาการแล้วช่วยแนะนำ</span></a>
+          <a class="tools-spotlight" href="/blackbox"><span><i>03</i></span><b>Blackbox Analyzer</b><span>วิเคราะห์ปัญหาการบิน</span></a>
+        </div>
+      </div>
+
+      <div class="tools-toolbar">
+        <div class="tools-searchbox">
+          <div class="tools-search-inner">
+            <span class="tools-search-ic">🔍</span>
+            <input type="search" class="tools-search-input" id="toolsSearch" placeholder="ค้นหาเครื่องมือ เช่น PID, blackbox, VTX, battery..." oninput="filterTools()" autocomplete="off" spellcheck="false">
+            <span class="tools-search-count" id="toolsSearchCount">30</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tools-layout">
+        <aside class="tools-rail" id="toolsRail"></aside>
+        <section class="tools-results" id="toolsResults">
+          <div id="toolsGroups"></div>
+          <div class="tools-empty" id="toolsEmpty" style="display:none;">ไม่พบเครื่องมือที่ตรงกับคำค้น ลองพิมพ์คำอื่น เช่น PID, VTX, Blackbox, Battery</div>
+        </section>
+      </div>
     </div>
   </div>
 </div>
@@ -1202,10 +1447,6 @@ window.toast=function(msg){
 
 window.onPreset=window.onPreset||function(){};
 
-/* PATCH: button disable must happen AFTER the browser commits to
-   submitting the form, not inside the button's own click handler —
-   disabling synchronously on click can cancel the submission itself
-   on some mobile browsers (notably Android Chrome/WebView). */
 window.onAnalyzeSubmit=function(form){
   var btn=g('btnA');
   if(btn&&!btn.disabled){
@@ -1225,29 +1466,6 @@ document.addEventListener('DOMContentLoaded',function(){
   var form=g('aForm');
   if(form)form.querySelectorAll('input[type="number"]').forEach(function(i){i.addEventListener('input',window.dCalc,{passive:true})});
 },false);
-})();
-</script>
-{% endblock %}
-{% block extra_scripts %}
-<!-- Global toast -->
-<div id="uiToast" role="status" aria-live="polite"></div>
-<script>
-window.showToast = function(msg, type, dur) {
-  var t = document.getElementById('uiToast');
-  if (!t) return;
-  t.textContent = msg;
-  t.className = (type === 'error' ? 'error' : type === 'info' ? 'info' : '') + ' show';
-  clearTimeout(t._tid);
-  t._tid = setTimeout(function() { t.className = t.className.replace(' show',''); }, dur || 2400);
-};
-// Scroll-animate observer
-(function() {
-  if (!window.IntersectionObserver) return;
-  var obs = new IntersectionObserver(function(entries) {
-    entries.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add('ui-visible'); obs.unobserve(e.target); } });
-  }, { threshold: 0.08 });
-  document.querySelectorAll('.ui-fade-up').forEach(function(el) { obs.observe(el); });
-
 
 var TOOLS = [
   {group:'Analyzer', icon:'📊', name:'Drone Analyzer', desc:'วิเคราะห์ PID / Filter / CLI จากสเปคโดรน', href:'/app', tag:'Core'},
@@ -1281,61 +1499,139 @@ var TOOLS = [
   {group:'Explore', icon:'🪖', name:'Military UAS', desc:'ข้อมูล/หน้าเฉพาะด้าน military UAS', href:'/military-uas', tag:'Special'}
 ];
 
-function groupTools(list){
-  return list.reduce(function(acc, item){
-    (acc[item.group] = acc[item.group] || []).push(item);
-    return acc;
-  }, {});
+var TOOL_GROUPS = [
+  {key:'ALL', label:'ทั้งหมด', icon:'✨'},
+  {key:'Analyzer', label:'Analyzer', icon:'📊'},
+  {key:'Analysis', label:'Analysis', icon:'🛰️'},
+  {key:'Performance', label:'Performance', icon:'⚡'},
+  {key:'Hardware', label:'Hardware', icon:'🧰'},
+  {key:'Training', label:'Training', icon:'🎮'},
+  {key:'Explore', label:'Explore', icon:'🧭'}
+];
+
+var currentQuery = '';
+var currentGroup = 'ALL';
+
+function escapeHtml(str){
+  return String(str).replace(/[&<>"']/g,function(m){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m];
+  });
+}
+
+function countByGroup(list, key){
+  if(key === 'ALL') return list.length;
+  return list.filter(function(t){ return t.group === key; }).length;
+}
+
+function renderRail(list){
+  var rail = g('toolsRail');
+  if(!rail) return;
+  var html = TOOL_GROUPS.map(function(grp){
+    var n = countByGroup(list, grp.key);
+    return [
+      '<button type="button" class="tools-filter', (currentGroup === grp.key ? ' active' : ''), '" data-group="', grp.key, '">',
+        '<span class="tools-filter-ic">', grp.icon, '</span>',
+        '<span class="tools-filter-copy">',
+          '<span class="tools-filter-name">', escapeHtml(grp.label), '</span>',
+          '<span class="tools-filter-count">', n, ' tools</span>',
+        '</span>',
+        '<span class="tools-filter-dot"></span>',
+      '</button>'
+    ].join('');
+  }).join('');
+  rail.innerHTML = html;
+  rail.querySelectorAll('.tools-filter').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      currentGroup = btn.getAttribute('data-group') || 'ALL';
+      renderTools(currentQuery);
+    });
+  });
 }
 
 function renderTools(filter){
-  var container = document.getElementById('toolsGroups');
+  var container = g('toolsGroups');
   if(!container) return;
-  var q = (filter || '').trim().toLowerCase();
-  var items = !q ? TOOLS.slice() : TOOLS.filter(function(t){
-    return [t.group,t.name,t.desc,t.tag,t.href].join(' ').toLowerCase().indexOf(q) !== -1;
+
+  currentQuery = (filter || '').trim();
+  var q = currentQuery.toLowerCase();
+
+  var list = TOOLS.filter(function(t){
+    var matchesQuery = !q || [t.group,t.name,t.desc,t.tag,t.href].join(' ').toLowerCase().indexOf(q) !== -1;
+    var matchesGroup = currentGroup === 'ALL' || t.group === currentGroup;
+    return matchesQuery && matchesGroup;
   });
-  var groups = groupTools(items);
-  var keys = ['Analyzer','Analysis','Performance','Hardware','Training','Explore'];
-  var total = 0;
+
+  var keys = (currentGroup === 'ALL' ? ['Analyzer','Analysis','Performance','Hardware','Training','Explore'] : [currentGroup]);
   var html = '';
+  var totalVisible = 0;
+  var visibleGroups = 0;
+
   keys.forEach(function(key){
-    var arr = groups[key] || [];
-    if (!arr.length) return;
-    total += arr.length;
-    html += '<section class="tools-section"><div class="tools-sec-h"><div class="tools-sec-title">'+key+'</div><div class="tools-sec-count">'+arr.length+' tools</div></div><div class="tools-grid">';
+    var arr = list.filter(function(t){ return t.group === key; });
+    if(!arr.length) return;
+    visibleGroups += 1;
+    totalVisible += arr.length;
+    html += '<section class="tools-section">';
+    html +=   '<div class="tools-sec-h">';
+    html +=     '<div class="tools-sec-title">' + escapeHtml(key) + '</div>';
+    html +=     '<div class="tools-sec-count">' + arr.length + ' tools</div>';
+    html +=   '</div>';
+    html +=   '<div class="tools-grid">';
     arr.forEach(function(t){
-      html += '<a class="tools-card" href="'+t.href+'"><div class="tools-ic">'+t.icon+'</div><div class="tools-copy"><div class="tools-name">'+t.name+'</div><div class="tools-desc">'+t.desc+'</div><span class="tools-tag">'+t.tag+'</span></div></a>';
+      html += '<a class="tools-card" href="' + escapeHtml(t.href) + '">';
+      html +=   '<div class="tools-ic">' + escapeHtml(t.icon) + '</div>';
+      html +=   '<div class="tools-copy">';
+      html +=     '<div class="tools-name">' + escapeHtml(t.name) + '</div>';
+      html +=     '<div class="tools-desc">' + escapeHtml(t.desc) + '</div>';
+      html +=     '<div class="tools-tag-row"><span class="tools-tag">' + escapeHtml(t.tag) + '</span></div>';
+      html +=   '</div>';
+      html +=   '<span class="tools-arrow">↗</span>';
+      html += '</a>';
     });
-    html += '</div></section>';
+    html +=   '</div>';
+    html += '</section>';
   });
-  if(!total){
+
+  if(!totalVisible){
     html = '<div class="tools-empty">ไม่พบเครื่องมือที่ตรงกับคำค้น ลองพิมพ์คำอื่น เช่น PID, VTX, Blackbox, Battery</div>';
   }
+
   container.innerHTML = html;
-  var c = document.getElementById('toolsCount'); if(c) c.textContent = String(items.length);
+
+  var total = TOOLS.length;
+  var b = g('toolsCount'); if(b) b.textContent = String(totalVisible || total);
+  var st = g('toolsTotal'); if(st) st.textContent = String(total);
+  var vis = g('toolsVisible'); if(vis) vis.textContent = String(totalVisible || 0);
+  var gc = g('toolsGroupsCount'); if(gc) gc.textContent = String(visibleGroups || TOOL_GROUPS.length - 1);
+  var sc = g('toolsSearchCount'); if(sc) sc.textContent = String(totalVisible || total);
+  var empty = g('toolsEmpty'); if(empty) empty.style.display = totalVisible ? 'none' : 'block';
 }
 
 window.openToolsModal = function(){
-  var m = document.getElementById('toolsModal');
+  var m = g('toolsModal');
   if(!m) return;
+  currentGroup = 'ALL';
   m.classList.add('open');
   m.setAttribute('aria-hidden','false');
   document.body.style.overflow = 'hidden';
-  renderTools(document.getElementById('toolsSearch') ? document.getElementById('toolsSearch').value : '');
-  setTimeout(function(){ var s=document.getElementById('toolsSearch'); if(s) s.focus(); }, 50);
+  renderTools(g('toolsSearch') ? g('toolsSearch').value : '');
+  setTimeout(function(){ var s=g('toolsSearch'); if(s) s.focus(); }, 50);
 };
+
 window.closeToolsModal = function(){
-  var m = document.getElementById('toolsModal');
+  var m = g('toolsModal');
   if(!m) return;
   m.classList.remove('open');
   m.setAttribute('aria-hidden','true');
   document.body.style.overflow = '';
 };
-window.filterTools = function(){ renderTools(document.getElementById('toolsSearch') ? document.getElementById('toolsSearch').value : ''); };
+
+window.filterTools = function(){
+  renderTools(g('toolsSearch') ? g('toolsSearch').value : '');
+};
 
 document.addEventListener('keydown', function(ev){
-  var m = document.getElementById('toolsModal');
+  var m = g('toolsModal');
   if (ev.key === 'Escape' && m && m.classList.contains('open')) closeToolsModal();
 });
 
