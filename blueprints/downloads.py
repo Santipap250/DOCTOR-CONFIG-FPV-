@@ -16,7 +16,10 @@ bp = Blueprint('downloads', __name__)
 def download_diff(fc, filename):
     from app import app
     safe_fc = secure_filename(fc)
-    safe_fn = secure_filename(filename)
+    # FIX: allow spaces in filenames for web compatibility while remaining safe
+    safe_fn = filename.replace('..', '') # Basic traversal guard
+    if not safe_fn or safe_fn.startswith('/') or safe_fn.startswith('.'):
+        abort(404)
     base_root = os.path.realpath(os.path.join(app.root_path, 'static', 'downloads', 'diff_all'))
     if not safe_fc:
         abort(404)
