@@ -27,7 +27,8 @@ from analyzer.cli_surgeon import analyze_dump as cli_analyze_dump
 
 
 # ── Logger init — MUST be first before any try/except import blocks ───────
-logging.basicConfig(level=logging.INFO)
+_log_level = os.environ.get("LOG_LEVEL", "INFO").upper()
+logging.basicConfig(level=getattr(logging, _log_level, logging.INFO))
 logger = logging.getLogger("configdoctor")
 
 import sqlite3, threading as _threading

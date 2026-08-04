@@ -71,6 +71,23 @@ from extensions import LIMITER_AVAILABLE, limiter, _rate
 
 # ── Flask app ─────────────────────────────────────────────────────────────
 app = Flask(__name__)
+def _startup_validate_templates() -> None:
+    """Validate that the main landing template exists before serving.
+    This keeps production startup honest, while still allowing local
+    development to run with a clear error if the template tree is broken.
+    """
+    try:
+        from jinja2 import Environment, FileSystemLoader as _FL
+        # ใช้ app.root_path เพื่อให้แน่ใจว่า path ถูกต้องทั้งบน local และ production
+        template_dir = os.path.join(os.path.abspath(os.path.dirname(__file__)), "templates")
+        _env = Environment(loader=_FL(template_dir))
+        _env.get_template("index.html")
+        logging.info("Startup: template validation passed ✓")
+    except Exception as _te:
+        logging.error("Startup: template validation FAILED - %s", _te)
+        raise
+# รันทันทีเพื่อให้ gunicorn fail fast ถ้า template หาย
+_startup_validate_templates()
 
 # FIX (critical): templates/index.html uses a |md5 filter to build a
 # cosmetic "build fingerprint" hash for display. It was never registered,
@@ -261,24 +278,10 @@ app.register_blueprint(_tools_cli_api_bp)
 app.register_blueprint(_tools_osd_bp)
 
 
-def _startup_validate_templates() -> None:
-    """Validate that the main landing template exists before serving.
-
-    This keeps production startup honest, while still allowing local
-    development to run with a clear error if the template tree is broken.
-    """
-    try:
-        from jinja2 import Environment, FileSystemLoader as _FL
-        _env = Environment(loader=_FL("templates"))
-        _env.get_template("index.html")
-        logger.info("Startup: template validation passed ✓")
-    except Exception as _te:
-        logger.error("Startup: template validation FAILED - %s", _te)
-        raise
+# _startup_validate_templates moved to app creation section
 
 
 if __name__ == "__main__":
-    _startup_validate_templates()
     port = int(os.environ.get("PORT", "10000"))
     debug = os.environ.get("FLASK_DEBUG", "0") in ("1", "true", "True")
     app.run(host="0.0.0.0", port=port, debug=debug)
