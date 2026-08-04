@@ -877,7 +877,7 @@ except Exception as _bb_err:
 def _cleanup_osd_files(max_age_hours: int = 24) -> None:
     """ลบไฟล์ OSD เก่ากว่า max_age_hours ออกจาก static/downloads/osd/
     เรียกก่อน save ทุกครั้งเพื่อป้องกัน disk fill"""
-    osd_dir = os.path.join(app.root_path, 'static', 'downloads', 'osd')
+    osd_dir = os.path.join(os.path.dirname(__file__), 'static', 'downloads', 'osd')
     if not os.path.isdir(osd_dir):
         return
     cutoff = time.time() - max_age_hours * 3600
