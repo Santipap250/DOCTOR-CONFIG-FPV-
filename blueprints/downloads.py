@@ -16,14 +16,17 @@ bp = Blueprint('downloads', __name__)
 def download_diff(fc, filename):
     from app import app
     safe_fc = secure_filename(fc)
-    # Hardened check: Allow spaces, dots, dashes, and underscores only.
-    # This prevents any control characters or shell-sensitive characters.
+    # Hardened check: Allow spaces, dots, dashes, underscores, and Thai characters.
+    # This prevents any control characters or shell-sensitive characters like ;, &, |, etc.
     import re
-    if not re.match(r'^[a-zA-Z0-9\s\.\-_()]+$', filename):
+    # Thai Unicode range: \u0e00-\u0e7f
+    if not re.match(r'^[a-zA-Z0-9\s\.\-_()\u0e00-\u0e7f]+$', filename):
         abort(404)
-    # Block any attempts at directory traversal via double dots
-    if '..' in filename:
+
+    # Absolute block for directory traversal
+    if '..' in filename or '/' in filename or '\\' in filename:
         abort(404)
+    
     safe_fn = filename
     base_root = os.path.realpath(os.path.join(app.root_path, 'static', 'downloads', 'diff_all'))
     if not safe_fc:

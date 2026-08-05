@@ -48,6 +48,24 @@ class TestDownloadsHardening:
             if os.path.exists(file_path):
                 os.remove(file_path)
 
+    def test_download_file_with_thai_chars_success(self, client, app):
+        """ทดสอบการดาวน์โหลดไฟล์ที่มีภาษาไทย (Unicode)."""
+        base_dir = os.path.join(app.root_path, 'static', 'downloads', 'diff_all', 'test_cat')
+        os.makedirs(base_dir, exist_ok=True)
+        file_name = 'ทดสอบไฟล์ภาษาไทย.txt'
+        file_path = os.path.join(base_dir, file_name)
+        with open(file_path, 'w', encoding='utf-8') as f:
+            f.write("thai content")
+
+        try:
+            # Flask test client handles unicode in URLs
+            response = client.get(f"/downloads/test_cat/{file_name}")
+            assert response.status_code == 200
+            assert response.data == b"thai content"
+        finally:
+            if os.path.exists(file_path):
+                os.remove(file_path)
+
     @pytest.mark.parametrize("malicious_filename", [
         "../../etc/passwd",
         "test..file.txt",
