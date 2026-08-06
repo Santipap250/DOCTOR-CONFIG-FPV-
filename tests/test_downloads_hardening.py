@@ -70,6 +70,7 @@ class TestDownloadsHardening:
         "../../etc/passwd",
         "test..file.txt",
         "test/file.txt",
+        "test\\file.txt",
         "test;file.txt",
         "test&file.txt",
         "test|file.txt",
@@ -79,9 +80,17 @@ class TestDownloadsHardening:
         "test$file.txt",
         "test'file.txt",
         'test"file.txt',
+        "test\0file.txt",  # Null byte
+        "test\rfile.txt",  # CR
+        "test\nfile.txt",  # LF
+        "%2e%2e%2fetc%2fpasswd", # Encoded ../etc/passwd
+        "test%2e%2efile.txt",    # Encoded ..
+        "test%2ffile.txt",       # Encoded /
+        "test%5cfile.txt",       # Encoded \
     ])
     def test_download_malicious_filename_returns_404(self, client, malicious_filename):
-        """ทดสอบว่าอักขระอันตรายหรือความพยายามทำ Traversal ต้องถูกบล็อก (404)."""
+        """ทดสอบว่าอักขระอันตราย, Encoded variants หรือความพยายามทำ Traversal ต้องถูกบล็อก (404)."""
+        # Note: client.get automatically handles URL encoding for the path segment
         response = client.get(f"/downloads/test_cat/{malicious_filename}")
         assert response.status_code == 404
 
