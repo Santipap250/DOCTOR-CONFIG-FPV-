@@ -160,7 +160,7 @@ def _cells_from_str(s):
     import cells_from_battery_string directly from analyzer.units."""
     if not is_valid_battery_string(s):
         return None
-    return cells_from_battery_string(s, default=4, lo=1, hi=8)
+    return cells_from_battery_string(s, default=4, lo=1, hi=12)
 
 # ── SHA-256 hash cache (avoid recomputing on every /downloads request) ────
 _HASH_CACHE: dict = {}
@@ -222,10 +222,10 @@ def validate_input(size, weight, prop_size, pitch, blades, battery,
         warnings.append("จำนวนใบพัด (blades) ต้องเป็นจำนวนเต็ม")
     try:
         cells = _cells_from_str(battery)
-        if cells is None or cells < 1 or cells > 8:
-            warnings.append("แบตควรอยู่ในช่วง 1S ถึง 8S")
+        if cells is None or cells < 1 or cells > 12:
+            warnings.append("แบตควรอยู่ในช่วง 1S ถึง 12S")
     except Exception:
-        warnings.append("แบตรูปแบบผิด (เช่น 3S, 4S, 6S, 8S)")
+        warnings.append("แบตรูปแบบผิด (เช่น 3S, 4S, 6S, 8S, 10S, 12S)")
 
     # FIX: these five fields used to have ZERO validation — a negative or
     # absurd motor_kv/motor_count/battery_mAh/payload_g/esc_current_limit_a
