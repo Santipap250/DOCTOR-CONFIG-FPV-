@@ -104,7 +104,7 @@ def analyze(size_inch=5.0, cell_input=4, batt_mAh=None, motor_kv=None,
     c_rating  = (current_a * 1000.0) / batt_mAh if batt_mAh > 0 else float('inf')
     warnings  = []
     if cells >= HIGH_VOLTAGE_CELLS:
-        warnings.append({"level":"warning","msg":"แรงดันสูง (7S–8S) — ตรวจสอบ ESC, capacitor และ motor KV"})
+        warnings.append({"level":"warning","msg":"แรงดันสูง (7S+) — ตรวจสอบ ESC, capacitor และ motor KV"})
     if motor_kv:
         if cells >= 7 and motor_kv > KV_THRESHOLD_HIGH:
             warnings.append({"level":"danger","msg":f"Motor KV {motor_kv} สูงเกินไปสำหรับ {cells}S"})
